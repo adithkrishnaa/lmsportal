@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 const Login = () => {
   return (
     <>
-      <div className="max-w-md mx-auto container">
+      <div className="max-w-md -mt-2 mx-auto container">
         <h2 className="text-5xl pb-1 font-bold font-inter text-center">
           Welcome Back!
         </h2>

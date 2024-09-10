@@ -35,8 +35,8 @@ const Register = () => {
           <RxDoubleArrowLeft size={22} />
         </Link>
       </div>
-      <div className="max-w-md -mt-10 mx-auto container">
-        <h2 className="text-5xl pb-1 font-bold font-inter text-center">
+      <div className="max-w-md -mt-11 mx-auto container">
+        <h2 className="text-4xl pb-1 font-bold font-inter text-center">
           Register with us now!
         </h2>
         <p className="text-sm font-medium text-center font-inter ">
@@ -140,7 +140,7 @@ const Register = () => {
         </form>
         <div className="py-1">
           <button className="text-lg rounded-full font-inter w-full p-3 bg-[#034118] text-white">
-            Sign In
+            <Link to={'/dashboard'}> Sign In</Link>
           </button>
 
           <p className="font-inter text-sm text-center font-semibold">

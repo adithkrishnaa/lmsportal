@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 const Signin = () => {
   return (
     <>
-      <div className="-mt-20   absolute">
+      <div className="-mt-24   absolute">
         <Link to={"/"}>
           <RxDoubleArrowLeft size={22} />
         </Link>
@@ -48,11 +48,11 @@ const Signin = () => {
 
           <div className="flex flex-col items-center mt-2 space-y-2">
             <button className="text-lg rounded-full font-inter w-full p-3 bg-[#034118] text-white">
-              Next
+              <Link to={"/siginpassword"}> Next</Link>
             </button>
 
             <button className="font-inter text-xl font-semibold text-[#034118] rounded-full border-black border-2 w-full p-2 mt-2">
-              Forgot password?
+              <Link to={'/forgotpassword'}> Forgot password? </Link>
             </button>
 
             <p className="font-inter text-sm font-semibold">

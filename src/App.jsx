@@ -4,6 +4,10 @@ import Login from "./components/Login";
 import Signin from "./components/Signin";
 import Register from "./components/Register";
 import Dashboard from "./pages/Dashboard";
+import SigninPassword from "./components/SigninPassword";
+import ForgotPassword from "./components/ForgotPassword";
+import Passwordcode from "./components/Passwordcode";
+import ChangePassword from "./components/ChangePassword";
 
 function App() {
   return (
@@ -14,6 +18,10 @@ function App() {
           <Route path="login" element={<Login />} />
           <Route path="signin" element={<Signin />} />
           <Route path="register" element={<Register />} />
+          <Route path="siginpassword" element={<SigninPassword />} />
+          <Route path="forgotpassword" element={<ForgotPassword />} />
+          <Route path="passwordcode" element={<Passwordcode />} />
+          <Route path="changepassword" element={<ChangePassword/>} />
         </Route>
         <Route path="/dashboard" element={<Dashboard />} />
       </Routes>
