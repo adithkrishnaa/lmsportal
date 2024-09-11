@@ -153,11 +153,10 @@ const Dashboard = () => {
             <li className="text-center list-decimal tracking-wide list-outside font-inter font-bold text-2xl lg:text-3xl">
               No Course Enrolled Yet!
             </li>
-            <input
-              className="border-[1px] text-center w-48 lg:w-80 rounded-full placeholder:text-black font-inter font-semibold border-secondary"
-              type="text"
-              placeholder="0%"
-            />
+            <p className="border-[1px] text-center w-48 lg:w-80 rounded-full text-black font-inter font-semibold border-secondary">
+              0%
+            </p>
+        
           </div>
         </div>
       </div>
