@@ -4,14 +4,18 @@ import logo from "../../src/assets/Image/logo1.png";
 
 const HomeLayout = () => {
   return (
-    <div className="flex flex-col md:flex-row h-screen">
+    <div className="flex flex-col md:flex-row h-screen ">
       {/* Left side with image */}
-      <div className="md:w-1/2 w-full flex items-center justify-center">
+      <div className="md:w-1/2 w-full flex relative">
         <img
-          className="max-h-screen w-full pl-6 pt-5 pb-4"
+          className="max-h-screen w-full ml-7 mt-6  bg-cover  rounded-2xl   mb-5"
           src={login}
           alt="Login Illustration"
         />
+        <h2 className=" absolute font-extrabold bottom-14   right-0 translate-x-14 px-24 text-right text-5xl text-white font-inter">
+          ``The beautiful thing about learning is that no one can take it away
+          from you.``
+        </h2>
       </div>
       {/* Right side with form and footer */}
       <div className="md:w-1/2 w-full flex flex-col justify-center items-center relative">
