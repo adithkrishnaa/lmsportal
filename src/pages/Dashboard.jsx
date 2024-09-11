@@ -68,7 +68,7 @@ const Dashboard = () => {
                 Top Recommended
               </p>
               <h2 className="text-4xl font-inter absolute ml-2 bottom-0 left-3 ">
-                Generative AI Course
+                Data Science Course
               </h2>
             </div>
             <div className=" bg-black text-white rounded-b-3xl px-5 py-2">
@@ -106,7 +106,7 @@ const Dashboard = () => {
                 Top Recommended
               </p>
               <h2 className="text-4xl font-inter absolute ml-2 bottom-0 left-3 ">
-                Generative AI Course
+                Data Science Course
               </h2>
             </div>
             <div className=" bg-black text-white rounded-b-3xl px-5 py-2">
@@ -144,18 +144,17 @@ const Dashboard = () => {
             <h2 className="text-center font-inter font-extrabold text-5xl">
               Course Progress Report
             </h2>
-            
-              <div className="grid mt-10 grid-cols-2 ml-20">
-                <li className="text-center list-decimal  tracking-wide list-outside font-inter font-bold text-3xl">
-                  No Course Enrolled Yet!
-                </li>
-                <input
-                  className="  border-[1px] text-center w-80 rounded-full  placeholder:text-black font-inter font-semibold border-secondary"
-                  type="text"
-                  placeholder="0%"
-                />
-              </div>
-            
+
+            <div className="grid mt-10 grid-cols-2 ml-20">
+              <li className="text-center list-decimal  tracking-wide list-outside font-inter font-bold text-3xl">
+                No Course Enrolled Yet!
+              </li>
+              <input
+                className="  border-[1px] text-center w-80 rounded-full  placeholder:text-black font-inter font-semibold border-secondary"
+                type="text"
+                placeholder="0%"
+              />
+            </div>
           </div>
         </div>
       </div>
