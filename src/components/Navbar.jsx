@@ -8,14 +8,12 @@ import { useState } from "react";
 import { AiOutlineGlobal } from "react-icons/ai";
 
 const Navbar = () => {
-
-  
   const [isDropdownVisible, setIsDropdownVisible] = useState(false); // State for toggling the dropdown
 
   // Function to toggle dropdown visibility
   const toggleDropdown = () => {
     setIsDropdownVisible(!isDropdownVisible);
-  }
+  };
   return (
     <>
       <div className="mt-4 px-4 sm:px-6 md:px-10 lg:px-16 xl:px-20">
@@ -73,11 +71,13 @@ const Navbar = () => {
 
                   {/* Menu Items */}
                   <div className="px-3">
-                    <li>Account setting</li>
-                    <Link>
+                    <Link to={'/setting'}>
+                      <li>Account setting</li>
+                    </Link>
+                    <Link to={'/setting'}>
                       <li>Payment methods</li>
                     </Link>
-                    <Link>
+                    <Link to={'/setting'}>
                       <li>Purchase history</li>
                     </Link>
                   </div>
@@ -85,14 +85,17 @@ const Navbar = () => {
                   <div className=" flex justify-items-center justify-evenly border-t-2 border-b-2 border-secondary">
                     <li>Language</li>
                     <p className="text-secondary">English</p>
-                    <AiOutlineGlobal className="mt-2 text-secondary" size={17} />
+                    <AiOutlineGlobal
+                      className="mt-2 text-secondary"
+                      size={17}
+                    />
                   </div>
 
                   <div className="px-3">
-                    <Link>
+                    <Link to={'/setting'}>
                       <li>Help and Support</li>
                     </Link>
-                    <Link>
+                    <Link to={'/setting'}>
                       <li>Log out</li>
                     </Link>
                   </div>
@@ -105,6 +108,5 @@ const Navbar = () => {
     </>
   );
 };
-
 
 export default Navbar;
