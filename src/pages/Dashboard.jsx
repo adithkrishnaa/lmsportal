@@ -1,10 +1,14 @@
 import { IoMdPerson } from "react-icons/io";
-import { LuCalendarDays } from "react-icons/lu";
 import { TbCertificate } from "react-icons/tb";
+
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import Searchbar from "../Searchbar/searchbar";
 import Aicalender from "../components/Aicalender";
+import ai from "../assets/Image/ai.png";
+import data from "../assets/Image/data.png";
+import ml from "../assets/Image/ml.png";
+import { MdAccessTime } from "react-icons/md";
 
 const Dashboard = () => {
   return (
@@ -29,26 +33,31 @@ const Dashboard = () => {
         {/* Courses Section */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-6">
           {/* Course 1 */}
-          <div className="drop-shadow-2xl">
-            <div className="bg-[url('/src/assets/Image/dash1.png')] bg-cover bg-center h-28 w-full flex flex-col rounded-t-3xl relative justify-center items-center text-white">
-              <p className="rounded-full text-sm top-6 left-2 text-left absolute bg-red-600 ml-2 p-2">
+          <div className="drop-shadow-2xl bg-black rounded-3xl px">
+            <div className="  bg-center h-28 w-full flex flex-col rounded-t-3xl relative justify-center items-center text-white">
+              <p className="rounded-full text-xs top-6 right-40 text-left absolute bg-custom-gradient ml-2 p-2 px-4">
+                Popular
+              </p>
+              <p className="rounded-full text-xs top-6 right-5 text-left absolute bg-red-600 ml-2 p-2">
                 Top Recommended
               </p>
-              <h2 className="text-2xl xl:text-4xl font-inter absolute ml-2 bottom-0 left-3">
-                Generative AI Course
+
+              <h2 className="text-2xl flex xl:text-4xl font-semibold font-inter absolute ml-2 mt- bottom-0  left-3">
+                <img className="pr-4 -mt-2" src={ai} alt="logo" />
+                Generative AI
               </h2>
             </div>
-            <div className="bg-black text-white rounded-b-3xl px-5 py-4">
+            <div className="bg-black text-white mx-auto rounded-b-3xl px-5 py-4">
               <p className="font-inter text-secondary text-sm">
                 Start your journey today and gain the cutting-edge skills
                 driving innovation across industries worldwide
               </p>
               <div className="py-5 space-y-4">
                 <p className="flex font-light items-center font-inter">
-                  <IoMdPerson size={25} className="mr-2" /> Author Name
+                  <IoMdPerson size={25} className="mr-2" /> Priya Chawla
                 </p>
                 <p className="flex font-light items-center font-inter">
-                  <LuCalendarDays size={25} className="mr-2" /> Course Duration
+                  <MdAccessTime size={25} className="mr-2" /> 3 hours
                 </p>
                 <p className="flex font-light items-center font-inter">
                   <TbCertificate size={25} className="mr-2" /> Certification
@@ -56,10 +65,10 @@ const Dashboard = () => {
               </div>
 
               <div className="flex text-sm justify-evenly gap-4 py-5">
-                <button className="font-inter border-[1px] p-2 rounded-lg w-full">
+                <button className="font-inter font-bold text-enr border-enr border-[1px] p-2 rounded-lg w-full">
                   View program
                 </button>
-                <button className="font-inter font-medium text-black bg-white border-[1px] p-2 rounded-lg w-full">
+                <button className="font-inter font-bold text-black bg-enr  p-2 rounded-lg w-full">
                   Enroll Now
                 </button>
               </div>
@@ -67,26 +76,31 @@ const Dashboard = () => {
           </div>
 
           {/* Course 2 */}
-          <div className="drop-shadow-2xl">
-            <div className="bg-[url('/src/assets/Image/dash1.png')] bg-cover bg-center h-28 w-full flex flex-col rounded-t-3xl relative justify-center items-center text-white">
-              <p className="rounded-full text-sm top-6 left-2 text-left absolute bg-red-600 ml-2 p-2">
+          <div className="drop-shadow-2xl bg-black rounded-3xl px">
+            <div className="  bg-center h-28 w-full flex flex-col rounded-t-3xl relative justify-center items-center text-white">
+              <p className="rounded-full text-xs top-6 right-40 text-left absolute bg-custom-gradient ml-2 p-2 px-4">
+                Popular
+              </p>
+              <p className="rounded-full text-xs top-6 right-5 text-left absolute bg-red-600 ml-2 p-2">
                 Top Recommended
               </p>
-              <h2 className="text-2xl xl:text-4xl font-inter absolute ml-2 bottom-0 left-3">
-                Data Science Course
+
+              <h2 className="text-2xl flex xl:text-4xl font-semibold font-inter absolute ml-2 mt- bottom-0  left-3">
+                <img className="pr-4 -mt-2" src={data} alt="logo" />
+                Data Science
               </h2>
             </div>
-            <div className="bg-black text-white rounded-b-3xl px-5 py-4">
+            <div className="bg-black text-white mx-auto rounded-b-3xl px-5 py-4">
               <p className="font-inter text-secondary text-sm">
                 Start your journey today and gain the cutting-edge skills
                 driving innovation across industries worldwide
               </p>
               <div className="py-5 space-y-4">
                 <p className="flex font-light items-center font-inter">
-                  <IoMdPerson size={25} className="mr-2" /> Author Name
+                  <IoMdPerson size={25} className="mr-2" /> Priya Chawla
                 </p>
                 <p className="flex font-light items-center font-inter">
-                  <LuCalendarDays size={25} className="mr-2" /> Course Duration
+                  <MdAccessTime size={25} className="mr-2" /> 3 hours
                 </p>
                 <p className="flex font-light items-center font-inter">
                   <TbCertificate size={25} className="mr-2" /> Certification
@@ -94,10 +108,10 @@ const Dashboard = () => {
               </div>
 
               <div className="flex text-sm justify-evenly gap-4 py-5">
-                <button className="font-inter border-[1px] p-2 rounded-lg w-full">
+                <button className="font-inter font-bold text-enr border-enr border-[1px] p-2 rounded-lg w-full">
                   View program
                 </button>
-                <button className="font-inter font-medium text-black bg-white border-[1px] p-2 rounded-lg w-full">
+                <button className="font-inter font-bold text-black bg-enr  p-2 rounded-lg w-full">
                   Enroll Now
                 </button>
               </div>
@@ -105,26 +119,31 @@ const Dashboard = () => {
           </div>
 
           {/* Course 3 */}
-          <div className="drop-shadow-2xl">
-            <div className="bg-[url('/src/assets/Image/dash1.png')] bg-cover bg-center h-28 w-full flex flex-col rounded-t-3xl relative justify-center items-center text-white">
-              <p className="rounded-full text-sm top-6 left-2 text-left absolute bg-red-600 ml-2 p-2">
+          <div className="drop-shadow-2xl bg-black rounded-3xl px">
+            <div className="  bg-center h-28 w-full flex flex-col rounded-t-3xl relative justify-center items-center text-white">
+              <p className="rounded-full text-xs top-6 right-40 text-left absolute bg-custom-gradient ml-2 p-2 px-4">
+                Popular
+              </p>
+              <p className="rounded-full text-xs top-6 right-5 text-left absolute bg-red-600 ml-2 p-2">
                 Top Recommended
               </p>
-              <h2 className="text-2xl xl:text-4xl font-inter absolute ml-2 bottom-0 left-3">
-                Data Science Course
+
+              <h2 className="text-2xl flex xl:text-4xl font-semibold font-inter absolute ml-2 mt- bottom-0  left-3">
+                <img className="pr-4 -mt-2" src={ml} alt="logo" />
+                Machine Learning
               </h2>
             </div>
-            <div className="bg-black text-white rounded-b-3xl px-5 py-4">
+            <div className="bg-black text-white mx-auto rounded-b-3xl px-5 py-4">
               <p className="font-inter text-secondary text-sm">
                 Start your journey today and gain the cutting-edge skills
                 driving innovation across industries worldwide
               </p>
               <div className="py-5 space-y-4">
                 <p className="flex font-light items-center font-inter">
-                  <IoMdPerson size={25} className="mr-2" /> Author Name
+                  <IoMdPerson size={25} className="mr-2" /> Priya Chawla
                 </p>
                 <p className="flex font-light items-center font-inter">
-                  <LuCalendarDays size={25} className="mr-2" /> Course Duration
+                  <MdAccessTime size={25} className="mr-2" /> 3 hours
                 </p>
                 <p className="flex font-light items-center font-inter">
                   <TbCertificate size={25} className="mr-2" /> Certification
@@ -132,10 +151,10 @@ const Dashboard = () => {
               </div>
 
               <div className="flex text-sm justify-evenly gap-4 py-5">
-                <button className="font-inter border-[1px] p-2 rounded-lg w-full">
+                <button className="font-inter font-bold text-enr border-enr border-[1px] p-2 rounded-lg w-full">
                   View program
                 </button>
-                <button className="font-inter font-medium text-black bg-white border-[1px] p-2 rounded-lg w-full">
+                <button className="font-inter font-bold text-black bg-enr  p-2 rounded-lg w-full">
                   Enroll Now
                 </button>
               </div>
@@ -156,7 +175,6 @@ const Dashboard = () => {
             <p className="border-[1px] text-center w-48 lg:w-80 rounded-full text-black font-inter font-semibold border-secondary">
               0%
             </p>
-        
           </div>
         </div>
       </div>

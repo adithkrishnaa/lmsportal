@@ -187,7 +187,7 @@ const Account = () => {
                     Profile URL
                   </label>
                   <input
-                    type="email"
+                    type="url"
                     className="p-2 pl-12 relative mt-2 bg-four rounded-lg w-96  "
                     placeholder="https://www.app2buildlearning.in/profile/47b28c93-1604-4110-8d07-85f635e8a60f/profile"
                   />

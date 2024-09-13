@@ -1,4 +1,6 @@
 import pic from "../../assets/Image/per.png";
+import git from "../../assets/Image/git_icon.png";
+import Linkedin from "../../assets/Image/Linkedin.png";
 
 const Profile = () => {
   return (
@@ -38,15 +40,19 @@ const Profile = () => {
         {/* Display Info Section */}
         <div>
           <h3 className="font-inter text-base">About</h3>
-          <input
-            type="textarea"
-            className="p-3 pl-12 relative mt-2 bg-four rounded-lg w-full "
-            
+          <textarea
+            className="p-3 pl-5 focus:outline-none relative mt-2 bg-four rounded-lg w-full h-32 resize-none"
+            placeholder="Write something about yourself..."
           />
-
           <div>
-            <div>
-              <li className="3"></li>
+            <h2>Connect with me on:</h2>
+            <div className=" list-none py-5 flex space-x-3">
+              <li>
+                <img className=" size-7" src={git} alt="" />
+              </li>
+              <li>
+                <img className=" size-7" src={Linkedin} alt="" />
+              </li>
             </div>
           </div>
 

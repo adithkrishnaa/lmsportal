@@ -6,14 +6,23 @@ import { IoSettingsOutline } from "react-icons/io5";
 import pic from "../assets/Image/per.png";
 import { useState } from "react";
 import { AiOutlineGlobal } from "react-icons/ai";
+import Help from "../components/Setting/Help"; // Import the Help component
 
 const Navbar = () => {
   const [isDropdownVisible, setIsDropdownVisible] = useState(false); // State for toggling the dropdown
+  const [showHelp, setShowHelp] = useState(false); // State for showing Help component
 
   // Function to toggle dropdown visibility
   const toggleDropdown = () => {
     setIsDropdownVisible(!isDropdownVisible);
   };
+
+  // Function to show Help component
+  const handleHelpClick = () => {
+    setShowHelp(true);
+    setIsDropdownVisible(false); // Close dropdown when Help is clicked
+  };
+
   return (
     <>
       <div className="mt-4 px-4 sm:px-6 md:px-10 lg:px-16 xl:px-20">
@@ -71,13 +80,13 @@ const Navbar = () => {
 
                   {/* Menu Items */}
                   <div className="px-3">
-                    <Link to={'/setting'}>
+                    <Link to={"/setting/account"}>
                       <li>Account setting</li>
                     </Link>
-                    <Link to={'/setting'}>
+                    <Link to={"/setting"}>
                       <li>Payment methods</li>
                     </Link>
-                    <Link to={'/setting'}>
+                    <Link to={"/setting/purchase"}>
                       <li>Purchase history</li>
                     </Link>
                   </div>
@@ -92,10 +101,10 @@ const Navbar = () => {
                   </div>
 
                   <div className="px-3">
-                    <Link to={'/setting'}>
+                    <button onClick={handleHelpClick}>
                       <li>Help and Support</li>
-                    </Link>
-                    <Link to={'/setting'}>
+                    </button>
+                    <Link to={"/setting"}>
                       <li>Log out</li>
                     </Link>
                   </div>
@@ -105,6 +114,9 @@ const Navbar = () => {
           </div>
         </nav>
       </div>
+
+      {/* Conditionally render Help component */}
+      {showHelp && <Help />}
     </>
   );
 };
