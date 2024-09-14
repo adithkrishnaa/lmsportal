@@ -18,7 +18,9 @@ export default {
         secondary: "#767676",
         four: "#F1EFEC",
         top: "#FF0000",
-        enr:"#F6F71E"
+        enr: "#F6F71E",
+        hlight: "#D4D3D1",
+        dhelp: "#A6A6A6",
       },
       backgroundImage: {
         "custom-gradient":
