@@ -36,7 +36,7 @@ const SettingsDropdown = () => {
 
         {/* Dropdown Menu */}
         {isDropdownVisible && (
-          <ul className="absolute z-20 top-5 py-2 right-0 drop-shadow-2xl my-3 font-inter text-sm leading-9 bg-white rounded-3xl w-48">
+          <ul className="absolute  top-5 py-2 right-0 drop-shadow-2xl my-3 font-inter text-sm leading-8 bg-white rounded-3xl w-52 z-50">
             {/* User Info */}
             <div className="flex justify-center items-center w-full p-4 border-b-2 border-secondary">
               <img
@@ -83,13 +83,13 @@ const SettingsDropdown = () => {
 
       {/* Help Modal */}
       {showHelp && (
-        <div className="fixed inset-0 bg-black  bg-opacity-60 z-50 flex justify-center items-center">
-          <div className=" w-1/2  rounded-3xl shadow-lg relative">
+        <div className="fixed min-w-full min-h-screen bg-black bg-opacity-60   flex justify-center items-center">
+          <div className="w-1/2  rounded-3xl shadow-lg relative ">
             {/* Close button */}
             <button
-              className="absolute  top-5 right-5 text-white"
+              className="absolute top-5 right-5 text-white"
               onClick={handleCloseHelp}>
-              <RxCross2  size={30}/>
+              <RxCross2 size={30} />
             </button>
 
             {/* Help content */}

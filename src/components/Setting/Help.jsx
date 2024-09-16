@@ -18,28 +18,28 @@ const Help = () => {
     {
       question: "How do I change or reset my Course Compass account password?",
       answer:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum nemo obcaecati voluptatem suscipit ullam error voluptates doloribus veniam natus voluptatum. A aliquam quibusdam, ullam obcaecati nesciunt ipsum molestias quam iusto.",
+        "Lorem ipsum dolor sit amet consectetur  A aliquam quibusdam, ullam obcaecati nesciunt ipsum molestias quam iusto.",
     },
     {
       question: "How do I change or reset my Course Compass account password?",
       answer:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum nemo obcaecati voluptatem suscipit ullam error voluptates doloribus veniam natus voluptatum. A aliquam quibusdam, ullam obcaecati nesciunt ipsum molestias quam iusto.",
+        "Lorem ipsum dolor sit amet consectetur  A aliquam quibusdam, ullam obcaecati nesciunt ipsum molestias quam iusto.",
     },
     {
       question: "How do I change or reset my Course Compass account password?",
       answer:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum nemo obcaecati voluptatem suscipit ullam error voluptates doloribus veniam natus voluptatum. A aliquam quibusdam, ullam obcaecati nesciunt ipsum molestias quam iusto.",
+        "Lorem ipsum dolor sit amet consectetur  A aliquam quibusdam, ullam obcaecati nesciunt ipsum molestias quam iusto.",
     },
     {
       question: "How do I change or reset my Course Compass account password?",
       answer:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum nemo obcaecati voluptatem suscipit ullam error voluptates doloribus veniam natus voluptatum. A aliquam quibusdam, ullam obcaecati nesciunt ipsum molestias quam iusto.",
+        "Lorem ipsum dolor sit amet consectetur  A aliquam quibusdam, ullam obcaecati nesciunt ipsum molestias quam iusto.",
     },
     // Add more FAQ items here
   ];
   return (
     <>
-      <div className="bg-black py-5 flex font-inter my-auto px-2 rounded-t-3xl text-white">
+      <div className="bg-black py-5 top-9 flex font-inter my-auto px-2 rounded-t-3xl text-white">
         <BiSupport size={30} />
         <h2 className="text-2xl font-bold  ml-5"> Help </h2>
       </div>

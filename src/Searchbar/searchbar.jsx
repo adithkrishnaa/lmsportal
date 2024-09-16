@@ -2,8 +2,8 @@ import { IoIosSearch } from "react-icons/io";
 
 const searchbar = () => {
   return (
-    <div className="sticky">
-      <div className=" absolute right-16 top-5 ">
+    <div className="sticky z-20 ">
+      <div className=" absolute right-16  top-5 ">
         <input
           type="text"
           placeholder="Search"

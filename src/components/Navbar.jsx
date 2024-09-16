@@ -7,15 +7,15 @@ import SettingsDropdown from "../components/Setting/SettingDropdown"; // Import 
 const Navbar = () => {
   return (
     <>
-      <div className="mt-4 px-4 sm:px-6 md:px-10 lg:px-16 xl:px-20">
-        <nav className="flex flex-col md:flex-row justify-between items-center">
+      <div className="mt-4 px-4 sm:px-6  z-50  drop-shadow-2xl shadow-2xl   md:px-10 lg:px-16 xl:px-20">
+        <nav className="flex flex-col  md:flex-row  justify-between items-center">
           {/* Logo Section */}
           <div className="mb-4 md:mb-0">
             <img className="w-32 md:w-44" src={logo} alt="logo" />
           </div>
 
           {/* Navigation Links */}
-          <div className="flex flex-col md:flex-row justify-around text-base lg:text-lg font-inter md:font-medium lg:font-bold space-y-2 md:space-y-0 md:space-x-5">
+          <div className="flex flex-col  md:flex-row justify-around text-base lg:text-lg font-inter md:font-medium lg:font-bold space-y-2 md:space-y-0 md:space-x-5">
             <Link to="/dashboard">
               <li className="list-none">Dashboard</li>
             </Link>
@@ -40,7 +40,7 @@ const Navbar = () => {
             </Link>
 
             {/* Use SettingsDropdown */}
-            <SettingsDropdown />
+            <SettingsDropdown  />
           </div>
         </nav>
       </div>
