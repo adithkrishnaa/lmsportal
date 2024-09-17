@@ -22,7 +22,7 @@ const Navbar = () => {
             <Link to="/my-courses">
               <li className="list-none">My Courses</li>
             </Link>
-            <Link to="/my-certificates">
+            <Link to="/mycertificates">
               <li className="list-none">My Certificates</li>
             </Link>
             <Link to="/assessments">
@@ -35,12 +35,12 @@ const Navbar = () => {
             <Link to="/cart">
               <BsCart3 size={20} />
             </Link>
-            <Link to="/notifications">
+            <Link to="/notification ">
               <IoIosNotificationsOutline size={23} />
             </Link>
 
             {/* Use SettingsDropdown */}
-            <SettingsDropdown  />
+            <SettingsDropdown />
           </div>
         </nav>
       </div>

@@ -21,6 +21,8 @@ export default {
         enr: "#F6F71E",
         hlight: "#D4D3D1",
         dhelp: "#A6A6A6",
+        cer: "#F6F6F6",
+        cerbg:"#A9A9A9",
       },
       backgroundImage: {
         "custom-gradient":

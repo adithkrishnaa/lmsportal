@@ -14,6 +14,8 @@ import Account from "./components/Setting/Account";
 import Subscriptions from "./components/Setting/Subscriptions";
 import Purchase from "./components/Setting/Purchase";
 import CourseOverview from "./pages/CourseOverview";
+import MyCertificates from "./pages/MyCertificates";
+import Notification from "./pages/Notification";
 
 function App() {
   return (
@@ -34,6 +36,7 @@ function App() {
         {/* Dashboard and Course Overview Routes */}
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/courseoverview/:courseId" element={<CourseOverview />} />
+        <Route path="/notification" element={<Notification />} />
 
         {/* Setting Page with Nested Routes */}
         <Route path="/setting" element={<Setting />}>
@@ -42,6 +45,8 @@ function App() {
           <Route path="subscription" element={<Subscriptions />} />
           <Route path="purchase" element={<Purchase />} />
         </Route>
+
+        <Route path="/mycertificates" element={<MyCertificates />} />
       </Routes>
     </Router>
   );

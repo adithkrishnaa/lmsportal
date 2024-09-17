@@ -12,6 +12,7 @@ import Aicalender from "../components/Aicalender";
 import { RxDoubleArrowLeft } from "react-icons/rx";
 import { Link, useParams } from "react-router-dom";
 import Footer from "../components/Footer";
+import { FaStar } from "react-icons/fa6";
 
 const CourseOverview = () => {
   const { courseId } = useParams(); // Get the courseId from the URL
@@ -128,24 +129,40 @@ const CourseOverview = () => {
       </div>
       <div className=" container mx-auto mt-10   grid grid-cols-5 justify-items-center text-center">
         <div className="px-2">
-          <h3>7 Module Series</h3>
-          <p className="text-sm">Earn a career credential that demonstrates</p>
+          <h3 className="text-lg font-inter font-bold underline py-1">
+            7 Module Series
+          </h3>
+          <p className="text-xs font-inter font-normal">
+            Earn a career credential that demonstrates
+          </p>
+        </div>
+        <div className="px-2 ">
+          <h3 className="text-lg flex gap-x-2 my-auto font-inter font-bold underline py-1">
+            4.5
+            <FaStar className="my-auto" />
+          </h3>
         </div>
         <div className="px-2">
-          <h3>7 Module Series</h3>
-          <p className="text-sm">Earn a career credential that demonstrates</p>
+          <h3 className="text-lg font-inter font-bold underline py-1">
+            Intermediate level
+          </h3>
+          <p className="text-xs font-inter font-normal">
+            Recommended experience
+          </p>
         </div>
         <div className="px-2">
-          <h3>7 Module Series</h3>
-          <p className="text-sm">Earn a career credential that demonstrates</p>
+          <h3 className="text-lg font-inter font-bold underline py-1">
+            Flexible schedule
+          </h3>
+          <p className="text-xs font-inter font-normal">
+            6 months, 10 hours a week.Learn at your own pace.
+          </p>
         </div>
         <div className="px-2">
-          <h3>7 Module Series</h3>
-          <p className="text-sm">Earn a career credential that demonstrates</p>
-        </div>
-        <div className="px-2">
-          <h3>7 Module Series</h3>
-          <p className="text-sm">Earn a career credential that demonstrates</p>
+          <h3 className="text-lg font-inter font-bold underline py-1">
+            Earn degree credit
+          </h3>
+          
         </div>
       </div>
       <div className="text-center mt-14">
@@ -154,6 +171,11 @@ const CourseOverview = () => {
           Mastering AI Innovation: A 7-Module Journey through Cutting-Edge
           Generative Technologies
         </p>
+      </div>
+      <div>
+        <div>
+
+        </div>
       </div>
 
       <Footer />
