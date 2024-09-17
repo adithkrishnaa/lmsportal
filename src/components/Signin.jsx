@@ -61,8 +61,10 @@ const Signin = () => {
     }
   };
 
-  const sendToBackend = async (uid, email = "", displayName = "", photoURL = "") => {
+  const sendToBackend = async (uid, email = "",username="" ,displayName = "", photoURL = "") => {
     const token = await auth.currentUser.getIdToken();
+    console.log("token",token);
+    
     setLoader(true);
     try {
       const response = await fetch('https://course-compass-backend-zh7c.onrender.com/api/student/save-user', {
@@ -71,9 +73,10 @@ const Signin = () => {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ uid, email, displayName, photoURL })
+        body: JSON.stringify({ uid, email,username, displayName, photoURL })
       });
-
+      console.log(response);
+      
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
