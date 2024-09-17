@@ -17,6 +17,16 @@ export default {
       colors: {
         secondary: "#767676",
         four: "#F1EFEC",
+        top: "#FF0000",
+        enr: "#F6F71E",
+        hlight: "#D4D3D1",
+        dhelp: "#A6A6A6",
+        cer: "#F6F6F6",
+        cerbg:"#A9A9A9",
+      },
+      backgroundImage: {
+        "custom-gradient":
+          "linear-gradient(82deg, #812BE7 25.11%, #9783AF 135.6%)",
       },
     },
   },
