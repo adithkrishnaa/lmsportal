@@ -46,7 +46,7 @@ const Dashboard = () => {
       <Navbar />
       <Searchbar />
       <Aicalender />
-      <div className="mt-4 px-4 lg:px-10 relative z-[-1] ">
+      <div className="mt-4 px-4 lg:px-10 relative">
         <div className="text-center">
           <h2 className="py-2 font-inter text-4xl lg:text-5xl font-extrabold">
             Explore Our
