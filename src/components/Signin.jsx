@@ -6,11 +6,12 @@ import { RxDoubleArrowLeft } from "react-icons/rx";
 import { auth, googleProvider, githubProvider } from '../firebase';
 import { signInWithPopup, signInWithEmailAndPassword } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
+
 const Signin = () => {
   const navigate= useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
+  const [loader,setLoader]=useState(false);
   const handleSignInWithEmail = async () => {
     try {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
@@ -27,6 +28,7 @@ const Signin = () => {
 
   const handleSignInWithGoogle = async () => {
     try {
+    
       const result = await signInWithPopup(auth, googleProvider);
       const user = result.user;
       const displayName = user.displayName;
@@ -38,11 +40,13 @@ const Signin = () => {
       console.log('User signed in with Google');
     } catch (e) {
       console.error("Error with Google sign-in", e);
+      
     }
   };
 
   const handleSignInWithGithub = async () => {
     try {
+      
       const result = await signInWithPopup(auth, githubProvider);
       const user = result.user;
       const displayName = user.displayName;
@@ -53,12 +57,15 @@ const Signin = () => {
       console.log('User signed in with GitHub');
     } catch (e) {
       console.error("Error with GitHub sign-in", e);
+     
     }
   };
 
-  const sendToBackend = async (uid, email = "", displayName = "", photoURL = "") => {
+  const sendToBackend = async (uid, email = "",username="" ,displayName = "", photoURL = "") => {
     const token = await auth.currentUser.getIdToken();
-
+    console.log("token",token);
+    
+    setLoader(true);
     try {
       const response = await fetch('https://course-compass-backend-zh7c.onrender.com/api/student/save-user', {
         method: 'POST',
@@ -66,9 +73,10 @@ const Signin = () => {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ uid, email, displayName, photoURL })
+        body: JSON.stringify({ uid, email,username, displayName, photoURL })
       });
-
+      console.log(response);
+      
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
@@ -78,6 +86,9 @@ const Signin = () => {
       navigate("/dashboard");
     } catch (e) {
       console.error("Error sending token to backend", e);
+    }
+    finally{
+      setLoader(false);
     }
   };
 
@@ -99,14 +110,14 @@ const Signin = () => {
               className="flex items-center justify-center text-lg rounded-full w-full font-inter bg-[#F1EFEC] p-2"
             >
               <img className="w-10 mr-2" src={google} alt="Google Icon" />
-              Sign up with Google
+              {loader?"Signing in":"Sign up with Google"}
             </button>
             <button
               onClick={handleSignInWithGithub}
               className="flex items-center justify-center text-lg rounded-full w-full font-inter bg-[#F1EFEC] p-2"
             >
               <img className="w-10 mr-2" src={git} alt="GitHub Icon" />
-              Sign up with GitHub
+              {loader?"Signing in":"Sign up with Github"}
             </button>
           </div>
 
@@ -164,7 +175,7 @@ const Signin = () => {
 
             <p className="font-inter text-sm font-semibold">
               Don’t have an account?
-              <span className="text-black underline">Sign up</span>
+              <button onClick={()=>navigate("/register")} className="text-black underline">Sign up</button>
             </p>
           </div>
         </div>

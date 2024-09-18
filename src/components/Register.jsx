@@ -6,14 +6,11 @@ import { MdLockOutline } from "react-icons/md";
 import { useState } from "react";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai"; 
 
-
-
-
-
-
+import { useNavigate } from "react-router-dom";
 
 const Register = () => {
 
+  const navigate=useNavigate();
 
    const [passwordVisible, setPasswordVisible] = useState(false); // State to track visibility
    const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false); // State for confirm password
@@ -145,7 +142,7 @@ const Register = () => {
 
           <p className="font-inter text-sm text-center font-semibold">
             Already have an account?
-            <span className="text-black underline"> Login Here</span>
+            <button onClick={()=>navigate("/signin")} className="text-black underline"> Login Here</button>
           </p>
 
           <p className="font-inter text-center text-sm font-semibold">

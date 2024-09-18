@@ -2,7 +2,7 @@ import { IoIosSearch } from "react-icons/io";
 
 const searchbar = () => {
   return (
-    <div className="sticky z-20 ">
+    <div className="sticky z-[-1] ">
       <div className=" absolute right-16  top-5 ">
         <input
           type="text"
