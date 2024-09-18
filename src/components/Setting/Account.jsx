@@ -54,7 +54,7 @@ const Account = () => {
                 </div>
                 <div className=" w-1/2">
                   <label className="block py-3 relative" htmlFor="">
-                    Titel
+                    Title
                     <input
                       type="text"
                       className="p-3 pl-12 relative mt-2 bg-four rounded-lg  w-full"
