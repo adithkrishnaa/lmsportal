@@ -31,14 +31,14 @@ const SettingsDropdown = () => {
       <div className="relative">
         {/* Settings Icon */}
         <button onClick={toggleDropdown} className="focus:outline-none">
-          <IoSettingsOutline size={20} />
+          <IoSettingsOutline size={23} />
         </button>
 
         {/* Dropdown Menu */}
         {isDropdownVisible && (
-          <ul className="absolute  top-5 py-2 right-0 drop-shadow-2xl my-3 font-inter text-sm leading-8 bg-white rounded-3xl w-52 z-50">
+          <ul className="absolute top-7 py-1 right-0 drop-shadow-2xl my-3 font-inter text-sm leading-8 bg-white rounded-3xl w-52 z-50">
             {/* User Info */}
-            <div className="flex justify-center items-center w-full p-4 border-b-2 border-secondary">
+            <div className="flex justify-center items-center w-full p-4 border-b-[1px] border-secondary">
               <img
                 className="rounded-full size-10 bg-secondary"
                 src={pic}
@@ -63,7 +63,7 @@ const SettingsDropdown = () => {
               </Link>
             </div>
 
-            <div className="flex justify-center border-t-2 border-b-2 border-secondary py-2">
+            <div className="flex  justify-evenly border-y-[1px] border-secondary py-2">
               <li>Language</li>
               <p className="text-secondary ml-2">English</p>
               <AiOutlineGlobal className="mt-1 ml-2 text-secondary" size={17} />
@@ -83,7 +83,7 @@ const SettingsDropdown = () => {
 
       {/* Help Modal */}
       {showHelp && (
-        <div className="fixed min-w-full min-h-screen bg-black bg-opacity-60   flex justify-center items-center">
+        <div className=" absolute w-full min-h-screen bg-black bg-opacity-60  flex justify-center items-center">
           <div className="w-1/2  rounded-3xl shadow-lg relative ">
             {/* Close button */}
             <button

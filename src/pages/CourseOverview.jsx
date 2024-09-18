@@ -39,8 +39,8 @@ const CourseOverview = () => {
         "Start your journey today and gain the cutting-edge skills driving innovation across industries worldwide",
     },
     {
-      id: "machine-learning",
-      name: "Machine Learning",
+      id: "Prompt Engineering",
+      name: "Prompt Engineering",
       image: mlgif,
       icon: ml,
       instructor: "Priya Chawla",

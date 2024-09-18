@@ -16,6 +16,7 @@ import Purchase from "./components/Setting/Purchase";
 import CourseOverview from "./pages/CourseOverview";
 import MyCertificates from "./pages/MyCertificates";
 import Notification from "./pages/Notification";
+import Cart from "./pages/Cart";
 
 function App() {
   return (
@@ -37,6 +38,7 @@ function App() {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/courseoverview/:courseId" element={<CourseOverview />} />
         <Route path="/notification" element={<Notification />} />
+        <Route path="/cart" element={<Cart />} />
 
         {/* Setting Page with Nested Routes */}
         <Route path="/setting" element={<Setting />}>

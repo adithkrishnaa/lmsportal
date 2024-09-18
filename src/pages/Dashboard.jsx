@@ -31,8 +31,8 @@ const Dashboard = () => {
         "Start your journey today and gain the cutting-edge skills driving innovation across industries worldwide",
     },
     {
-      id: "machine-learning",
-      name: "Machine Learning",
+      id: "Prompt Engineering",
+      name: "Prompt Engineering",
       image: ml,
       instructor: "Priya Chawla",
       duration: "3 hours",
@@ -64,8 +64,8 @@ const Dashboard = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 pr-6  lg:grid-cols-3 gap-8 mt-6">
           {courses.map((course) => (
             <Link to={`/courseoverview/${course.id}`} key={course.id}>
-              <div className="drop-shadow-2xl bg-black rounded-3xl px">
-                <div className="bg-center h-28 w-full flex flex-col rounded-t-3xl relative justify-center items-center text-white">
+              <div className=" shadow-2xl border-2 rounded-3xl px">
+                <div className="bg-center h-28 w-full flex flex-col rounded-t-3xl relative justify-center items-center text-black">
                   <p className="rounded-full text-xs top-6 right-40 text-left absolute bg-custom-gradient ml-2 p-2 px-4">
                     Popular
                   </p>
@@ -78,7 +78,7 @@ const Dashboard = () => {
                     {course.name}
                   </h2>
                 </div>
-                <div className="bg-black text-white mx-auto rounded-b-3xl px-5 py-4">
+                <div className=" text-black mx-auto rounded-b-3xl px-5 py-4">
                   <p className="font-inter text-secondary text-sm">
                     {course.description}
                   </p>
@@ -98,13 +98,13 @@ const Dashboard = () => {
 
                   <div className="flex text-sm justify-evenly gap-4 py-5">
                     <Link to={"viewprogram"}>
-                      <button className="font-inter font-bold text-enr px-4  border-enr border-[1px] p-2 rounded-lg w-full">
+                      <button className="font-inter font-bold text-black px-4  border-black border-[1px] p-2 rounded-lg w-full">
                         View program
                       </button>
                     </Link>
 
                     <Link to={"cart"}>
-                      <button className="font-inter font-bold text-black  px-4 bg-enr p-2 rounded-lg w-full">
+                      <button className="font-inter font-bold text-white  px-6 bg-black border-[1px] p-2 rounded-lg w-full">
                         Enroll Now
                       </button>
                     </Link>
@@ -120,18 +120,19 @@ const Dashboard = () => {
             Course Progress Report
           </h2>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 mt-10 justify-center items-center gap-4 px-8">
-            <li className="text-center list-decimal tracking-wide list-outside font-inter font-bold text-2xl lg:text-3xl">
-              No Course Enrolled Yet!
+          <div className="mt-10 justify-center items-center gap-4 px-8">
+            <li className="p-3 px-5 list-decimal list-outside rounded-3xl drop-shadow-2xl grid grid-cols-1 border-4 lg:grid-cols-2  ">
+              <h2 className="text-center list-none tracking-wide list-outside font-inter font-bold text-2xl lg:text-3xl">
+                No Course Enrolled Yet!
+              </h2>
+              <p className="border-[1px] mt-1  mx-auto text-center w-48 lg:w-80 rounded-full text-black font-inter font-semibold border-secondary">
+                0%
+              </p>
             </li>
-            <p className="border-[1px] text-center w-48 lg:w-80 rounded-full text-black font-inter font-semibold border-secondary">
-              0%
-            </p>
           </div>
         </div>
 
-        {/* Progress Report Section */}
-        {/* ... (rest of your code) */}
+      
       </div>
       <Footer />
     </>

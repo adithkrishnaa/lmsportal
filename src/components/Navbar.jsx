@@ -31,12 +31,15 @@ const Navbar = () => {
           </div>
 
           {/* Icon Links */}
-          <div className="flex justify-end space-x-5 mt-4 md:mt-0">
+          <div className="flex justify-end space-x-10 mt-4 md:mt-0">
             <Link to="/cart">
               <BsCart3 size={20} />
             </Link>
-            <Link to="/notification ">
-              <IoIosNotificationsOutline size={23} />
+            <Link className=" relative " to="/notification ">
+              <IoIosNotificationsOutline size={25} />
+              <div className=" absolute -top-2 border-2  w-5 p-1 h-5 rounded-full bg-red-600 -right-1">
+                <p className="-mt-1 ml-[2px] text-white font-inter text-[10px]">1</p>
+              </div>
             </Link>
 
             {/* Use SettingsDropdown */}

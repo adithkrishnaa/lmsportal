@@ -39,7 +39,7 @@ const Help = () => {
   ];
   return (
     <>
-      <div className="bg-black py-5 top-9 flex font-inter my-auto px-2 rounded-t-3xl text-white">
+      <div className="bg-black py-5  flex font-inter  px-2 rounded-t-3xl text-white">
         <BiSupport size={30} />
         <h2 className="text-2xl font-bold  ml-5"> Help </h2>
       </div>
