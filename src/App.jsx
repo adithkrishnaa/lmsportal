@@ -17,6 +17,8 @@ import CourseOverview from "./pages/CourseOverview";
 import MyCertificates from "./pages/MyCertificates";
 import Notification from "./pages/Notification";
 import Cart from "./pages/Cart";
+import MyCourses from "./pages/MyCourses";
+import CoursesModule from "./pages/CoursesModule";
 
 function App() {
   return (
@@ -49,6 +51,9 @@ function App() {
         </Route>
 
         <Route path="/mycertificates" element={<MyCertificates />} />
+
+        <Route path="/mycourses" element={<MyCourses />} />
+        <Route path="/coursesmodule" element={<CoursesModule />} />
       </Routes>
     </Router>
   );

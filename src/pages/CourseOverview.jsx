@@ -53,20 +53,7 @@ const CourseOverview = () => {
   // Find the course that matches the courseId
   const course = courses.find((c) => c.id === courseId);
 
-  if (!course) {
-    return (
-      <>
-        <Navbar />
-        <div className="text-center z-20 mt-20">
-          <h2 className="text-2xl font-bold">Course Not Found</h2>
-          <Link to="/dashboard" className="text-blue-500 underline">
-            Return to Dashboard
-          </Link>
-        </div>
-        <Footer />
-      </>
-    );
-  }
+
 
   return (
     <>

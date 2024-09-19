@@ -166,7 +166,7 @@ const Signin = () => {
               onClick={handleSignInWithEmail}
               className="text-lg rounded-full font-inter w-full p-3 bg-[#034118] text-white"
             >
-              Sign in with Email
+             Next
             </button>
 
             <button className="font-inter text-xl font-semibold text-[#034118] rounded-full border-black border-2 w-full p-2 mt-2">

@@ -6,7 +6,7 @@ const Login = () => {
   
   return (
     <>
-      <div className="max-w-md -mt-2 mx-auto container">
+      <div className="max-w-md -mt-10 mx-auto container">
         <h2 className="text-5xl pb-1 font-bold font-inter text-center">
           Welcome Back!
         </h2>
@@ -34,7 +34,7 @@ const Login = () => {
 
           <div className="flex flex-col items-center mt-2 space-y-2">
             <button className="text-lg rounded-full font-inter w-full p-3 bg-[#034118] text-white">
-              <Link to={'/register'}>Create account</Link>
+              <Link to={"/register"}>Create account</Link>
             </button>
 
             <p className="font-inter text-sm font-semibold">
@@ -45,14 +45,21 @@ const Login = () => {
             </p>
           </div>
 
-          <div className="mt-2 text-start">
+          <div className="mt-2 space-y-2 text-start">
             {/* Sign In Section */}
             <h2 className="font-inter text-xl font-bold">
               Already have an account?
             </h2>
-            <button className="font-inter text-xl font-semibold text-[#034118] rounded-full border-black border-2 w-full p-2 mt-2">
+            <button className="font-inter text-xl font-semibold text-[#034118] rounded-full border-black border-[1px] w-full p-2 mt-2">
               <Link to={"/signin"}>Sign in</Link>
             </button>
+            <p className=" font-inter text-secondary font-medium text-center">
+              Host account?{" "}
+              <span className=" underline text-black font-inter  font-medium">
+                {" "}
+                <Link>Are you a instructor at Course Compass</Link>
+              </span>{" "}
+            </p>
           </div>
         </div>
       </div>
