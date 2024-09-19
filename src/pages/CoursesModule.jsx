@@ -3,10 +3,14 @@ import Aicalender from "../components/Aicalender";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import { FaAngleRight, FaArrowRight } from "react-icons/fa6";
+import module11 from "../assets/Image/module11.png";
 import module1 from "../assets/Image/module1.png";
 import module2 from "../assets/Image/module2.png";
 import module3 from "../assets/Image/module3.png";
 import module4 from "../assets/Image/module4.png";
+import { RxCross2 } from "react-icons/rx";
+import { IoMdPerson } from "react-icons/io";
+import { MdAccessTime } from "react-icons/md";
 
 const CoursesModule = () => {
   // State to track the selected module and modal visibility
@@ -19,8 +23,10 @@ const CoursesModule = () => {
       description:
         "Lorem ipsum dolor sit amet, consectetur. Diam id tortor euismod maecenas quis scelerisque risus in.",
       image: module1,
+      instructor: "Priya Chawla",
+      duration: "3 hours",
       detailedDescription:
-        "This is the detailed description for Module #1. You will learn about various topics including advanced AI technologies...",
+        "Lorem ipsum dolor sit amet consectetur. Habitant scelerisque nunc lacinia augue elit faucibus at. Vulputate risus consequat tempus at faucibus facilisi vitae. Aliquam hendrerit risus eu in. Congue leo quis enim accumsan in metus aliquet cras.Lorem ipsum dolor sit amet consectetur. Habitant scelerisque nunc lacinia augue elit faucibus at. Vulputate risus consequat tempus at faucibus facilisi vitae. Aliquam hendrerit risus eu in. Congue leo quis enim accumsan in metus aliquet cras.Lorem ipsum dolor sit amet consectetur. Habitant scelerisque nunc lacinia augue elit faucibus at. Vulputate risus consequat tempus at faucibus facilisi vitae. Aliquam hendrerit risus eu in. Congue leo quis enim accumsan in metus aliquet cras.",
     },
     {
       id: 2,
@@ -28,8 +34,10 @@ const CoursesModule = () => {
       description:
         "Lorem ipsum dolor sit amet, consectetur. Diam id tortor euismod maecenas quis scelerisque risus in.",
       image: module2,
+      instructor: "Priya Chawla",
+      duration: "3 hours",
       detailedDescription:
-        "In Module #2, you will dive deeper into machine learning concepts, exploring supervised and unsupervised learning techniques...",
+        "Lorem ipsum dolor sit amet consectetur. Habitant scelerisque nunc lacinia augue elit faucibus at. Vulputate risus consequat tempus at faucibus facilisi vitae. Aliquam hendrerit risus eu in. Congue leo quis enim accumsan in metus aliquet cras.Lorem ipsum dolor sit amet consectetur. Habitant scelerisque nunc lacinia augue elit faucibus at. Vulputate risus consequat tempus at faucibus facilisi vitae. Aliquam hendrerit risus eu in. Congue leo quis enim accumsan in metus aliquet cras.Lorem ipsum dolor sit amet consectetur. Habitant scelerisque nunc lacinia augue elit faucibus at. Vulputate risus consequat tempus at faucibus facilisi vitae. Aliquam hendrerit risus eu in. Congue leo quis enim accumsan in metus aliquet cras.",
     },
     {
       id: 3,
@@ -37,8 +45,10 @@ const CoursesModule = () => {
       description:
         "Lorem ipsum dolor sit amet, consectetur. Diam id tortor euismod maecenas quis scelerisque risus in.",
       image: module3,
+      instructor: "Priya Chawla",
+      duration: "3 hours",
       detailedDescription:
-        "Module #3 focuses on data science methodologies, statistical analysis, and how to apply them to real-world problems...",
+        "Lorem ipsum dolor sit amet consectetur. Habitant scelerisque nunc lacinia augue elit faucibus at. Vulputate risus consequat tempus at faucibus facilisi vitae. Aliquam hendrerit risus eu in. Congue leo quis enim accumsan in metus aliquet cras.Lorem ipsum dolor sit amet consectetur. Habitant scelerisque nunc lacinia augue elit faucibus at. Vulputate risus consequat tempus at faucibus facilisi vitae. Aliquam hendrerit risus eu in. Congue leo quis enim accumsan in metus aliquet cras.Lorem ipsum dolor sit amet consectetur. Habitant scelerisque nunc lacinia augue elit faucibus at. Vulputate risus consequat tempus at faucibus facilisi vitae. Aliquam hendrerit risus eu in. Congue leo quis enim accumsan in metus aliquet cras.",
     },
     {
       id: 4,
@@ -46,8 +56,10 @@ const CoursesModule = () => {
       description:
         "Lorem ipsum dolor sit amet, consectetur. Diam id tortor euismod maecenas quis scelerisque risus in.",
       image: module4,
+      instructor: "Priya Chawla",
+      duration: "3 hours",
       detailedDescription:
-        "This module will cover AI ethics and the societal impact of AI technologies, along with their advantages and risks...",
+        "Lorem ipsum dolor sit amet consectetur. Habitant scelerisque nunc lacinia augue elit faucibus at. Vulputate risus consequat tempus at faucibus facilisi vitae. Aliquam hendrerit risus eu in. Congue leo quis enim accumsan in metus aliquet cras.Lorem ipsum dolor sit amet consectetur. Habitant scelerisque nunc lacinia augue elit faucibus at. Vulputate risus consequat tempus at faucibus facilisi vitae. Aliquam hendrerit risus eu in. Congue leo quis enim accumsan in metus aliquet cras.Lorem ipsum dolor sit amet consectetur. Habitant scelerisque nunc lacinia augue elit faucibus at. Vulputate risus consequat tempus at faucibus facilisi vitae. Aliquam hendrerit risus eu in. Congue leo quis enim accumsan in metus aliquet cras.",
     },
     {
       id: 5,
@@ -55,8 +67,10 @@ const CoursesModule = () => {
       description:
         "Lorem ipsum dolor sit amet, consectetur. Diam id tortor euismod maecenas quis scelerisque risus in.",
       image: module3,
+      instructor: "Priya Chawla",
+      duration: "3 hours",
       detailedDescription:
-        "This module will cover AI ethics and the societal impact of AI technologies, along with their advantages and risks...",
+        "Lorem ipsum dolor sit amet consectetur. Habitant scelerisque nunc lacinia augue elit faucibus at. Vulputate risus consequat tempus at faucibus facilisi vitae. Aliquam hendrerit risus eu in. Congue leo quis enim accumsan in metus aliquet cras.Lorem ipsum dolor sit amet consectetur. Habitant scelerisque nunc lacinia augue elit faucibus at. Vulputate risus consequat tempus at faucibus facilisi vitae. Aliquam hendrerit risus eu in. Congue leo quis enim accumsan in metus aliquet cras.Lorem ipsum dolor sit amet consectetur. Habitant scelerisque nunc lacinia augue elit faucibus at. Vulputate risus consequat tempus at faucibus facilisi vitae. Aliquam hendrerit risus eu in. Congue leo quis enim accumsan in metus aliquet cras.",
     },
     {
       id: 6,
@@ -64,8 +78,10 @@ const CoursesModule = () => {
       description:
         "Lorem ipsum dolor sit amet, consectetur. Diam id tortor euismod maecenas quis scelerisque risus in.",
       image: module1,
+      instructor: "Priya Chawla",
+      duration: "3 hours",
       detailedDescription:
-        "This module will cover AI ethics and the societal impact of AI technologies, along with their advantages and risks...",
+        "Lorem ipsum dolor sit amet consectetur. Habitant scelerisque nunc lacinia augue elit faucibus at. Vulputate risus consequat tempus at faucibus facilisi vitae. Aliquam hendrerit risus eu in. Congue leo quis enim accumsan in metus aliquet cras.Lorem ipsum dolor sit amet consectetur. Habitant scelerisque nunc lacinia augue elit faucibus at. Vulputate risus consequat tempus at faucibus facilisi vitae. Aliquam hendrerit risus eu in. Congue leo quis enim accumsan in metus aliquet cras.Lorem ipsum dolor sit amet consectetur. Habitant scelerisque nunc lacinia augue elit faucibus at. Vulputate risus consequat tempus at faucibus facilisi vitae. Aliquam hendrerit risus eu in. Congue leo quis enim accumsan in metus aliquet cras.",
     },
   ];
 
@@ -107,7 +123,7 @@ const CoursesModule = () => {
               onClick={() => openModule(module)}>
               <img
                 src={module.image}
-                className="rounded-t-xl"
+                className="rounded-t-xl "
                 alt={module.name}
               />
               <div className="p-2 space-y-2 px-3 py-4">
@@ -131,32 +147,52 @@ const CoursesModule = () => {
       {/* Modal for selected module */}
       {selectedModule && (
         <div className="fixed inset-0 z-50 flex justify-center items-center bg-black bg-opacity-60">
-          <div className="bg-white w-1/2 p-6 rounded-2xl relative">
+          <div className="bg-white w-2/3 p-6 rounded-2xl relative">
             {/* Close Button */}
             <button
               onClick={closeModule}
-              className="absolute top-4 right-4 text-xl font-bold text-gray-600">
-              &times;
+              className="absolute  top-4 right-4 text-xl font-bold text-black">
+              <RxCross2 size={25} />
             </button>
 
             <img
-              src={selectedModule.image}
-              className="w-full rounded-lg mb-4"
+              src={module11}
+              className="w-full mt-8 rounded-3xl mb-4"
               alt={selectedModule.name}
             />
 
             <h2 className="font-inter text-3xl font-bold mb-4">
               {selectedModule.name}
             </h2>
-            <p className="font-inter text-secondary text-lg mb-4">
+            <p className="font-inter text-xs text-secondary mb-4">
               {selectedModule.detailedDescription}
             </p>
 
-            <button
-              className="flex p-2 bg-black text-white rounded-lg font-inter mx-auto"
-              onClick={closeModule}>
-              Close <FaArrowRight className="my-auto ml-2" />
-            </button>
+            <div className="flex space-x-3">
+              <p className="flex font-light text-sm items-center font-inter">
+                <IoMdPerson size={15} className="mr-2" />{" "}
+                {selectedModule.instructor}
+              </p>
+              <p className="flex font-light text-sm  items-center font-inter">
+                <MdAccessTime size={15} className="mr-2" />{" "}
+                {selectedModule.duration}
+              </p>
+            </div>
+
+            <div className="flex justify-end mt-14 space-x-10 mx-auto">
+              <button className="flex p-2 px-4 bg-black text-white rounded-lg font-inter ">
+                Take Assessment
+              </button>
+              <button className="flex p-2 px-4 bg-black text-white rounded-lg font-inter ">
+                Take Quiz
+              </button>
+              <button className="flex p-2 px-4 bg-black text-white rounded-lg font-inter ">
+                Recap
+              </button>
+              <button className="flex p-2  px-4 bg-black text-white rounded-lg font-inter ">
+                Start Module
+              </button>
+            </div>
           </div>
         </div>
       )}
