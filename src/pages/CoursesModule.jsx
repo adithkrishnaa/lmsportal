@@ -11,6 +11,7 @@ import module4 from "../assets/Image/module4.png";
 import { RxCross2 } from "react-icons/rx";
 import { IoMdPerson } from "react-icons/io";
 import { MdAccessTime } from "react-icons/md";
+import { Link } from "react-router-dom";
 
 const CoursesModule = () => {
   // State to track the selected module and modal visibility
@@ -190,7 +191,7 @@ const CoursesModule = () => {
                 Recap
               </button>
               <button className="flex p-2  px-4 bg-black text-white rounded-lg font-inter ">
-                Start Module
+                <Link to={"/module"}>Start Module</Link>
               </button>
             </div>
           </div>

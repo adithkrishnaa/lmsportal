@@ -10,11 +10,11 @@ import { useNavigate } from 'react-router-dom';
 const Signin = () => {
   const navigate= useNavigate();
   const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  // const [password, setPassword] = useState('');
   const [loader,setLoader]=useState(false);
   const handleSignInWithEmail = async () => {
     try {
-      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      const userCredential = await signInWithEmailAndPassword(auth, email, );
       const user = userCredential.user;
       const uid = user.uid;
       const displayName = user.displayName || email.split('@')[0];
@@ -83,7 +83,7 @@ const Signin = () => {
 
       const result = await response.json();
       console.log(result);
-      navigate("/dashboard");
+      navigate("/signinpassword");
     } catch (e) {
       console.error("Error sending token to backend", e);
     }
@@ -143,7 +143,7 @@ const Signin = () => {
             </label>
           </div>
 
-          <div className="relative mt-1">
+          {/* <div className="relative mt-1">
             <input
               type="password"
               id="password"
@@ -159,7 +159,7 @@ const Signin = () => {
             >
               Password
             </label>
-          </div>
+          </div> */}
 
           <div className="flex flex-col items-center mt-2 space-y-2">
             <button

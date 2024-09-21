@@ -19,6 +19,12 @@ import Notification from "./pages/Notification";
 import Cart from "./pages/Cart";
 import MyCourses from "./pages/MyCourses";
 import CoursesModule from "./pages/CoursesModule";
+import LuctherHomeLayout from "./pages/InstructorPages/LuctherHomepage";
+import LuctherLogin from "./components/Instructor/LuctherLogin";
+import LuctherRegister from "./components/Instructor/LuctherRegister";
+import LuctherDashboard from "./pages/InstructorPages/LuctherDashboard";
+import Module from "./pages/Module";
+import ModuleVideo from "./components/ModuleVideo";
 
 function App() {
   return (
@@ -35,6 +41,19 @@ function App() {
           <Route path="passwordcode" element={<Passwordcode />} />
           <Route path="changepassword" element={<ChangePassword />} />
         </Route>
+
+        <Route path="/luctherhomelayout" element={<LuctherHomeLayout />}>
+          <Route index element={<LuctherLogin />} />
+          <Route path="luctherlogin" element={<LuctherLogin />} />
+          <Route path="signin" element={<Signin />} />
+          <Route path="luctherregister" element={<LuctherRegister />} />
+          <Route path="siginpassword" element={<SigninPassword />} />
+          <Route path="forgotpassword" element={<ForgotPassword />} />
+          <Route path="passwordcode" element={<Passwordcode />} />
+          <Route path="changepassword" element={<ChangePassword />} />
+        </Route>
+
+        <Route path="/luctherdashboard" element={<LuctherDashboard />} />
 
         {/* Dashboard and Course Overview Routes */}
         <Route path="/dashboard" element={<Dashboard />} />
@@ -54,6 +73,12 @@ function App() {
 
         <Route path="/mycourses" element={<MyCourses />} />
         <Route path="/coursesmodule" element={<CoursesModule />} />
+
+        {/*Module  */}
+        <Route path="/module" element={<Module />}>
+          <Route index element={<ModuleVideo />} />
+          <Route path="modulevideo" element={<ModuleVideo />} />
+        </Route>
       </Routes>
     </Router>
   );

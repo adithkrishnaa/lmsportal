@@ -13,6 +13,7 @@ import { RxDoubleArrowLeft } from "react-icons/rx";
 import { Link, useParams } from "react-router-dom";
 import Footer from "../components/Footer";
 import { FaStar } from "react-icons/fa6";
+import { CiCalendarDate } from "react-icons/ci";
 
 const CourseOverview = () => {
   const { courseId } = useParams(); // Get the courseId from the URL
@@ -60,7 +61,7 @@ const CourseOverview = () => {
       <Navbar />
       <Aicalender />
 
-      <div className="drop-shadow-2xl mt-20 z-10  flex relative container mx-auto bg-black rounded-3xl px">
+      <div className="drop-shadow-2xl mt-20 z-10  flex relative container mx-auto text-black rounded-3xl px">
         <div className="-ml-32 absolute">
           <Link to="/dashboard">
             <RxDoubleArrowLeft size={32} />
@@ -68,13 +69,13 @@ const CourseOverview = () => {
         </div>
         <div className="w-3/5">
           <img
-            className="bg-contain rounded-l-3xl w-full h-full"
+            className="bg-cover bg-left rounded-l-3xl w-full h-full"
             src={course.image}
             alt={course.name}
           />
         </div>
-        <div className="w-2/5">
-          <div className="bg-center h-28 w-full flex flex-col rounded-t-3xl relative justify-center items-center text-white">
+        <div className="w-2/5 -ml-4 border-[1px] drop-shadow-2xl rounded-3xl">
+          <div className="bg-center h-28 w-full flex flex-col rounded-t-3xl relative justify-center items-center bg-white text-white">
             <p className="rounded-full text-xs top-6 right-40 text-left absolute bg-custom-gradient ml-2 p-2 px-4">
               Popular
             </p>
@@ -82,12 +83,12 @@ const CourseOverview = () => {
               Top Recommended
             </p>
 
-            <h2 className="text-2xl flex xl:text-4xl font-semibold font-inter absolute bottom-0 left-3">
+            <h2 className="text-2xl text-black flex xl:text-4xl font-semibold font-inter absolute bottom-0 left-3">
               <img className="pr-4 -mt-2" src={course.icon} alt="logo" />
               {course.name}
             </h2>
           </div>
-          <div className="bg-black text-white mx-auto rounded-b-3xl px-5 py-4">
+          <div className="bg-white mx-auto rounded-b-3xl px-5 py-4">
             <p className="font-inter text-secondary text-sm">
               {course.description}
             </p>
@@ -104,10 +105,10 @@ const CourseOverview = () => {
             </div>
 
             <div className="flex text-sm justify-evenly gap-4 py-5">
-              <button className="font-inter font-bold text-enr border-enr border-[1px] p-2 rounded-lg w-full">
+              <button className="font-inter font-bold text-black px-4  border-black border-[1px] p-2 rounded-lg w-full">
                 View program
               </button>
-              <button className="font-inter font-bold text-black bg-enr p-2 rounded-lg w-full">
+              <button className="font-inter font-bold text-white  px-6 bg-black border-[1px] p-2 rounded-lg w-full">
                 Enroll Now
               </button>
             </div>
@@ -149,21 +150,29 @@ const CourseOverview = () => {
           <h3 className="text-lg font-inter font-bold underline py-1">
             Earn degree credit
           </h3>
-          
         </div>
       </div>
       <div className="text-center mt-14">
         <h2 className="font-inter text-4xl font-bold"> Course Overview</h2>
-        <p className=" py-6 font-inter w-2/6 font-medium mx-auto text-center">
-          Mastering AI Innovation: A 7-Module Journey through Cutting-Edge
-          Generative Technologies
+        <p className=" py-6 font-inter w-2/6 px-5 font-medium mx-auto text-center">
+          Mastering AI Innovation: A 2-Month Journey through 5 Cutting-Edge
+          Generative Technology Subcategories
         </p>
-      </div>
-      <div>
-        <div>
-
+        <div className=" relative">
+          <h2 className=" font-inter text-3xl font-bold">
+            Month #1{" "}
+            <span className=" underline ml-2 font-inter text-lg font-bold ">
+              Covers 4 Subcategories
+            </span>
+          </h2>
+          <div className=" mt-10 flex justify-items-center ">
+            <h2>
+              <CiCalendarDate  /> WEEK
+            </h2>
+          </div>
         </div>
       </div>
+      
 
       <Footer />
     </>
