@@ -7,6 +7,7 @@ import { FaCircleHalfStroke, FaCircleCheck } from "react-icons/fa6";
 import { BiLock } from "react-icons/bi";
 import min from "../assets/Image/modmin.png";
 import { Outlet } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const Module = () => {
   const [isMinimized, setIsMinimized] = useState(false); // State to minimize left panel
@@ -39,19 +40,17 @@ const Module = () => {
     <>
       <Navbar />
       <Aicalender />
-      <div className=" container font-inter px-1 mt-10 flex">
+      <div className="w-full px-2 font-inter  mt-10 flex">
         {/* Left Section */}
         <div
-          className={`transition-all duration-300 ${
-            isMinimized ? "w-16" : "w-2/6"
-          }`}
-        >
+          className={`transition-all  duration-300 ${
+            isMinimized ? "w-16" : "w-3/12"
+          }`}>
           <div className="flex justify-between items-center">
             <h2
               className={`text-2xl font-semibold ${
                 isMinimized ? "hidden" : ""
-              }`}
-            >
+              }`}>
               Overview
             </h2>
             <img
@@ -69,61 +68,120 @@ const Module = () => {
               <div className="mt-5">
                 <h3
                   className="text-lg text-white bg-secondary p-3 rounded-xl flex justify-between cursor-pointer"
-                  onClick={toggleMonth1}
-                >
+                  onClick={toggleMonth1}>
                   Month 1 <GoDot className="my-auto " size={22} />
                 </h3>
                 {month1Expanded && (
-                  <ul className="pl-5 py-2 px-5 space-y-4">
+                  <ul className="pl-5 py-2  space-y-4">
                     <li
                       onClick={toggleWeek1}
-                      className="cursor-pointer p-3 border-2 rounded-xl shadow-xl flex justify-between font-medium "
-                    >
+                      className="cursor-pointer p-3 border-2 rounded-xl shadow-xl flex justify-between font-medium ">
                       Week 1 <FaCircleHalfStroke className="inline" />
                     </li>
                     {week1Expanded && (
-                      <ul className="pl-5 pr-5 border-2 py-2 space-y-3 text-base rounded-xl shadow-2xl font-medium">
-                        <li className="w-full flex justify-between">
-                          1.1 Day 1{" "}
-                          <FaCircleCheck className="my-auto" size={20} />
-                        </li>
-                        <li className="flex justify-between">
-                          1.2 Day 2 <GoDot className="my-auto " size={22} />
-                        </li>
-                        <li className="flex justify-between">
-                          1.3 Day 3 <GoDot className="my-auto " size={22} />
-                        </li>
-                        <li className="flex justify-between">
-                          1.4 Day 4 <GoDot className="my-auto " size={22} />
-                        </li>
-                        <li className="flex w-full justify-between">
-                          1.5 Day 5 <BiLock className="my-auto" size={17} />
-                        </li>
+                      <ul className=" border-2 py-2 space-y-3 text-sm rounded-xl shadow-2xl font-medium">
+                        <Link to={"modulevideo"}>
+                          <li className="w-full border-b-2 pl-3 p-2 flex justify-between">
+                            1.1 Day 1{" "}
+                            <span className="-ml-28  text-[10px] text-white bg-quiz p-1 rounded-3xl">
+                              AVAILABLE
+                            </span>
+                            <FaCircleCheck className="my-auto" size={15} />
+                          </li>
+                        </Link>
+                        <Link to={"videolive"}>
+                          <li className="w-full border-b-2 pl-3 p-2 flex justify-between">
+                            1.2 Day 2{" "}
+                            <span className="-ml-28 text-[10px] text-white bg-quiz p-1 rounded-3xl">
+                              AVAILABLE
+                            </span>{" "}
+                            <GoDot className="my-auto " size={22} />
+                          </li>
+                        </Link>
+                        <Link>
+                          <li className="w-full border-b-2 pl-3 p-2 flex justify-between">
+                            1.3 Day 3{" "}
+                            <span className="-ml-28 text-[10px] text-white bg-quiz p-1 rounded-3xl">
+                              AVAILABLE
+                            </span>{" "}
+                            <GoDot className="my-auto " size={22} />
+                          </li>
+                        </Link>
+                        <Link>
+                          {" "}
+                          <li className="w-full border-b-2 pl-3 p-2 flex justify-between">
+                            1.4 Day 4{" "}
+                            <span className="-ml-28 text-[10px] text-white bg-quiz p-1 rounded-3xl">
+                              AVAILABLE
+                            </span>{" "}
+                            <GoDot className="my-auto " size={22} />
+                          </li>
+                        </Link>
+                        <Link>
+                          {" "}
+                          <li className="w-full border-b-2 pl-3 p-2 flex justify-between">
+                            1.5 Day 5
+                            <span className="-ml-24 text-[10px] text-white bg-[#FF8787] p-1 rounded-3xl">
+                              Live on 2nd Oct
+                            </span>{" "}
+                            <BiLock className="my-auto" size={17} />
+                          </li>
+                        </Link>
+                        <Link>
+                          {" "}
+                          <li className="w-full border-b-2 pl-3 p-2 flex justify-between">
+                            1.6 Day 6
+                            <span className="-ml-28 text-[10px] text-white bg-[#FF8787] p-1 rounded-3xl">
+                              Assessment
+                            </span>{" "}
+                            <BiLock className="my-auto" size={17} />
+                          </li>
+                        </Link>
                       </ul>
                     )}
                     <li
                       onClick={toggleWeek2}
-                      className="cursor-pointer p-3 border-2 rounded-xl shadow-xl flex justify-between font-medium "
-                    >
+                      className="cursor-pointer p-3 border-2 rounded-xl shadow-xl flex justify-between font-medium ">
                       Week 2 <BiLock className="my-auto" size={20} />
                     </li>
                     {week2Expanded && (
-                      <ul className="pl-5 pr-5 border-2 py-2 space-y-3 text-base rounded-xl shadow-2xl font-medium">
-                        <li className="flex justify-between">
-                          2.1 Day 1 <BiLock className="my-auto" size={17} />
-                        </li>
-                        <li className="flex justify-between">
-                          2.2 Day 2 <BiLock className="my-auto" size={17} />
-                        </li>
-                        <li className="flex justify-between">
-                          2.3 Day 3 <BiLock className="my-auto" size={17} />
-                        </li>
-                        <li className="flex justify-between">
-                          2.4 Day 4 <BiLock className="my-auto" size={17} />
-                        </li>
-                        <li className="flex justify-between">
-                          2.5 Day 5 <BiLock className="my-auto" size={17} />
-                        </li>
+                      <ul className="  border-2 py-2 space-y-3 text-sm rounded-xl shadow-2xl font-medium">
+                        <Link>
+                          {" "}
+                          <li className=" w-full border-b-2 pl-3 p-2 flex justify-between">
+                            2.1 Day 1
+                            <span className="-ml-28 text-[10px] text-white bg-[#F00] px-2 rounded-3xl">
+                              Live
+                            </span>
+                            <BiLock className="my-auto" size={17} />
+                          </li>
+                        </Link>
+                        <Link>
+                          <li className=" w-full border-b-2 pl-3 p-2 flex justify-between">
+                            2.2 Day 2 <BiLock className="my-auto" size={17} />
+                          </li>
+                        </Link>
+                        <Link>
+                          <li className=" w-full border-b-2 pl-3 p-2 flex justify-between">
+                            2.3 Day 3 <BiLock className="my-auto" size={17} />
+                          </li>
+                        </Link>
+                        <Link>
+                          <li className=" w-full border-b-2 pl-3 p-2 flex justify-between">
+                            2.4 Day 4 <BiLock className="my-auto" size={17} />
+                          </li>
+                        </Link>
+                        <Link>
+                          <li className=" w-full border-b-2 pl-3 p-2 flex justify-between">
+                            2.5 Day 5 <BiLock className="my-auto" size={17} />
+                          </li>
+                        </Link>
+                        <Link>
+                          {" "}
+                          <li className="w-full border-b-2 pl-3 p-2 flex justify-between">
+                            2.5 Day 6 <BiLock className="my-auto" size={17} />
+                          </li>
+                        </Link>
                       </ul>
                     )}
                     <li className="cursor-pointer p-3 border-2 rounded-xl shadow-xl flex justify-between font-medium ">
@@ -143,8 +201,7 @@ const Module = () => {
               <div className="mt-5">
                 <h3
                   className="text-lg text-white bg-secondary p-3 rounded-xl flex justify-between cursor-pointer"
-                  onClick={toggleMonth2}
-                >
+                  onClick={toggleMonth2}>
                   Month 2 <BiLock className="my-auto" size={20} />
                 </h3>
                 {month2Expanded && (
@@ -173,13 +230,10 @@ const Module = () => {
 
         {/* Right Section */}
         <div
-          className={`transition-all duration-300 ${
-            isMinimized ? "w-5/6" : "w-4/6"
-          }`}
-        >
-          
-            <Outlet />
-          
+          className={`transition-all  duration-300 ${
+            isMinimized ? "w-6/6" : "w-9/12"
+          }`}>
+          <Outlet />
         </div>
       </div>
       <Footer />

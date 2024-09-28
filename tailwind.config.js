@@ -24,10 +24,20 @@ export default {
         cer: "#F6F6F6",
         cerbg: "#A9A9A9",
         notbg: "#E3E3E3",
+        modbe: "#A18038",
+        quiz: "#00BF63",
       },
       backgroundImage: {
         "custom-gradient":
           "linear-gradient(82deg, #812BE7 25.11%, #9783AF 135.6%)",
+        "ai-gradient": "linear-gradient(92deg, #10BE00 18.61%, #1976D2 99.36%)",
+      },
+
+      backgroundColor: {
+        "white-rgba": "rgba(255, 255, 255, 0.01)",
+      },
+      backdropBlur: {
+        30: "30px",
       },
     },
   },

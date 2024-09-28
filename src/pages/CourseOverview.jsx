@@ -54,8 +54,6 @@ const CourseOverview = () => {
   // Find the course that matches the courseId
   const course = courses.find((c) => c.id === courseId);
 
-
-
   return (
     <>
       <Navbar />
@@ -165,14 +163,30 @@ const CourseOverview = () => {
               Covers 4 Subcategories
             </span>
           </h2>
-          <div className=" mt-10 flex justify-items-center ">
-            <h2>
-              <CiCalendarDate  /> WEEK
-            </h2>
+          <div className=" absolute left-96 top-28 justify-items-center ">
+            <div className=" space-y-2">
+              <h2 className="text-[#ED0004] text-right relative text-lg font-semibold">
+                <CiCalendarDate
+                  className="my-auto right-14 absolute "
+                  size={30}
+                />{" "}
+                WEEK
+              </h2>
+              <h3 className="font-bold text-right underline">Category 1</h3>
+              <p className="font-semibold ">
+                (Introduction to AI/ML & Generative AI)
+              </p>
+              <ul className="text-left text-base list-disc list-outside pl-6">
+                <li>Fundamentals</li>
+                <li>Generative Adversarial Networks</li>
+                <li>Machine Learning Basics</li>
+                <li>Deep Learning Fundamentals</li>
+                <li>Generative Models</li>
+              </ul>
+            </div>
           </div>
         </div>
       </div>
-      
 
       <Footer />
     </>

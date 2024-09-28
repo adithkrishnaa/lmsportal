@@ -27,21 +27,21 @@ const Register = () => {
 
   return (
     <>
-      <div className="-mt-20   absolute">
+      <div className="-mt-24   absolute">
         <Link to={"/"}>
           <RxDoubleArrowLeft size={22} />
         </Link>
       </div>
-      <div className="max-w-md -mt-11 mx-auto container">
-        <h2 className="text-4xl pb-1 font-bold font-inter text-center">
+      <div className="max-w-md px-4 -mt-14 mx-auto container">
+        <h2 className="text-4xl xl:text-5xl pb-1  font-bold font-inter text-center">
           Register with us now!
         </h2>
-        <p className="text-sm font-medium text-center font-inter ">
+        <p className=" text-xs text-secondary xl:text-sm font-medium text-center font-inter ">
           Welcome to LMS. Please enter details to register.
         </p>
         <form className="py-2">
           <div className="relative w-full">
-            <label className="font-inter">
+            <label className="font-inter text-secondary">
               Name
               <div className="relative mt-1">
                 <IoPersonOutline
@@ -51,13 +51,13 @@ const Register = () => {
                 <input
                   type="text"
                   name="name"
-                  className="w-full p-2 pl-10 border-2 border-black rounded-lg"
+                  className="w-full p-2 pl-10 border-[1px] border-black rounded-lg"
                 />
               </div>
             </label>
           </div>
 
-          <label className="font-inter">
+          <label className="font-inter text-secondary">
             Email
             <div className="relative mt-1">
               <MdOutlineEmail
@@ -67,13 +67,13 @@ const Register = () => {
               <input
                 type="email"
                 name="email"
-                className="w-full p-2 pl-10 border-2 border-black rounded-lg"
+                className="w-full p-2 pl-10 border-[1px] border-black rounded-lg"
                 placeholder="Enter your email"
               />
             </div>
           </label>
 
-          <label className="font-inter mt-2 block">
+          <label className="font-inter text-secondary mt-2 block">
             Enter Password
             <div className="relative mt-1">
               <MdLockOutline
@@ -98,13 +98,13 @@ const Register = () => {
                 type={passwordVisible ? "text" : "password"}
                 name="password"
                 id="password"
-                className="w-full p-2 pl-10 border-2 border-black rounded-lg"
+                className="w-full p-2 pl-10 border-[1px] border-black rounded-lg"
                 placeholder="Enter your password"
               />
             </div>
           </label>
 
-          <label className="font-inter mt-2 block">
+          <label className="font-inter text-secondary mt-2 block">
             Confirm Password
             <div className="relative mt-1">
               <MdLockOutline
@@ -129,20 +129,25 @@ const Register = () => {
                 type={confirmPasswordVisible ? "text" : "password"}
                 name="Confirmpassword"
                 id="confirmpassword"
-                className="w-full p-2 pl-10 border-2 border-black rounded-lg"
+                className="w-full p-2 pl-10 border-[1px] border-black rounded-lg"
                 placeholder="Confirm your password"
               />
             </div>
           </label>
         </form>
-        <div className="py-1">
-          <button className="text-lg rounded-full font-inter w-full p-3 bg-[#034118] text-white">
-            <Link to={'/dashboard'}> Sign In</Link>
+        <div className="mt-4 space-y-2">
+          <button className="text-base xl:text-lg rounded-full font-inter w-full p-2 xl:p-3 bg-[#034118] text-white">
+            <Link to={"/dashboard"}> Sign In</Link>
           </button>
 
           <p className="font-inter text-sm text-center font-semibold">
             Already have an account?
-            <button onClick={()=>navigate("/signin")} className="text-black underline"> Login Here</button>
+            <button
+              onClick={() => navigate("/signin")}
+              className="text-black underline">
+              {" "}
+              Login Here
+            </button>
           </p>
 
           <p className="font-inter text-center text-sm font-semibold">

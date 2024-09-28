@@ -21,7 +21,7 @@ const HomeLayout = () => {
       <div className="md:w-1/2 w-full flex flex-col justify-center items-center relative">
         {/* Logo */}
         <div className="absolute top-10 left-1/2 transform -translate-x-1/2">
-          <img className="w-56" src={logo} alt="CourseCompass Logo" />
+          <img className="w-48 xl:w-56" src={logo} alt="CourseCompass Logo" />
         </div>
 
         {/* Outlet for dynamic form content */}

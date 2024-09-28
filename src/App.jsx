@@ -24,7 +24,10 @@ import LuctherLogin from "./components/Instructor/LuctherLogin";
 import LuctherRegister from "./components/Instructor/LuctherRegister";
 import LuctherDashboard from "./pages/InstructorPages/LuctherDashboard";
 import Module from "./pages/Module";
-import ModuleVideo from "./components/ModuleVideo";
+import ModuleVideo from "./components/Module/ModuleVideo";
+import VideoLive from "./components/Module/ViedoLive";
+import QuizTest from "./components/Module/QuizTest";
+import AssessementTest from "./components/Module/AssessementTest";
 
 function App() {
   return (
@@ -77,7 +80,11 @@ function App() {
         {/*Module  */}
         <Route path="/module" element={<Module />}>
           <Route index element={<ModuleVideo />} />
-          <Route path="modulevideo" element={<ModuleVideo />} />
+          <Route path="modulevideo" element={<ModuleVideo />}>
+            <Route path="quiztest" element={<QuizTest />} />
+            <Route path="assessementtest" element={<AssessementTest />} />
+          </Route>
+          <Route path="videolive" element={<VideoLive />} />
         </Route>
       </Routes>
     </Router>

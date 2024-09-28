@@ -8,7 +8,7 @@ const Navbar = () => {
   return (
     <>
       <div className="relative mt-4 px-4 sm:px-6  z-10  drop-shadow-2xl shadow-2xl   md:px-10 lg:px-16 xl:px-20">
-        <nav className="flex flex-col  md:flex-row  justify-between items-center">
+        <nav className="flex flex-col sticky top-0  md:flex-row  justify-between items-center">
           {/* Logo Section */}
           <div className="mb-4 md:mb-0">
             <img className="w-32 md:w-44" src={logo} alt="logo" />
@@ -38,7 +38,9 @@ const Navbar = () => {
             <Link className=" relative " to="/notification ">
               <IoIosNotificationsOutline size={25} />
               <div className=" absolute -top-2 border-2  w-5 p-1 h-5 rounded-full bg-red-600 -right-1">
-                <p className="-mt-1 ml-[2px] text-white font-inter text-[10px]">1</p>
+                <p className="-mt-1 ml-[2px] text-white font-inter text-[10px]">
+                  1
+                </p>
               </div>
             </Link>
 
