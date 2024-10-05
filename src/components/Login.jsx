@@ -26,7 +26,7 @@ const Login = () => {
               />
               Sign up with Google
             </button>
-            <button className="flex items-center justify-center text-base xl:text-lgrounded-full w-full font-inter bg-[#F1EFEC] p-2">
+            <button className="flex items-center justify-center text-base xl:text-lg rounded-full w-full font-inter bg-[#F1EFEC] p-2">
               <img className="w-8 xl:w-10  mr-2" src={git} alt="GitHub Icon" />
               Sign up with GitHub
             </button>

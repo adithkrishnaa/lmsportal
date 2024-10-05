@@ -6,7 +6,7 @@ import SettingsDropdown from "../../components/Setting/SettingDropdown"; // Impo
 const LuctherNavbar = () => {
   return (
     <>
-      <div className="relative mt-4 px-4 sm:px-6  z-10  drop-shadow-2xl shadow-2xl   md:px-10 lg:px-16 xl:px-20">
+      <div className="relative mt-4 px-4 sm:px-6  z-10  drop-shadow-xl shadow-xl   md:px-10 lg:px-16 xl:px-20">
         <nav className="flex flex-col  md:flex-row  justify-between items-center">
           {/* Logo Section */}
           <div className="mb-4 md:mb-0">

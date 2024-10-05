@@ -33,7 +33,7 @@ const SigninPassword = () => {
             />
             <label
               htmlFor="username"
-              className="absolute text-sm text-black font-medium font-inter duration-300 my-auto transform -translate-y-5 scale-75 top-1  z-10 origin-[0] left-3.5 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-3 peer-focus:scale-75 peer-focus:-translate-y-1">
+              className="absolute text-sm text-black font-medium font-inter duration-300 my-auto transform -translate-y-1 scale-75 top-1  z-10 origin-[0] left-3.5 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-3 peer-focus:scale-75 peer-focus:-translate-y-1">
               Phone,email,or username
             </label>
           </div>
@@ -42,14 +42,14 @@ const SigninPassword = () => {
             {passwordVisible ? (
               <AiOutlineEye
                 onClick={togglePasswordVisibility}
-                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-black cursor-pointer"
-                size={20}
+                className="absolute right-3 top-7 transform -translate-y-1/2 text-black cursor-pointer"
+                size={23}
               />
             ) : (
               <AiOutlineEyeInvisible
                 onClick={togglePasswordVisibility}
-                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-black cursor-pointer"
-                size={20}
+                className="absolute right-3 top-7 transform -translate-y-1/2 text-black cursor-pointer"
+                size={23}
               />
             )}
             <input
@@ -62,7 +62,7 @@ const SigninPassword = () => {
             />
             <label
               htmlFor="username"
-              className="absolute text-sm text-black font-medium font-inter duration-300 my-auto transform -translate-y-5 scale-75 top-1  z-10 origin-[0] left-3.5 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-3 peer-focus:scale-75 peer-focus:-translate-y-1">
+              className="absolute text-sm text-black font-medium font-inter duration-300 my-auto transform -translate-y-1 scale-75 top-1  z-10 origin-[0] left-3.5 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-3 peer-focus:scale-75 peer-focus:-translate-y-1">
               Password
             </label>
             <p className="font-inter text-black font-medium text-sm ml-4">

@@ -120,7 +120,7 @@ const CoursesModule = () => {
           {modules.map((module) => (
             <div
               key={module.id}
-              className="border-2 rounded-xl drop-shadow-xl cursor-pointer"
+              className="border-2  rounded-xl drop-shadow-xl cursor-pointer"
               onClick={() => openModule(module)}>
               <img
                 src={module.image}

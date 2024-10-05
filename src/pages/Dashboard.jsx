@@ -66,10 +66,10 @@ const Dashboard = () => {
             <Link to={`/courseoverview/${course.id}`} key={course.id}>
               <div className=" shadow-2xl border-2 rounded-3xl px">
                 <div className="bg-center h-28 w-full flex flex-col rounded-t-3xl relative justify-center items-center text-black">
-                  <p className="rounded-full text-xs top-6 right-40 text-left absolute bg-custom-gradient ml-2 p-2 px-4">
+                  <p className="rounded-full text-white text-xs top-6 right-40 text-left absolute bg-custom-gradient ml-2 p-2 px-4">
                     Popular
                   </p>
-                  <p className="rounded-full text-xs top-6 right-5 text-left absolute bg-red-600 ml-2 p-2">
+                  <p className="rounded-full text-white  text-xs top-6 right-5 text-left absolute bg-red-600 ml-2 p-2">
                     Top Recommended
                   </p>
 
@@ -103,7 +103,7 @@ const Dashboard = () => {
                       </button>
                     </Link>
 
-                    <Link to={"cart"}>
+                    <Link to={"/cart"}>
                       <button className="font-inter font-bold text-white  px-6 bg-black border-[1px] p-2 rounded-lg w-full">
                         Enroll Now
                       </button>
@@ -131,8 +131,6 @@ const Dashboard = () => {
             </li>
           </div>
         </div>
-
-      
       </div>
       <Footer />
     </>

@@ -28,6 +28,11 @@ import ModuleVideo from "./components/Module/ModuleVideo";
 import VideoLive from "./components/Module/ViedoLive";
 import QuizTest from "./components/Module/QuizTest";
 import AssessementTest from "./components/Module/AssessementTest";
+import Assessments from "./pages/Assessments";
+import QuizReport from "./pages/QuizReport";
+import AssessmentReport from "./pages/AssessmentReport";
+import CalanderPage from "./pages/InstructorPages/CalanderPage";
+import AssessmentMiniproject from "./components/AssessmentMiniproject";
 
 function App() {
   return (
@@ -48,8 +53,8 @@ function App() {
         <Route path="/luctherhomelayout" element={<LuctherHomeLayout />}>
           <Route index element={<LuctherLogin />} />
           <Route path="luctherlogin" element={<LuctherLogin />} />
-          <Route path="signin" element={<Signin />} />
           <Route path="luctherregister" element={<LuctherRegister />} />
+          <Route path="signin" element={<Signin />} />
           <Route path="siginpassword" element={<SigninPassword />} />
           <Route path="forgotpassword" element={<ForgotPassword />} />
           <Route path="passwordcode" element={<Passwordcode />} />
@@ -57,6 +62,7 @@ function App() {
         </Route>
 
         <Route path="/luctherdashboard" element={<LuctherDashboard />} />
+        <Route path="/calanderpage" element={<CalanderPage />} />
 
         {/* Dashboard and Course Overview Routes */}
         <Route path="/dashboard" element={<Dashboard />} />
@@ -73,6 +79,7 @@ function App() {
         </Route>
 
         <Route path="/mycertificates" element={<MyCertificates />} />
+        <Route path="/assessments" element={<Assessments />} />
 
         <Route path="/mycourses" element={<MyCourses />} />
         <Route path="/coursesmodule" element={<CoursesModule />} />
@@ -80,12 +87,15 @@ function App() {
         {/*Module  */}
         <Route path="/module" element={<Module />}>
           <Route index element={<ModuleVideo />} />
-          <Route path="modulevideo" element={<ModuleVideo />}>
-            <Route path="quiztest" element={<QuizTest />} />
-            <Route path="assessementtest" element={<AssessementTest />} />
-          </Route>
+          <Route path="quiztest" element={<QuizTest />} />
+          <Route path="assessementtest" element={<AssessementTest />} />
+          <Route path="modulevideo" element={<ModuleVideo />} />
           <Route path="videolive" element={<VideoLive />} />
         </Route>
+
+        <Route path="/quizreport" element={<QuizReport />} />
+        <Route path="/assessmentreport" element={<AssessmentReport />} />
+        <Route path="/assessmentminiproject" element={<AssessmentMiniproject />} />
       </Routes>
     </Router>
   );

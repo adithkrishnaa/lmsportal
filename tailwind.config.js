@@ -35,9 +35,11 @@ export default {
 
       backgroundColor: {
         "white-rgba": "rgba(255, 255, 255, 0.01)",
+        "blue-rgba": "rgba(255, 255, 255, 0.01)",
       },
       backdropBlur: {
         30: "30px",
+        42: "42.15px",
       },
     },
   },

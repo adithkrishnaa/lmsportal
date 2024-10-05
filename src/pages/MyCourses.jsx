@@ -59,29 +59,29 @@ const MyCourses = () => {
 
         {/* Courses Section */}
         <div className="grid grid-cols-1 md:grid-cols-2  px-20  lg:grid-cols-3 gap-8 mt-6">
-          {courses.map((course, ) => (
+          {courses.map((course) => (
             <div
               key={course.id}
               className={`relative border-2 rounded-3xl shadow-2xl ${
-                !course.purchased ? "opacity-50 cursor-not-allowed" : ""
+                !course.purchased ? "opacity-50  cursor-not-allowed" : ""
               }`}>
               {!course.purchased && (
-                <div className="absolute text-white top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50">
+                <div className="absolute  top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50">
                   <BiSolidLock size={45} />
                 </div>
               )}
               <div
-                className={`bg-center h-20 bg-black text-white w-full flex flex-col rounded-t-3xl relative justify-center items-center`}>
+                className={`bg-center h-20 bg-white  w-full flex flex-col rounded-t-3xl relative justify-center items-center`}>
                 <h2 className="text-2xl flex xl:text-4xl font-semibold font-inter absolute ml-2 bottom-0 left-3">
                   <img className="pr-4 -mt-2" src={course.image} alt="logo" />
                   {course.name}
                 </h2>
               </div>
-              <div className=" bg-black mx-auto  rounded-b-3xl px-5 py-4">
+              <div className=" bg-white mx-auto  rounded-b-3xl px-5 py-4">
                 <p className="font-inter text-secondary text-sm">
                   {course.description}
                 </p>
-                <div className="py-5 text-white space-y-4">
+                <div className="py-5  space-y-4">
                   <p className="flex font-light items-center font-inter">
                     <IoMdPerson size={25} className="mr-2" />{" "}
                     {course.instructor}
@@ -99,13 +99,13 @@ const MyCourses = () => {
                 <div className="text-sm gap-4 py-5">
                   {course.purchased ? (
                     <Link to={"/coursesmodule"}>
-                      <button className="font-inter bg-enr text-black font-bold px-4 border-black border-[1px] p-2 rounded-lg w-full">
+                      <button className="font-inter bg-black text-white font-bold px-4 border-black border-[1px] p-2 rounded-lg w-full">
                         Begin your modules
                       </button>
                     </Link>
                   ) : (
                     <button
-                      className="font-inter cursor-not-allowed bg-enr text-black font-bold px-4 border-black border-[1px] p-2 rounded-lg w-full"
+                      className="font-inter cursor-not-allowed bg-black text-white  font-bold px-4 border-black border-[1px] p-2 rounded-lg w-full"
                       disabled>
                       Begin your modules
                     </button>

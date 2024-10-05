@@ -8,6 +8,10 @@ import { BiLock } from "react-icons/bi";
 import min from "../assets/Image/modmin.png";
 import { Outlet } from "react-router-dom";
 import { Link } from "react-router-dom";
+import QuizTest from "../components/Module/QuizTest";
+import AssessmentTest from "../components/Module/AssessementTest";
+
+
 
 const Module = () => {
   const [isMinimized, setIsMinimized] = useState(false); // State to minimize left panel
@@ -15,6 +19,8 @@ const Module = () => {
   const [month2Expanded, setMonth2Expanded] = useState(false); // State to toggle Month 2 dropdown
   const [week1Expanded, setWeek1Expanded] = useState(false); // State to toggle Week 1 dropdown
   const [week2Expanded, setWeek2Expanded] = useState(false); // State to toggle Week 2 dropdown
+  const [showQuizTest, setShowQuizTest] = useState(false); // State to show quiz test on the right side
+  const [showAssessmentTest, setShowAssessmentTest] = useState(false);
 
   const toggleMinimize = () => {
     setIsMinimized(!isMinimized);
@@ -230,10 +236,18 @@ const Module = () => {
 
         {/* Right Section */}
         <div
-          className={`transition-all  duration-300 ${
-            isMinimized ? "w-6/6" : "w-9/12"
+          className={`transition-all duration-300 ${
+            isMinimized ? "w-11/12" : "w-9/12"
           }`}>
-          <Outlet />
+          {showQuizTest ? (
+            <QuizTest />
+          ) : showAssessmentTest ? (
+            <AssessmentTest />
+          ) : (
+            <Outlet           
+            />
+          )}
+          
         </div>
       </div>
       <Footer />
