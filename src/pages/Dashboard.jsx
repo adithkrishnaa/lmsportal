@@ -1,4 +1,3 @@
-
 import { TbCertificate } from "react-icons/tb";
 import { MdAccessTime } from "react-icons/md";
 import { useState } from "react";
@@ -69,7 +68,7 @@ const Dashboard = () => {
       <Navbar />
       <Searchbar />
       <Aicalender />
-      <div className="mt-4 px-4 lg:px-10 relative">
+      <div className="pt-24 px-4 lg:px-10 relative">
         <div className="text-center">
           <h2 className="py-2 font-inter text-4xl lg:text-5xl font-extrabold">
             Explore Our
@@ -92,7 +91,8 @@ const Dashboard = () => {
                 selectedCourse && selectedCourse.id !== course.id
                   ? "opacity-50 pointer-events-none" // Disable other courses once one is selected
                   : ""
-              }`}>
+              }`}
+            >
               {selectedCourse && selectedCourse.id !== course.id && (
                 <div className="absolute inset-0 bg-black bg-opacity-60 rounded-3xl flex items-center justify-center">
                   <IoMdLock size={40} className="text-white" />
@@ -118,7 +118,11 @@ const Dashboard = () => {
                 </p>
                 <div className="py-5 space-y-4">
                   <p className="flex font-light items-center font-inter">
-                    <img className=" size-7 mr-1" src={profileimg} alt="profileimg" />
+                    <img
+                      className=" size-7 mr-1"
+                      src={profileimg}
+                      alt="profileimg"
+                    />
                     {course.instructor}
                   </p>
                   <p className="flex font-light items-center font-inter">
@@ -140,7 +144,8 @@ const Dashboard = () => {
                   <button
                     onClick={() => handleJoin(course)}
                     className="font-inter font-bold text-white px-6 bg-black border-[1px] p-2 rounded-lg w-40"
-                    disabled={selectedCourse !== null}>
+                    disabled={selectedCourse !== null}
+                  >
                     Join
                   </button>
                 </div>
@@ -188,12 +193,14 @@ const Dashboard = () => {
             <div className=" space-y-3 px-10 ">
               <button
                 className="px-4 py-2 bg-black text-white rounded-lg w-full"
-                onClick={handleConfirmJoin}>
+                onClick={handleConfirmJoin}
+              >
                 Join
               </button>
               <button
                 className="px-4 py-2  rounded-lg w-full"
-                onClick={handleCancelJoin}>
+                onClick={handleCancelJoin}
+              >
                 Cancel
               </button>
             </div>
