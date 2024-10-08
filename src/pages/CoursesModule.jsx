@@ -101,7 +101,7 @@ const CoursesModule = () => {
       <Navbar />
       <Aicalender />
       <div>
-        <div className="mt-16 space-y-4 px-20">
+        <div className="mt-16  z-10 space-y-4 px-20">
           <div className="flex my-auto space-x-2">
             <h2 className="font-inter text-3xl font-bold">Courses </h2>
             <FaAngleRight className="mt-2" size={25} />
