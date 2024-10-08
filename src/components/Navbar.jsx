@@ -7,8 +7,13 @@ import SettingsDropdown from "../components/Setting/SettingDropdown"; // Import 
 const Navbar = () => {
   return (
     <>
+<<<<<<< HEAD
       <div className=" sticky top-1 mt-4 px-4 sm:px-6  z-50  drop-shadow-md shadow-md   md:px-10 lg:px-16 xl:px-20">
         <nav className="flex flex-col  sticky top-0  md:flex-row z-50 justify-between items-center pb-4">
+=======
+      <div className="fixed w-full z-10  px-4 sm:px-6   drop-shadow-md shadow-xl   md:px-10 lg:px-16 xl:px-20 bg-white">
+        <nav className="flex flex-col top-0  md:flex-row  justify-between items-center pb-4 pt-4">
+>>>>>>> updater/main
           {/* Logo Section */}
           <div className="mb-4 md:mb-0">
             <img className="w-32 md:w-44" src={logo} alt="logo" />

@@ -94,7 +94,7 @@ const MyCertificates = () => {
       <Navbar />
       <Aicalender />
       <div>
-        <div className="mt-16 space-y-4 px-20">
+        <div className="pt-24 space-y-4 px-20">
           <div className="flex my-auto space-x-2">
             <h2 className="font-inter text-3xl font-bold">My Certificates </h2>
           </div>
@@ -105,7 +105,8 @@ const MyCertificates = () => {
             <div
               key={module.id}
               className="border-2  rounded-xl drop-shadow-xl cursor-pointer"
-              onClick={() => openModule(module)}>
+              onClick={() => openModule(module)}
+            >
               <img
                 src={module.image}
                 className="rounded-t-xl "
@@ -183,7 +184,8 @@ const MyCertificates = () => {
               </div>
               <button
                 onClick={closeModule}
-                className="flex p-2 px-6 my-auto bg-[#007EFA] text-sm font-normal text-white rounded-lg font-inter">
+                className="flex p-2 px-6 my-auto bg-[#007EFA] text-sm font-normal text-white rounded-lg font-inter"
+              >
                 Close
               </button>
             </div>

@@ -65,7 +65,7 @@ const Assessments = () => {
   };
 
   const handleViewMore = () => {
-     navigate("/assessmentminiproject");
+    navigate("/assessmentminiproject");
   };
 
   return (
@@ -73,7 +73,7 @@ const Assessments = () => {
       <Navbar />
       <Aicalender />
       <div>
-        <div className="px-40 font-inter py-16">
+        <div className="px-40 font-inter py-16 pt-24">
           <div className="space-y-4">
             <h2 className="text-3xl font-bold py-2">Assessments</h2>
             <div className="flex space-x-5">
@@ -83,7 +83,8 @@ const Assessments = () => {
                     ? "bg-blue-500 text-white"
                     : "border-[1px] border-black text-black"
                 }`}
-                onClick={() => setActiveTab("ongoing")}>
+                onClick={() => setActiveTab("ongoing")}
+              >
                 Ongoing
               </button>
               <button
@@ -92,7 +93,8 @@ const Assessments = () => {
                     ? "bg-blue-500 text-white"
                     : "border-[1px] border-black text-black"
                 }`}
-                onClick={() => setActiveTab("completed")}>
+                onClick={() => setActiveTab("completed")}
+              >
                 Completed
               </button>
             </div>
@@ -111,7 +113,8 @@ const Assessments = () => {
                   assessment.status === "locked"
                     ? " fixed z-50 bg-opacity-40 bg-gray-800  cursor-not-allowed   "
                     : "bg-white"
-                }`}>
+                }`}
+              >
                 <div className="space-y-4  ">
                   <h2 className="text-3xl space-x-2 font-bold">
                     {assessment.title}{" "}
@@ -134,7 +137,8 @@ const Assessments = () => {
                           : "cursor-not-allowed"
                       }`}
                       disabled={assessment.status === "locked"}
-                      onClick={() => handleStartTest(assessment)}>
+                      onClick={() => handleStartTest(assessment)}
+                    >
                       {assessment.status === "locked" ? (
                         <>
                           <BiSolidLock className="inline mr-2" /> Locked
@@ -151,7 +155,8 @@ const Assessments = () => {
                           : "bg-gray-400 cursor-not-allowed"
                       }`}
                       disabled={assessment.status === "locked"}
-                      onClick={() => handleViewMore(assessment)}>
+                      onClick={() => handleViewMore(assessment)}
+                    >
                       {assessment.status === "locked"
                         ? "View More"
                         : "View More"}
