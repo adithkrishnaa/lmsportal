@@ -104,11 +104,9 @@ const CourseOverview = () => {
             </div>
 
             <div className="flex text-sm justify-evenly gap-4 py-5">
-              <button className="font-inter font-bold text-black px-4  border-black border-[1px] p-2 rounded-lg w-full">
-                View program
-              </button>
+              
               <button className="font-inter font-bold text-white  px-6 bg-black border-[1px] p-2 rounded-lg w-full">
-                Enroll Now
+                Join
               </button>
             </div>
           </div>

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import Footer from "../../components/Footer";
 import Searchbar from "../../Searchbar/searchbar";
 import live from "../../assets/Image/live.png";
@@ -12,6 +12,7 @@ import ml from "../../assets/Image/ml.png";
 import { MdAccessTime } from "react-icons/md";
 import { BsChevronDoubleLeft, BsChevronDoubleRight } from "react-icons/bs";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const LuctherDashboard = () => {
   const courses = [
@@ -50,6 +51,9 @@ const LuctherDashboard = () => {
   const [showPopup, setShowPopup] = useState(true); // State to manage pop-up visibility
   const [currentIndex, setCurrentIndex] = useState(0); // State for the index of visible courses
   const [showLive, setshowLive] = useState(false);
+  const [selectedClass, setSelectedClass] = useState(null); // To track the selected class
+  const navigate = useNavigate();
+  const modalRef = useRef(null);
 
   // Handler to close the pop-up
   const handleClosePopup = () => {
@@ -63,10 +67,20 @@ const LuctherDashboard = () => {
     }
   };
 
-
   const handelshowLive = () => {
     setshowLive(true);
-  }
+  };
+
+  // Handle checkbox change
+  const handleClassSelect = (className, classTime) => {
+    setSelectedClass({ name: className, time: classTime }); // Set both name and time
+  };
+
+  const handleGoLive = () => {
+    if (selectedClass) {
+      navigate("/livepage"); // Navigate to the live page
+    }
+  };
 
   // Navigate to next course
   const handleNextCourse = () => {
@@ -75,15 +89,27 @@ const LuctherDashboard = () => {
     }
   };
 
+  const handleClickOutside = (event) => {
+    if (modalRef.current && !modalRef.current.contains(event.target)) {
+      setshowLive(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside); // Cleanup on component unmount
+    };
+  }, []);
+
   return (
     <>
       <LuctherNavbar />
       <Searchbar />
       <Aitutore />
-
       {/* Pop-up Modal */}
       {showPopup && (
-        <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center z-50">
+        <div className="fixed top-0 left-0 w-full h-full font-inter bg-black bg-opacity-50 flex justify-center items-center z-50">
           <div className="rounded-3xl shadow-2xl w-7/12  bg-white">
             <div className="bg-[#E6E5E7] p-4 space-x-2 flex rounded-t-3xl">
               <svg
@@ -220,7 +246,6 @@ const LuctherDashboard = () => {
           </div>
         </div>
       )}
-
       {/* Main Dashboard */}
       <div className="mt-10 px-4 lg:px-10 relative">
         <div className="text-center">
@@ -274,25 +299,28 @@ const LuctherDashboard = () => {
           </div>
         </div>
       </div>
-
       {showLive && (
-        <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center z-50">
-          <div className="rounded-3xl shadow-2xl w-2/6  bg-white">
+        <div className="fixed top-0 left-0 w-full font-inter h-full bg-black bg-opacity-50 flex justify-center items-center z-50">
+          <div ref={modalRef} className="rounded-3xl shadow-2xl w-2/6 bg-white">
             <div className="py-5">
-              <h3 className="text-xl text-[#0832FF]  font-medium text-center">
+              <h3 className="text-xl text-[#0832FF] font-medium text-center">
                 Select Class To Go Live
               </h3>
 
-              <div className="px-10 mt-5">
-                <p className=" p-1 ">19 Sept, 11.00 am</p>
-                <div className="px-5">
+              {/* Class 1 */}
+              <div className="px-10 py-5 relative mt-3">
+                <span className="p-1 px-2 text-sm text-white bg-[#FF0000] rounded-3xl">
+                  19 Sept, 11.00 am
+                </span>
+                <div className="px-5 mt-2 flex">
+                  {" "}
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    width="39"
-                    height="49"
+                    width="20"
+                    height="30"
                     viewBox="0 0 39 49"
                     fill="none"
-                    className="w-10 h-12 md:w-14 md:h-16 lg:w-16 lg:h-20">
+                    className="w-10 h-12 md:w-14 md:h-13 lg:w-15 lg:h-16 xl:w-16 xl:h-20">
                     <line
                       x1="1.35447"
                       y1="0.015625"
@@ -317,6 +345,166 @@ const LuctherDashboard = () => {
                     />
                   </svg>
                 </div>
+                <div className="absolute top-20 space-y-1 left-32">
+                  <div className="flex justify-between">
+                    <h3 className="text-base xl:text-lg font-medium">
+                      Generative AI
+                    </h3>
+                    <input
+                      type="checkbox"
+                      name="checkbox"
+                      checked={
+                        selectedClass?.name === "Generative AI" &&
+                        selectedClass?.time === "19 Sept, 11.00 am"
+                      }
+                      className="size-6 ml-24"
+                      onChange={() =>
+                        handleClassSelect("Generative AI", "19 Sept, 11.00 am")
+                      }
+                    />
+                  </div>
+                  <p className="text-sm xl:text-base">Week 1: Day 3</p>
+                  <li className="text-sm xl:text-base">Fundamentals of AI</li>
+                </div>
+              </div>
+
+              {/* Class 2 */}
+              <div className="px-10 py-5 relative mt-3">
+                <span className="p-1 px-2 text-sm text-white bg-[#FF0000] rounded-3xl">
+                  20 Sept, 2.00 pm
+                </span>
+                <div className="px-5 mt-2 flex">
+                  {" "}
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20"
+                    height="30"
+                    viewBox="0 0 39 49"
+                    fill="none"
+                    className="w-10 h-12 md:w-14 md:h-13 lg:w-15 lg:h-16 xl:w-16 xl:h-20">
+                    <line
+                      x1="1.35447"
+                      y1="0.015625"
+                      x2="1.35447"
+                      y2="37.1892"
+                      stroke="black"
+                      strokeWidth="2.25191" // Update 'stroke-width' to 'strokeWidth' for React compatibility
+                    />
+                    <line
+                      x1="0.791016"
+                      y1="36.0537"
+                      x2="21.0582"
+                      y2="36.0537"
+                      stroke="black"
+                      strokeWidth="2.25191" // Update 'stroke-width' to 'strokeWidth' for React compatibility
+                    />
+                    <path
+                      d="M22.1271 28.1213L35.9186 36.5261L22.1271 44.931L22.1271 28.1213Z"
+                      fill="white"
+                      stroke="black"
+                      strokeWidth="2.60747" // Update 'stroke-width' to 'strokeWidth' for React compatibility
+                    />
+                  </svg>
+                </div>
+                <div className="absolute top-20 space-y-1 left-32">
+                  <div className="flex justify-between">
+                    <h3 className="text-base xl:text-lg font-medium">
+                      Generative AI
+                    </h3>
+                    <input
+                      type="checkbox"
+                      name="checkbox"
+                      checked={
+                        selectedClass?.name === "Generative AI" &&
+                        selectedClass?.time === "20 Sept, 2.00 pm"
+                      }
+                      className="size-6 ml-24"
+                      onChange={() =>
+                        handleClassSelect("Generative AI", "20 Sept, 2.00 pm")
+                      }
+                    />
+                  </div>
+                  <p className="text-sm xl:text-base">Week 1: Day 4</p>
+                  <li className="text-sm xl:text-base">Fundamentals of AI</li>
+                </div>
+              </div>
+
+              {/* Class 3 */}
+              <div className="px-10 py-5 mb-2 relative mt-3">
+                <span className="p-1 px-2 text-sm text-white bg-[#FF0000] rounded-3xl">
+                  21 Sept, 12.00 pm
+                </span>
+                <div className="px-5 mt-2 flex">
+                  {" "}
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20"
+                    height="30"
+                    viewBox="0 0 39 49"
+                    fill="none"
+                    className="w-10 h-12 md:w-14 md:h-13 lg:w-15 lg:h-16 xl:w-16 xl:h-20">
+                    <line
+                      x1="1.35447"
+                      y1="0.015625"
+                      x2="1.35447"
+                      y2="37.1892"
+                      stroke="black"
+                      strokeWidth="2.25191" // Update 'stroke-width' to 'strokeWidth' for React compatibility
+                    />
+                    <line
+                      x1="0.791016"
+                      y1="36.0537"
+                      x2="21.0582"
+                      y2="36.0537"
+                      stroke="black"
+                      strokeWidth="2.25191" // Update 'stroke-width' to 'strokeWidth' for React compatibility
+                    />
+                    <path
+                      d="M22.1271 28.1213L35.9186 36.5261L22.1271 44.931L22.1271 28.1213Z"
+                      fill="white"
+                      stroke="black"
+                      strokeWidth="2.60747" // Update 'stroke-width' to 'strokeWidth' for React compatibility
+                    />
+                  </svg>
+                </div>
+                <div className="absolute space-y-1 top-20 left-32">
+                  <div className="flex justify-between">
+                    <h3 className="text-base xl:text-lg font-medium">
+                      Generative AI
+                    </h3>
+                    <input
+                      type="checkbox"
+                      name="checkbox"
+                      checked={
+                        selectedClass?.name === "Generative AI" &&
+                        selectedClass?.time === "21 Sept, 12.00 pm"
+                      }
+                      className="size-6 ml-24"
+                      onChange={() =>
+                        handleClassSelect("Generative AI", "21 Sept, 12.00 pm")
+                      }
+                    />
+                  </div>
+                  <p className="text-sm xl:text-base">Week 1: Day 5</p>
+                  <li className="text-sm xl:text-base">Fundamentals of AI</li>
+                </div>
+              </div>
+
+              <div className="px-14 py-3">
+                <li className="text-sm text-secondary">Select any one</li>
+              </div>
+
+              <div className="flex justify-center">
+                <button
+                  onClick={handleGoLive}
+                  className={`p-2 px-6 text-white rounded-lg font-semibold ${
+                    selectedClass
+                      ? "bg-[#01C064]"
+                      : "bg-opacity-50 bg-[#01C064] cursor-not-allowed"
+                  }`}
+                  disabled={!selectedClass}>
+                  GO LIVE
+                </button>
               </div>
             </div>
           </div>

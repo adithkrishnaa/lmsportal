@@ -66,24 +66,7 @@ const Signin = () => {
             </label>
           </div>
 
-          {/* <div className="relative mt-1">
-            <input
-              type="password"
-              id="password"
-              className="block px-2.5 pb-2.5 pt-5 w-full text-sm text-black bg-transparent border border-black rounded-xl appearance-none focus:outline-none focus:ring-0 focus:border-[#034118] peer"
-              placeholder=" "
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-            <label
-              htmlFor="password"
-              className="absolute text-sm text-black font-medium font-inter duration-300 my-auto transform -translate-y-5 scale-75 top-1 z-10 origin-[0] left-3.5 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-3 peer-focus:scale-75 peer-focus:-translate-y-1"
-            >
-              Password
-            </label>
-          </div> */}
-
+    
           <div className="flex flex-col items-center mt-2 py-3 space-y-5">
             <button
               onClick={() => navigate("/siginpassword")}

@@ -11,7 +11,6 @@ import ChangePassword from "./components/ChangePassword";
 import Setting from "./pages/Setting";
 import Profile from "./components/Setting/Profile";
 import Account from "./components/Setting/Account";
-import Subscriptions from "./components/Setting/Subscriptions";
 import Purchase from "./components/Setting/Purchase";
 import CourseOverview from "./pages/CourseOverview";
 import MyCertificates from "./pages/MyCertificates";
@@ -33,6 +32,7 @@ import QuizReport from "./pages/QuizReport";
 import AssessmentReport from "./pages/AssessmentReport";
 import CalanderPage from "./pages/InstructorPages/CalanderPage";
 import AssessmentMiniproject from "./components/AssessmentMiniproject";
+import Livepage from "./pages/InstructorPages/Livepage";
 
 function App() {
   return (
@@ -63,6 +63,7 @@ function App() {
 
         <Route path="/luctherdashboard" element={<LuctherDashboard />} />
         <Route path="/calanderpage" element={<CalanderPage />} />
+        <Route path="/livepage" element={<Livepage/>} />
 
         {/* Dashboard and Course Overview Routes */}
         <Route path="/dashboard" element={<Dashboard />} />
@@ -74,7 +75,7 @@ function App() {
         <Route path="/setting" element={<Setting />}>
           <Route path="profile" element={<Profile />} />
           <Route path="account" element={<Account />} />
-          <Route path="subscription" element={<Subscriptions />} />
+          
           <Route path="purchase" element={<Purchase />} />
         </Route>
 
@@ -95,7 +96,10 @@ function App() {
 
         <Route path="/quizreport" element={<QuizReport />} />
         <Route path="/assessmentreport" element={<AssessmentReport />} />
-        <Route path="/assessmentminiproject" element={<AssessmentMiniproject />} />
+        <Route
+          path="/assessmentminiproject"
+          element={<AssessmentMiniproject />}
+        />
       </Routes>
     </Router>
   );

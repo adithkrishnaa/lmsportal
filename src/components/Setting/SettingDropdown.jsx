@@ -74,9 +74,7 @@ const Navigate = useNavigate();
               <Link to="/setting/account">
                 <li className="py-2">Account settings</li>
               </Link>
-              <Link to="/setting/payment">
-                <li className="py-2">Payment methods</li>
-              </Link>
+              
               <Link to="/setting/purchase">
                 <li className="py-2">Purchase history</li>
               </Link>

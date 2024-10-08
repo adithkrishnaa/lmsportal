@@ -19,7 +19,7 @@ const Navbar = () => {
             <Link to="/dashboard">
               <li className="list-none">Dashboard</li>
             </Link>
-            <Link to="/mycourses">
+            <Link to="/module">
               <li className="list-none">My Courses</li>
             </Link>
             <Link to="/mycertificates">

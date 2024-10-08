@@ -30,9 +30,6 @@ const Setting = () => {
             <Link to={"account"}>
               <li className="py-6 font-inter">Account settings</li>
             </Link>
-            <Link to={"subscription"}>
-              <li className="py-6 font-inter">Subscriptions</li>
-            </Link>
             <Link to={"purchase"}>
               <li className="py-6 font-inter">Purchase history</li>
             </Link>
