@@ -135,8 +135,10 @@ const LuctherRegister = () => {
           </label>
         </form>
         <div className="py-1">
-          <button className="text-lg rounded-full font-inter w-full p-3 bg-[#034118] text-white">
-            <Link to={"/luctherdashboard"}> Sign In</Link>
+          <button
+            onClick={() => navigate("/luctherdashboard")}
+            className="text-lg rounded-full font-inter w-full p-3 bg-[#034118] text-white">
+             Sign In
           </button>
 
           <p className="font-inter text-sm text-center font-semibold">

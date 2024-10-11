@@ -1,8 +1,11 @@
 import google from "../../assets/Image/Goo_icon.webp";
 import git from "../../assets/Image/git_icon.png";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const LuctherLogin = () => {
+const navigate = useNavigate();
+
   return (
     <>
       <div className="max-w-md -mt-10  mx-auto container">
@@ -32,13 +35,15 @@ const LuctherLogin = () => {
           </div>
 
           <div className="flex flex-col items-center mt-2 space-y-2">
-            <button className="text-lg rounded-full font-inter w-full p-3 bg-[#034118] text-white">
-              <Link to={"luctherregister"}>Create account</Link>
+            <button
+              onClick={() => navigate("/luctherhomelayout/luctherregister")}
+              className="text-lg rounded-full font-inter w-full p-3 bg-[#034118] text-white">
+              Create account
             </button>
 
             <p className="font-inter text-sm font-semibold">
               Need Help?
-              <span className="text-black underline">
+              <span className="text-black  underline">
                 support@coursecompass.com
               </span>
             </p>
@@ -49,8 +54,10 @@ const LuctherLogin = () => {
             <h2 className="font-inter text-xl font-bold">
               Already have an account?
             </h2>
-            <button className="font-inter text-xl font-semibold text-[#034118] rounded-full border-black border-[1px] w-full p-2 mt-2">
-              <Link to={"signin"}>Sign in</Link>
+            <button
+              onClick={() => navigate("/luctherhomelayout/lucthersignin")}
+              className="font-inter text-xl font-semibold text-[#034118] rounded-full border-black border-[1px] w-full p-2 mt-2">
+              Sign in
             </button>
             <p className=" font-inter text-secondary font-medium text-center">
               Student account?{" "}

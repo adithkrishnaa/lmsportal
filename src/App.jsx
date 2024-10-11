@@ -34,6 +34,11 @@ import CalanderPage from "./pages/InstructorPages/CalanderPage";
 import AssessmentMiniproject from "./components/AssessmentMiniproject";
 import Livepage from "./pages/InstructorPages/Livepage";
 import { CourseProvider } from "./Context/CourseContext";
+import LuctherSignin from "./components/Instructor/LuctherSignin";
+import LuctherSigninPassword from "./components/Instructor/LuctherSigninPassword";
+import LuctherForgotPassword from "./components/Instructor/LuctherForgotPassword";
+import LuctherPasswordcode from "./components/Instructor/LuctherPasswordcode";
+import LuctherChangePassword from "./components/Instructor/LuctherChangePassword";
 
 function App() {
   return (
@@ -59,11 +64,11 @@ function App() {
             <Route index element={<LuctherLogin />} />
             <Route path="luctherlogin" element={<LuctherLogin />} />
             <Route path="luctherregister" element={<LuctherRegister />} />
-            <Route path="signin" element={<Signin />} />
-            <Route path="siginpassword" element={<SigninPassword />} />
-            <Route path="forgotpassword" element={<ForgotPassword />} />
-            <Route path="passwordcode" element={<Passwordcode />} />
-            <Route path="changepassword" element={<ChangePassword />} />
+            <Route path="lucthersignin" element={<LuctherSignin />} />
+            <Route path="lucthersiginpassword" element={<LuctherSigninPassword />} />
+            <Route path="luctherforgotpassword" element={<LuctherForgotPassword />} />
+            <Route path="luctherpasswordcode" element={<LuctherPasswordcode />} />
+            <Route path="luctherchangepassword" element={<LuctherChangePassword/>} />
           </Route>
 
           <Route path="/luctherdashboard" element={<LuctherDashboard />} />
