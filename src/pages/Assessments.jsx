@@ -60,7 +60,7 @@ const Assessments = () => {
 
   const handleStartTest = (assessment) => {
     if (assessment.status === "unlocked") {
-      alert(`Starting ${assessment.title}`);
+      navigate("/module/assessementtest");
     }
   };
 

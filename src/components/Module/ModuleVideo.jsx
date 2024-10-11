@@ -6,20 +6,24 @@ import {
 } from "react-icons/io5";
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 import PropTypes from "prop-types"; 
+import { useNavigate } from "react-router-dom";
 
 
 const ModuleVideo = ({ setShowQuizTest, setShowAssessmentTest }) => {
   const [showQuiz, setShowQuiz] = useState(false);
   const [showAssessment, setShowAssessment] = useState(false);
+  const navigate = useNavigate();
 
   // Use navigate to programmatically redirect to quiztest
 
   const handleQuizClick = () => {
     setShowQuiz(true);
+    navigate("/module/assessementtest");
   };
 
   const handleAssessmentClick = () => {
     setShowAssessment(true);
+    navigate("/module/quiztest");
   };
 
   const handleCloseQuiz = () => {

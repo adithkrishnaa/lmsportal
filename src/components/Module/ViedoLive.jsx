@@ -6,9 +6,9 @@ import {
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 import { RxCross1 } from "react-icons/rx";
 import { LuSendHorizonal } from "react-icons/lu";
-import { IoMdPerson } from "react-icons/io";
+
 import { useState } from "react";
-import logo from "../../assets/Image/logo2.png";
+import person from "../../assets/Image/person.png";
 
 const VideoLive = () => {
   const [isChatVisible, setIsChatVisible] = useState(false); // Controls the visibility of the chat
@@ -97,7 +97,9 @@ const VideoLive = () => {
           {isChatVisible && (
             <div className="border-2 rounded-3xl p-5">
               <div className="flex justify-between">
-                <h2 className="font-inter text-xl font-medium">Live chat</h2>
+                <h2 className="font-inter text-xl font-medium">
+                  Live AI Bot Chat
+                </h2>
                 <RxCross1
                   className="my-auto cursor-pointer"
                   size={18}
@@ -107,28 +109,13 @@ const VideoLive = () => {
 
               {/* Chat messages */}
               <div className="h-96 xl:h-[500px] z-5 overflow-y-auto  flex flex-col-reverse">
-                {/* Fixed community guidelines */}
-                <div className="bg-[#7CD042] rounded-xl p-2 ">
-                  <div className="flex items-center">
-                    <img
-                      className="w-10 h-7 ml-2 bg-white"
-                      src={logo}
-                      alt="logo"
-                    />
-                    <p className="ml-2 text-xs font-inter font-medium">
-                      Welcome to live chat! Remember to be polite and respectful
-                      to each other and abide by our community guidelines.
-                    </p>
-                  </div>
-                </div>
-
                 {/* Messages */}
                 {messages.map((msg, index) => (
                   <div key={index} className="flex items-center space-x-3 mb-3">
-                    <IoMdPerson className="my-auto ml-2 rounded-3xl" size={18} />
-                    <div className="flex">
-                      <p className="font-medium mr-3">{msg.name}</p>
-                      <p className="text-sm">{msg.message}</p>
+                    <img className="size-5" src={person} alt="image" />
+                    <div className="flex my-auto">
+                      <p className="font-medium my-auto mr-3">{msg.name}</p>
+                      <p className="text-sm my-auto">{msg.message}</p>
                     </div>
                   </div>
                 ))}
@@ -137,7 +124,7 @@ const VideoLive = () => {
 
               {/* Input box and send button */}
               <div className="flex mt-3">
-                <IoMdPerson size={25} className="mr-2 rounded-3xl  my-auto" />
+                <img className="size-7" src={person} alt="image" />
                 <input
                   type="text"
                   placeholder="Chat..."

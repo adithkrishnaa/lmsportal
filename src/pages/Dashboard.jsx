@@ -11,8 +11,11 @@ import data from "../assets/Image/data.png";
 import ml from "../assets/Image/ml.png";
 import { IoMdLock } from "react-icons/io";
 import profileimg from "../assets/Image/person2.png";
+import { useCourse } from "../Context/CourseContext";
 
 const Dashboard = () => {
+  const { joinedCourse, joinCourse } = useCourse(); // Get the joined course and function to join a course
+
   const courses = [
     {
       id: "generative-ai",
@@ -33,7 +36,7 @@ const Dashboard = () => {
         "Start your journey today and gain the cutting-edge skills driving innovation across industries worldwide",
     },
     {
-      id: "Prompt Engineering",
+      id: "prompt-engineering",
       name: "Prompt Engineering",
       image: ml,
       instructor: "Priya Chawla",
@@ -52,8 +55,11 @@ const Dashboard = () => {
     setShowJoinPopup(true); // Show the confirmation pop-up
   };
 
-  // Confirm joining the course
+  // Confirm joining the course and update the context
   const handleConfirmJoin = () => {
+    if (selectedCourse) {
+      joinCourse(selectedCourse); // Set the selected course in context
+    }
     setShowJoinPopup(false);
   };
 
@@ -68,11 +74,7 @@ const Dashboard = () => {
       <Navbar />
       <Searchbar />
       <Aicalender />
-<<<<<<< HEAD
-      <div className="mt-4 px-4 -z-10 lg:px-10 relative">
-=======
       <div className="pt-24 px-4 lg:px-10 relative">
->>>>>>> updater/main
         <div className="text-center">
           <h2 className="py-2 font-inter text-4xl lg:text-5xl font-extrabold">
             Explore Our
@@ -92,12 +94,11 @@ const Dashboard = () => {
             <div
               key={course.id}
               className={`relative shadow-2xl border-2 rounded-3xl ${
-                selectedCourse && selectedCourse.id !== course.id
-                  ? "opacity-50 pointer-events-none" // Disable other courses once one is selected
+                joinedCourse && joinedCourse.id !== course.id
+                  ? "opacity-50 pointer-events-none" // Disable other courses once one is joined
                   : ""
-              }`}
-            >
-              {selectedCourse && selectedCourse.id !== course.id && (
+              }`}>
+              {joinedCourse && joinedCourse.id !== course.id && (
                 <div className="absolute inset-0 bg-black bg-opacity-60 rounded-3xl flex items-center justify-center">
                   <IoMdLock size={40} className="text-white" />
                 </div>
@@ -123,7 +124,7 @@ const Dashboard = () => {
                 <div className="py-5 space-y-4">
                   <p className="flex font-light items-center font-inter">
                     <img
-                      className=" size-7 mr-1"
+                      className="size-7 mr-1"
                       src={profileimg}
                       alt="profileimg"
                     />
@@ -148,7 +149,7 @@ const Dashboard = () => {
                   <button
                     onClick={() => handleJoin(course)}
                     className="font-inter font-bold text-white px-6 bg-black border-[1px] p-2 rounded-lg w-40"
-                    disabled={selectedCourse !== null}
+                    disabled={joinedCourse !== null} // Disable if a course is already joined
                   >
                     Join
                   </button>
@@ -167,10 +168,10 @@ const Dashboard = () => {
           <div className="mt-10 justify-center items-center gap-4 px-8">
             <li className="p-3 px-5 list-decimal list-outside rounded-3xl drop-shadow-2xl grid grid-cols-1 border-4 lg:grid-cols-2">
               <h2 className="text-center list-none tracking-wide list-outside font-inter font-bold text-2xl lg:text-3xl">
-                No Course Enrolled Yet!
+                {joinedCourse ? joinedCourse.name : "No Course Enrolled Yet!"}
               </h2>
               <p className="border-[1px] mt-1 mx-auto text-center w-48 lg:w-80 rounded-full text-black font-inter font-semibold border-secondary">
-                0%
+                {joinedCourse ? "50%" : "0%"}
               </p>
             </li>
           </div>
@@ -192,19 +193,17 @@ const Dashboard = () => {
             </h2>
 
             <p className="text-center text-lg mb-6">
-              Are you want to continue with this electives ?
+              Are you sure you want to continue with this elective?
             </p>
-            <div className=" space-y-3 px-10 ">
+            <div className="space-y-3 px-10">
               <button
                 className="px-4 py-2 bg-black text-white rounded-lg w-full"
-                onClick={handleConfirmJoin}
-              >
+                onClick={handleConfirmJoin}>
                 Join
               </button>
               <button
-                className="px-4 py-2  rounded-lg w-full"
-                onClick={handleCancelJoin}
-              >
+                className="px-4 py-2 rounded-lg w-full"
+                onClick={handleCancelJoin}>
                 Cancel
               </button>
             </div>

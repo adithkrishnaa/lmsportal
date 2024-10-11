@@ -33,7 +33,7 @@ const Notification = () => {
       <Search />
       <Aicalender />
 
-      <div className="mt-24">
+      <div className="pt-24">
         {/* Back to Previous Section */}
         <div className="relative">
           <div className="left-7 absolute">

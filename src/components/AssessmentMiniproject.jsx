@@ -48,8 +48,8 @@ const AssessmentMiniproject = () => {
     <>
       <Navbar />
       <Aicalender />
-      <div className="pl-20 mt-10 h-screen font-inter relative">
-        <div className="top-1 left-8 absolute">
+      <div className="pl-20 pt-10 h-screen font-inter relative">
+        <div className="top-28 left-8 absolute">
           <Link to={"/assessments"}>
             <RxDoubleArrowLeft size={25} className="my-auto" />
           </Link>
