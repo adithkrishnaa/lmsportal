@@ -15,9 +15,13 @@ import Footer from "../components/Footer";
 import { FaStar } from "react-icons/fa6";
 import certificate from "../assets/Image/certificate.png";
 import bulding from "../assets/Image/bulding.png";
-
 import { useCourse } from "../Context/CourseContext";
 import { useState } from "react";
+import { useEffect } from "react";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const CourseOverview = () => {
   const { courseId } = useParams();
@@ -75,6 +79,43 @@ const CourseOverview = () => {
       joinCourse(course); 
       setShowJoinPopup(false);
     };
+
+
+   useEffect(() => {
+     
+     gsap.fromTo(
+       ".svg-scroll1", 
+       {
+         y: 0, 
+       },
+       {
+         y: 770, 
+         scrollTrigger: {
+           trigger: ".scroll-line1", 
+           start: "top top", 
+           end: "bottom bottom", 
+           scrub: 2, 
+         },
+       }
+     );
+
+     
+     gsap.fromTo(
+       ".svg-scroll", 
+       {
+         y: 0, 
+       },
+       {
+         y: 1000,
+         scrollTrigger: {
+           trigger: ".scroll-line2", 
+           start: "top center", 
+           end: "bottom center", 
+           scrub: true, 
+         },
+       }
+     );
+   }, []);
 
 
 
@@ -192,20 +233,20 @@ const CourseOverview = () => {
               </span>
             </h2>
 
-            <div className=" absolute top-16 left-1/2 translate-x-14">
-              <div>
-                <p className=" p-2 w-2 mt-1 ml-1   z-10 rounded-3xl bg-black"></p>
-                <hr className="border-r-2 border-t-0  ml-[5px] h-[830px] inset-2 w-2 -z-10 border-blue-500" />
-                <p className=" p-2 w-2 -mt-1 ml-1 z-10 rounded-3xl bg-black"></p>
-              </div>
-              <div className=" absolute top-10  -right-8 -translate-x-2 ">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="63"
-                  height="63"
-                  viewBox="0 0 73 73"
-                  fill="none">
-                  <svg>
+            <div className=" relative">
+              <div className="absolute top-1 left-1/2 translate-x-14">
+                <div className="scroll-line1">
+                  <p className="p-2 w-2 mt-1 ml-1 z-10 rounded-3xl bg-black"></p>
+                  <hr className="border-r-2 border-t-0 ml-[5px] h-[830px] inset-2 w-2 -z-10 border-blue-500" />
+                  <p className="p-2 w-2 -mt-1 ml-1 z-10 rounded-3xl bg-black"></p>
+                </div>
+                <div className="absolute top-5 -right-8 -translate-x-2 svg-scroll1">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="63"
+                    height="63"
+                    viewBox="0 0 73 73"
+                    fill="none">
                     <path
                       d="M36.5 -1.36376e-06L22.8125 36.5L36.5 73L50.1875 36.5L36.5 -1.36376e-06ZM36.5 9.18887L41.0157 21.2327L45.5315 33.2766L27.4685 33.2766L36.5 9.18887Z"
                       fill="black"
@@ -215,17 +256,7 @@ const CourseOverview = () => {
                       fill="white"
                     />
                   </svg>
-                  <defs>
-                    <clipPath id="clip0_513_10554">
-                      <rect
-                        width="51.6188"
-                        height="51.6188"
-                        fill="white"
-                        transform="translate(73 36.5) rotate(135)"
-                      />
-                    </clipPath>
-                  </defs>
-                </svg>
+                </div>
               </div>
             </div>
 
@@ -515,21 +546,20 @@ const CourseOverview = () => {
                 experience based on individual needs and progress.
               </p>
             </div>
-
-            <div className=" absolute top- left-1/2 translate-x-14">
-              <div>
-                <p className=" p-2 w-2 mt-1 ml-1   z-10 rounded-3xl bg-black"></p>
-                <hr className="border-r-2 border-t-0  ml-[5px] h-[1050px] inset-2 w-2 -z-10 border-[#F2A700]" />
-                <p className=" p-2 w-2 -mt-1 ml-1 z-10 rounded-3xl bg-black"></p>
-              </div>
-              <div className=" absolute top-80  -right-8 -translate-x-2 ">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="63"
-                  height="63"
-                  viewBox="0 0 73 73"
-                  fill="none">
-                  <svg>
+            <div className=" relative">
+              <div className="absolute t left-1/2 translate-x-14">
+                <div className="scroll-line2">
+                  <p className="p-2 w-2 mt-1 ml-1 z-10 rounded-3xl bg-black"></p>
+                  <hr className="border-r-2 border-t-0 ml-[5px] h-[1050px] inset-2 w-2 -z-10 border-[#F2A700]" />
+                  <p className="p-2 w-2 -mt-1 ml-1 z-10 rounded-3xl bg-black"></p>
+                </div>
+                <div className="absolute  top-5 -right-8 -translate-x-2 svg-scroll">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="63"
+                    height="63"
+                    viewBox="0 0 73 73"
+                    fill="none">
                     <path
                       d="M36.5 -1.36376e-06L22.8125 36.5L36.5 73L50.1875 36.5L36.5 -1.36376e-06ZM36.5 9.18887L41.0157 21.2327L45.5315 33.2766L27.4685 33.2766L36.5 9.18887Z"
                       fill="black"
@@ -539,17 +569,7 @@ const CourseOverview = () => {
                       fill="white"
                     />
                   </svg>
-                  <defs>
-                    <clipPath id="clip0_513_10554">
-                      <rect
-                        width="51.6188"
-                        height="51.6188"
-                        fill="white"
-                        transform="translate(73 36.5) rotate(135)"
-                      />
-                    </clipPath>
-                  </defs>
-                </svg>
+                </div>
               </div>
             </div>
 
