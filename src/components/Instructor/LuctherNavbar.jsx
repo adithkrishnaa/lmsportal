@@ -1,7 +1,7 @@
 import logo from "../../assets/Image/logo1.png";
 import { Link } from "react-router-dom";
 import { IoIosNotificationsOutline } from "react-icons/io";
-import SettingsDropdown from "../../components/Setting/SettingDropdown"; // Import the new SettingsDropdown
+import SettingsDropdown from "../../components/Instructor/Setting/SettingDropdown"; // Import the new SettingsDropdown
 
 const LuctherNavbar = () => {
   return (

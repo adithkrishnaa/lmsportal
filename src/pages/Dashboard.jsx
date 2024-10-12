@@ -3,7 +3,7 @@ import { MdAccessTime } from "react-icons/md";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
+
 import Searchbar from "../Searchbar/searchbar";
 import Aicalender from "../components/Aicalender";
 import ai from "../assets/Image/ai.png";
@@ -12,6 +12,7 @@ import ml from "../assets/Image/ml.png";
 import { IoMdLock } from "react-icons/io";
 import profileimg from "../assets/Image/person2.png";
 import { useCourse } from "../Context/CourseContext";
+import FooterDashboard from "../components/FooterDashboard";
 
 const Dashboard = () => {
   const { joinedCourse, joinCourse } = useCourse(); // Get the joined course and function to join a course
@@ -177,7 +178,7 @@ const Dashboard = () => {
           </div>
         </div>
       </div>
-      <Footer />
+      <FooterDashboard />
 
       {/* Confirmation Popup */}
       {showJoinPopup && selectedCourse && (

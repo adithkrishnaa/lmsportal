@@ -1,21 +1,22 @@
-import Aicalender from "../components/Aicalender";
-import Footer from "../components/Footer";
+
+import Footer from "../../components/Footer";
+import Aitutore from "../../components/Instructor/Aitutore";
 import LuctherNavbar from "../../components/Instructor/LuctherNavbar";
 import Lucthersearchbar from "../../Searchbar/Lucthersearchbar"
 import { RxDoubleArrowLeft } from "react-icons/rx";
 import { Link, Outlet } from "react-router-dom";
 
 
-const Setting = () => {
+const LuctherSetting = () => {
   return (
     <>
       <LuctherNavbar />
       <Lucthersearchbar />
-      <Aicalender />
+      <Aitutore />
       <div className="flex ">
         <div className=" w-2/6 flex mx-auto mt-24 relative">
           <div className="left-20 flex  absolute ">
-            <Link to={"/dashboard"}>
+            <Link to={"/luctherdashboard"}>
               <RxDoubleArrowLeft size={25} />
             </Link>
             <h2 className="text-xl ml-5 container font-inter font-semibold">
@@ -30,9 +31,6 @@ const Setting = () => {
             <Link to={"account"}>
               <li className="py-6 font-inter">Account settings</li>
             </Link>
-            <Link to={"purchase"}>
-              <li className="py-6 font-inter">Purchase history</li>
-            </Link>
           </ul>
         </div>
         <div className="w-3/6  ">
@@ -45,6 +43,6 @@ const Setting = () => {
       <Footer />
     </>
   );
-}
+};
 
-export default Setting
+export default LuctherSetting;

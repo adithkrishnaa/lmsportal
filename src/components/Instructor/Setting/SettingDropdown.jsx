@@ -2,7 +2,7 @@ import { useState } from "react";
 import { AiOutlineGlobal } from "react-icons/ai";
 import { IoSettingsOutline } from "react-icons/io5";
 import { Link, useNavigate } from "react-router-dom";
-import pic from "../../assets/Image/per.png"; // Ensure the correct path to your image
+import pic from "../../../assets/Image/per.png"; // Ensure the correct path to your image
 import Help from "./Help"; // Import the Help component
 import { RxCross2 } from "react-icons/rx";
 
@@ -37,7 +37,7 @@ const Navigate = useNavigate();
   // Handle the confirmation dialog
   const confirmLogout = () => {
     // Add the logic for logging out, e.g., clearing tokens or redirecting to a login page
-    Navigate ("/");
+    Navigate("/luctherhomelayout");
     ; // Close the confirmation dialog
   };
 
@@ -71,12 +71,8 @@ const Navigate = useNavigate();
 
             {/* Menu Items */}
             <div className="px-3">
-              <Link to="/setting/account">
+              <Link to="/lucthersetting/account">
                 <li className="py-2">Account settings</li>
-              </Link>
-              
-              <Link to="/setting/purchase">
-                <li className="py-2">Purchase history</li>
               </Link>
             </div>
 
@@ -116,7 +112,7 @@ const Navigate = useNavigate();
       )}
 
       {/* Logout Confirmation Modal */}
-      {showLogoutConfirm && ( 
+      {showLogoutConfirm && (
         <div className="fixed top-0  right-0 w-full min-h-screen bg-black bg-opacity-60 flex justify-center z-50 items-center">
           <div className="w-1/4 bg-white font-inter p-8 rounded-3xl shadow-lg relative">
             <div className="w-full py-2 mx-auto px-28 ">

@@ -39,6 +39,7 @@ import LuctherSigninPassword from "./components/Instructor/LuctherSigninPassword
 import LuctherForgotPassword from "./components/Instructor/LuctherForgotPassword";
 import LuctherPasswordcode from "./components/Instructor/LuctherPasswordcode";
 import LuctherChangePassword from "./components/Instructor/LuctherChangePassword";
+import LuctherSetting from "./pages/InstructorPages/LuctherSetting";
 
 function App() {
   return (
@@ -65,10 +66,22 @@ function App() {
             <Route path="luctherlogin" element={<LuctherLogin />} />
             <Route path="luctherregister" element={<LuctherRegister />} />
             <Route path="lucthersignin" element={<LuctherSignin />} />
-            <Route path="lucthersiginpassword" element={<LuctherSigninPassword />} />
-            <Route path="luctherforgotpassword" element={<LuctherForgotPassword />} />
-            <Route path="luctherpasswordcode" element={<LuctherPasswordcode />} />
-            <Route path="luctherchangepassword" element={<LuctherChangePassword/>} />
+            <Route
+              path="lucthersiginpassword"
+              element={<LuctherSigninPassword />}
+            />
+            <Route
+              path="luctherforgotpassword"
+              element={<LuctherForgotPassword />}
+            />
+            <Route
+              path="luctherpasswordcode"
+              element={<LuctherPasswordcode />}
+            />
+            <Route
+              path="luctherchangepassword"
+              element={<LuctherChangePassword />}
+            />
           </Route>
 
           <Route path="/luctherdashboard" element={<LuctherDashboard />} />
@@ -86,6 +99,13 @@ function App() {
 
           {/* Setting Page with Nested Routes */}
           <Route path="/setting" element={<Setting />}>
+            <Route path="profile" element={<Profile />} />
+            <Route path="account" element={<Account />} />
+            <Route path="purchase" element={<Purchase />} />
+          </Route>
+
+          {/* Setting Page with Nested Routes */}
+          <Route path="/lucthersetting" element={<LuctherSetting />}>
             <Route path="profile" element={<Profile />} />
             <Route path="account" element={<Account />} />
             <Route path="purchase" element={<Purchase />} />
