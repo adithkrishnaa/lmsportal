@@ -1,11 +1,26 @@
 import google from "../assets/Image/Goo_icon.webp";
 import git from "../assets/Image/git_icon.png";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate} from "react-router-dom";
 import { auth, googleProvider, githubProvider } from "../firebase"; // Import Firebase setup
 import { signInWithPopup } from "firebase/auth";
+import { useEffect } from "react";
 
 const Login = () => {
   const navigate = useNavigate();
+
+  useEffect(() => {
+    // Listen for auth state change
+    const unsubscribe = auth.onAuthStateChanged(user => {
+      if (user) {
+        // If user is logged in, redirect to the desired page
+        navigate('/dashboard');
+      } 
+    });
+
+    // Cleanup the subscription on unmount
+    return () => unsubscribe();
+  }, [navigate]);
+
   // Function to handle Google sign-in
   const handleGoogleSignIn = async () => {
     try {
@@ -50,11 +65,11 @@ const Login = () => {
 
     try {
       const response = await fetch(
-        "https://course-compass-backend-zh7c.onrender.com/api/instructor/save-user",
+        "https://course-compass-backend-zh7c.onrender.com/api/student/save-user",
         {
           method: "POST",
           headers: {
-            Authorization: `Bearer ${token}`,
+            "Authorization": `Bearer ${token}`,
             "Content-Type": "application/json",
           },
           body: JSON.stringify({ uid, email, displayName, photoURL }),
