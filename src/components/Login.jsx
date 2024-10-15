@@ -1,9 +1,77 @@
 import google from "../assets/Image/Goo_icon.webp";
 import git from "../assets/Image/git_icon.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { auth, googleProvider, githubProvider } from "../firebase"; // Import Firebase setup
+import { signInWithPopup } from "firebase/auth";
 
 const Login = () => {
-  
+  const navigate = useNavigate();
+  // Function to handle Google sign-in
+  const handleGoogleSignIn = async () => {
+    try {
+      const result = await signInWithPopup(auth, googleProvider);
+      const user = result.user;
+      const displayName = user.displayName;
+      const email = user.email;
+      const photoURL = user.photoURL;
+      const uid = user.uid;
+      await sendToBackend(uid, email, displayName, photoURL);
+      navigate("/dashboard");
+    } catch (error) {
+      console.error("Google sign-in error:", error);
+      // Handle errors here
+    }
+  };
+
+  // Function to handle GitHub sign-in
+  const handleGitHubSignIn = async () => {
+    try {
+      const result = await signInWithPopup(auth, githubProvider);
+      const user = result.user;
+
+      const displayName = user.displayName;
+      const email = user.email;
+      const photoURL = user.photoURL;
+      const uid = user.uid;
+      await sendToBackend(uid, email, displayName, photoURL);
+      navigate("/dahsboard");
+    } catch (e) {
+      console.error("Error with Github sign-in", e);
+    }
+  };
+
+  const sendToBackend = async (
+    uid,
+    email = "",
+    displayName = "",
+    photoURL = ""
+  ) => {
+    const token = await auth.currentUser.getIdToken(); // Get Firebase auth token
+
+    try {
+      const response = await fetch(
+        "https://course-compass-backend-zh7c.onrender.com/api/instructor/save-user",
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ uid, email, displayName, photoURL }),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.message}`);
+      }
+
+      const result = await response.json();
+      console.log(result);
+    } catch (e) {
+      console.error("Error sending token to backend", e);
+    }
+  };
+
   return (
     <>
       <div className="max-w-md -mt-14 mx-auto container">
@@ -18,7 +86,10 @@ const Login = () => {
             Log in to your account:
           </p>
           <div className="flex flex-col items-center space-y-3 mt-2">
-            <button className="flex items-center justify-center text-base xl:text-lg rounded-full w-full font-inter bg-[#F1EFEC] p-2">
+            <button
+              className="flex items-center justify-center text-base xl:text-lg rounded-full w-full font-inter bg-[#F1EFEC] p-2"
+              onClick={handleGoogleSignIn}
+            >
               <img
                 className=" w-8 xl:w-10 mr-2"
                 src={google}
@@ -26,7 +97,10 @@ const Login = () => {
               />
               Sign up with Google
             </button>
-            <button className="flex items-center justify-center text-base xl:text-lg rounded-full w-full font-inter bg-[#F1EFEC] p-2">
+            <button
+              className="flex items-center justify-center text-base xl:text-lg rounded-full w-full font-inter bg-[#F1EFEC] p-2"
+              onClick={handleGitHubSignIn}
+            >
               <img className="w-8 xl:w-10  mr-2" src={git} alt="GitHub Icon" />
               Sign up with GitHub
             </button>

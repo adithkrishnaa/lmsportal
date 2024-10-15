@@ -15,7 +15,7 @@
     "@schedule-x/theme-default": "^2.2.1",
     "axios": "^1.7.7",
     "date-fns": "^4.1.0",
-    "firebase": "^10.13.1",
+    "firebase": "^10.14.1",
     "gsap": "^3.12.5",
     "intro.js": "^7.2.0",
     "moment": "^2.30.1",
