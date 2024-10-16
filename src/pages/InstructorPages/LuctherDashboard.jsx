@@ -14,6 +14,8 @@ import { BsChevronDoubleLeft, BsChevronDoubleRight } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
+
+
 const LuctherDashboard = () => {
   const courses = [
     {
@@ -34,7 +36,7 @@ const LuctherDashboard = () => {
       instructor: "Priya Chawla",
       duration: "3 hours",
       description:
-        "Start your journey today and gain the cutting-edge skills driving innovation across industries worldwide",
+        "Start your journey today and gain the cutting-edge skills innovation across industries worldwide",
     },
     {
       id: "prompt-engineering",

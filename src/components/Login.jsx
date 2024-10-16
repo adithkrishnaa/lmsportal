@@ -2,7 +2,7 @@ import google from "../assets/Image/Goo_icon.webp";
 import git from "../assets/Image/git_icon.png";
 import { Link, useNavigate} from "react-router-dom";
 import { auth, googleProvider, githubProvider } from "../firebase"; // Import Firebase setup
-import { signInWithPopup } from "firebase/auth";
+import { signInWithPopup, setPersistence, browserLocalPersistence } from "firebase/auth";
 import { useEffect } from "react";
 
 const Login = () => {
@@ -24,6 +24,7 @@ const Login = () => {
   // Function to handle Google sign-in
   const handleGoogleSignIn = async () => {
     try {
+      await setPersistence(auth, browserLocalPersistence);
       const result = await signInWithPopup(auth, googleProvider);
       const user = result.user;
       const displayName = user.displayName;
@@ -41,6 +42,7 @@ const Login = () => {
   // Function to handle GitHub sign-in
   const handleGitHubSignIn = async () => {
     try {
+      await setPersistence(auth, browserLocalPersistence);
       const result = await signInWithPopup(auth, githubProvider);
       const user = result.user;
 
@@ -49,7 +51,7 @@ const Login = () => {
       const photoURL = user.photoURL;
       const uid = user.uid;
       await sendToBackend(uid, email, displayName, photoURL);
-      navigate("/dahsboard");
+      navigate("/dashboard");
     } catch (e) {
       console.error("Error with Github sign-in", e);
     }
