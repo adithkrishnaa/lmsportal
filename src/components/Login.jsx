@@ -19,7 +19,6 @@ const Login = () => {
       navigate("/dashboard");
     } catch (error) {
       console.error("Google sign-in error:", error);
-      // Handle errors here
     }
   };
 
@@ -46,7 +45,7 @@ const Login = () => {
     displayName = "",
     photoURL = ""
   ) => {
-    const token = await auth.currentUser.getIdToken(); // Get Firebase auth token
+    const token = await auth.currentUser.getIdToken(); 
 
     try {
       const response = await fetch(
