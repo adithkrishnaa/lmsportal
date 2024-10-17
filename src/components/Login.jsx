@@ -82,7 +82,6 @@ const Login = () => {
       }
 
       const result = await response.json();
-      console.log(result);
     } catch (e) {
       console.error("Error sending token to backend", e);
     }
