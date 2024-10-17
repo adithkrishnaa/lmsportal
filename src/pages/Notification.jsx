@@ -1,12 +1,13 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
+import React, { useState, useEffect } from "react";
 import Aicalender from "../components/Aicalender";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import Search from "../Searchbar/searchbar";
 import { Link } from "react-router-dom";
-import { IoIosArrowBack, IoIosNotificationsOutline } from "react-icons/io";
-import { IoSettingsOutline, IoPersonSharp } from "react-icons/io5";
+import { IoIosArrowBack } from "react-icons/io";
+import { IoSettingsOutline } from "react-icons/io5";
+import { IoIosNotificationsOutline } from "react-icons/io";
+import { IoPersonSharp } from "react-icons/io5";
 import { BsThreeDots } from "react-icons/bs";
 import { RiDeleteBinLine } from "react-icons/ri";
 import { HiMailOpen } from "react-icons/hi";
@@ -14,49 +15,46 @@ import { HiMailOpen } from "react-icons/hi";
 const Notification = () => {
   const [notifications, setNotifications] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
 
-  // Fetch Notifications based on Role
-  const fetchNotifications = async () => {
-    try {
-      const token = localStorage.getItem("token");
-      const role = localStorage.getItem("role");
+  // Get the token from localStorage
+  const token = localStorage.getItem("token");
 
-      if (!token) {
-        throw new Error("No token found. Please log in.");
-      }
-
-      const endpoint =
-        role === "student"
-          ? "http://localhost:5173/api/student/update/notifications"
-          : "http://localhost:5173/api/instructor/update/notifications";
-
-      console.log("Fetching notifications from:", endpoint); // Debug endpoint
-
-      const response = await axios.get(endpoint, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
-      console.log("API Response:", response.data); // Debug full response
-      setNotifications(response.data.notifications || []);
-    } catch (err) {
-      console.error("Error fetching notifications:", err);
-      setError(
-        err.response?.status === 401
-          ? "Unauthorized! Please log in."
-          : err.message
-      );
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  // Fetch notifications on component mount
   useEffect(() => {
+    if (!token) {
+      console.error("No token found, please log in.");
+      return;
+    }
+
+    const fetchNotifications = async () => {
+      try {
+        const response = await fetch(
+          `https://course-compass-backend-zh7c.onrender.com/api/student/update/notifications`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+
+        // Assuming the API returns a notifications array
+        setNotifications(data.notification);
+      } catch (error) {
+        console.error("Error fetching notifications:", error.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
     fetchNotifications();
-  }, []);
+  }, [token]);
 
   return (
     <>
@@ -88,14 +86,12 @@ const Notification = () => {
             </span>
 
             {loading ? (
-              <p className="text-center mt-10">Loading notifications...</p>
-            ) : error ? (
-              <div className="text-center mt-10 text-red-500">{error}</div>
+              <p>Loading notifications...</p>
             ) : notifications.length === 0 ? (
               <div className="bg-four h-[641px] rounded-lg mt-5 flex justify-items-center">
-                <div className="place-content-center space-y-5 mx-auto text-center">
+                <div className="place-content-center space-y-5 mx-auto text-center justify-items-center">
                   <IoIosNotificationsOutline
-                    className="text-secondary bg-notbg rounded-full mx-auto"
+                    className="text-secondary bg-notbg rounded-full mx-auto justify-items-center place-content-center"
                     size={60}
                   />
                   <h2 className="text-3xl font-inter font-bold">
@@ -111,16 +107,18 @@ const Notification = () => {
                 {notifications.map((notification, index) => (
                   <div
                     key={index}
-                    className="flex justify-between w-full border-b-2 bg-white"
+                    className="flex justify-between w-full border-b-2 bg-white justify-items-center"
                   >
                     <div className="p-6 flex space-x-10">
                       <IoPersonSharp size={20} />
                       <h1 className="text-base font-inter font-semibold">
-                        {notification.content}
+                        {notification.content} {/* Updated to 'content' */}
                       </h1>
                     </div>
+
                     <div className="p-6 relative group">
                       <BsThreeDots size={20} />
+
                       <div className="hidden group-hover:block absolute w-48 right-2 bg-white rounded-2xl shadow-xl py-3 px-3">
                         <button className="flex my-auto text-sm font-medium font-inter">
                           <RiDeleteBinLine className="mr-2" size={20} />
@@ -132,8 +130,10 @@ const Notification = () => {
                           Mark as read
                         </button>
                       </div>
+
                       <p className="font-inter text-sm">
-                        {new Date(notification.timestamp).toLocaleString()}
+                        {new Date(notification.timestamp).toLocaleString()}{" "}
+                        {/* Updated to 'timestamp' */}
                       </p>
                     </div>
                   </div>
