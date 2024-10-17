@@ -1,7 +1,7 @@
 import logo from "../assets/Image/logo.png";
 import facimg from "../assets/Image/facebook.png";
 import twitimg from "../assets/Image/x.png";
-import linkimg from "../assets/Image/Linkedin.png"
+import linkimg from "../assets/Image/LinkedIn.png"
 
 const FooterDashboard = () => {
   return (

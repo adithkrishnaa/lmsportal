@@ -195,6 +195,9 @@ const Module = () => {
                           <li className="w-full border-b-2 pl-3 p-2 flex justify-between">
                             2.5 Day 6 <BiLock className="my-auto" size={17} />
                           </li>
+                          <li className="w-full border-b-2 pl-3 p-2 flex justify-between">
+                            2.5 Day 7 <BiLock className="my-auto" size={17} />
+                          </li>
                         </Link>
                       </ul>
                     )}

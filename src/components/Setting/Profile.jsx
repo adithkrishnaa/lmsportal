@@ -1,6 +1,6 @@
 import pic from "../../assets/Image/per.png";
 import git from "../../assets/Image/git_icon.png";
-import Linkedin from "../../assets/Image/Linkedin.png";
+import LinkedIn from "../../assets/Image/LinkedIn.png";
 
 const Profile = () => {
   return (
@@ -51,7 +51,7 @@ const Profile = () => {
                 <img className=" size-7" src={git} alt="" />
               </li>
               <li>
-                <img className=" size-7" src={Linkedin} alt="" />
+                <img className=" size-7" src={LinkedIn} alt="" />
               </li>
             </div>
           </div>
