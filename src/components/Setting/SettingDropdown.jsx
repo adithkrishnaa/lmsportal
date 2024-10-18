@@ -5,12 +5,26 @@ import { Link, useNavigate } from "react-router-dom";
 import pic from "../../assets/Image/per.png"; // Ensure the correct path to your image
 import Help from "./Help"; // Import the Help component
 import { RxCross2 } from "react-icons/rx";
+import {signOut} from 'firebase/auth';
+import { auth } from "../../firebase";
 
 const SettingsDropdown = () => {
   const [isDropdownVisible, setIsDropdownVisible] = useState(false); // Dropdown visibility
   const [showHelp, setShowHelp] = useState(false); // Help modal visibility
   const [showLogoutConfirm, setShowLogoutConfirm] = useState(false); // Logout confirmation visibility
-const Navigate = useNavigate();
+  const Navigate = useNavigate();
+
+  // Log Out
+
+  const logOut = async () => {
+    try {
+      await signOut(auth);
+
+      console.log("User logged out and tokens removed");
+    } catch (e) {
+      console.error("Error logging out", e);
+    }
+  };
 
   // Toggle dropdown visibility
   const toggleDropdown = () => {
@@ -37,8 +51,9 @@ const Navigate = useNavigate();
   // Handle the confirmation dialog
   const confirmLogout = () => {
     // Add the logic for logging out, e.g., clearing tokens or redirecting to a login page
-    Navigate ("/");
-    ; // Close the confirmation dialog
+
+    logOut()
+    Navigate("/login"); // Close the confirmation dialog
   };
 
   const cancelLogout = () => {
@@ -74,7 +89,7 @@ const Navigate = useNavigate();
               <Link to="/setting/account">
                 <li className="py-2">Account settings</li>
               </Link>
-              
+
               <Link to="/setting/purchase">
                 <li className="py-2">Purchase history</li>
               </Link>
@@ -105,7 +120,8 @@ const Navigate = useNavigate();
             {/* Close button */}
             <button
               className="absolute top-5 right-5 text-white"
-              onClick={handleCloseHelp}>
+              onClick={handleCloseHelp}
+            >
               <RxCross2 size={30} />
             </button>
 
@@ -116,7 +132,7 @@ const Navigate = useNavigate();
       )}
 
       {/* Logout Confirmation Modal */}
-      {showLogoutConfirm && ( 
+      {showLogoutConfirm && (
         <div className="fixed top-0  right-0 w-full min-h-screen bg-black bg-opacity-60 flex justify-center z-50 items-center">
           <div className="w-1/4 bg-white font-inter p-8 rounded-3xl shadow-lg relative">
             <div className="w-full py-2 mx-auto px-28 ">
@@ -125,7 +141,8 @@ const Navigate = useNavigate();
                 width="40"
                 height="40"
                 viewBox="0 0 35 35"
-                fill="none">
+                fill="none"
+              >
                 <path
                   fillRule="evenodd"
                   clipRule="evenodd"
@@ -139,7 +156,8 @@ const Navigate = useNavigate();
                     y1="0.700001"
                     x2="35"
                     y2="35.7"
-                    gradientUnits="userSpaceOnUse">
+                    gradientUnits="userSpaceOnUse"
+                  >
                     <stop stopColor="#49FFA7" />
                     <stop offset="1" stopColor="#1976D2" />
                   </linearGradient>
@@ -156,13 +174,15 @@ const Navigate = useNavigate();
             <div className=" place-items-center space-y-4 w-full px-8 mt-8">
               <button
                 onClick={confirmLogout}
-                className="bg-black w-full text-white py-2 px-6 rounded-lg">
+                className="bg-black w-full text-white py-2 px-6 rounded-lg"
+              >
                 Log out
               </button>
               <br />
               <button
                 onClick={cancelLogout}
-                className="bg-gray-300 text-black w-full py-2 px-6 rounded-lg">
+                className="bg-gray-300 text-black w-full py-2 px-6 rounded-lg"
+              >
                 Cancel
               </button>
             </div>
