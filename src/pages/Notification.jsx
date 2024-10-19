@@ -20,17 +20,17 @@ const Notification = () => {
   // Get the token from localStorage
 
   useEffect(() => {
-    const token = auth.currentUser.getIdToken();
 
     const fetchNotifications = async () => {
+      const token = await auth.currentUser.getIdToken();
       try {
         const response = await fetch(
           `https://course-compass-backend-zh7c.onrender.com/api/student/update/notifications`,
           {
             method: "GET",
             headers: {
-              "Content-Type": "application/json",
               Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
             },
           }
         );
@@ -42,7 +42,7 @@ const Notification = () => {
         const data = await response.json();
 
         // Assuming the API returns a notifications array
-        setNotifications(data.notification);
+        setNotifications(data.notificationArray);
       } catch (error) {
         console.error("Error fetching notifications:", error.message);
       } finally {
