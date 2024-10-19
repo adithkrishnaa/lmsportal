@@ -15,6 +15,9 @@ const Login = () => {
         // If user is logged in, redirect to the desired page
         navigate('/dashboard');
       } 
+      else{
+        navigate("/login")
+      }
     });
 
     // Cleanup the subscription on unmount
