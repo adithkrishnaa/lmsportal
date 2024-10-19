@@ -2,6 +2,7 @@ import pic from "../../assets/Image/per.png";
 import { IoEye } from "react-icons/io5";
 
 const Account = () => {
+  
   return (
     <>
       <div className="">

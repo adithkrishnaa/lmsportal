@@ -17,7 +17,7 @@ const MyCertificates = () => {
     const fetchCertificates = async () => {
       try {
         const token = await auth.currentUser.getIdToken(); 
-        const response = await fetch("http://localhost:3000/api/student/get-certificates", {
+        const response = await fetch("https://course-compass-backend-zh7c.onrender.com/api/student/get-certificates", {
           method: "GET",
           headers: {
             Authorization: `Bearer ${token}`,
