@@ -19,7 +19,7 @@ const SettingsDropdown = () => {
   const logOut = async () => {
     try {
       await signOut(auth);
-
+      Navigate("/login");
       console.log("User logged out and tokens removed");
     } catch (e) {
       console.error("Error logging out", e);
@@ -49,12 +49,6 @@ const SettingsDropdown = () => {
   };
 
   // Handle the confirmation dialog
-  const confirmLogout = () => {
-    // Add the logic for logging out, e.g., clearing tokens or redirecting to a login page
-
-    logOut()
-    Navigate("/login"); // Close the confirmation dialog
-  };
 
   const cancelLogout = () => {
     setShowLogoutConfirm(false); // Close the confirmation dialog without logging out
@@ -173,7 +167,7 @@ const SettingsDropdown = () => {
             </p>
             <div className=" place-items-center space-y-4 w-full px-8 mt-8">
               <button
-                onClick={confirmLogout}
+                onClick={logOut}
                 className="bg-black w-full text-white py-2 px-6 rounded-lg"
               >
                 Log out
