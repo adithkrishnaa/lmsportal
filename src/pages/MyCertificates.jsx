@@ -9,24 +9,34 @@ import cerbanner from "../assets/Image/celebanner.png";
 import cercup from "../assets/Image/celecup.png";
 
 const MyCertificates = () => {
-  const [modules, setModules] = useState([]);
+  const [modules, setModules] = useState([
+    {
+      title: "Loading...",
+      description: "Loading...",
+      image: "Loading...",
+      detailedDescription: "Loading...",
+    },
+  ]);
   const [loading, setLoading] = useState(true); // Add a loading state
   const [selectedModule, setSelectedModule] = useState(null);
 
   useEffect(() => {
     const fetchCertificates = async () => {
       try {
-        const token = await auth.currentUser.getIdToken(); 
-        const response = await fetch("https://course-compass-backend-zh7c.onrender.com/api/student/get-certificates", {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-        });
+        const token = await auth.currentUser.getIdToken();
+        const response = await fetch(
+          "https://course-compass-backend-zh7c.onrender.com/api/student/get-certificates",
+          {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
+            },
+          }
+        );
 
         const data = await response.json();
-        setModules(data.certificates);  // Assuming your API returns an array of certificates
+        setModules(data.certificates); // Assuming your API returns an array of certificates
       } catch (error) {
         console.error("Failed to fetch certificates:", error);
       } finally {
@@ -72,7 +82,7 @@ const MyCertificates = () => {
               <img
                 src={module.image}
                 className="rounded-t-xl "
-                alt={module.name}
+                alt={module.title}
               />
               <div className="p-2 space-y-2 p py-4">
                 <h3 className="font-inter text-xl font-semibold">
@@ -122,9 +132,7 @@ const MyCertificates = () => {
               <h2 className="font-inter text-2xl font-bold mb-4">
                 Congratulations on achieving {selectedModule.title}
               </h2>
-              <p className="text-sm">
-                  {selectedModule.detailedDescription}
-              </p>
+              <p className="text-sm">{selectedModule.detailedDescription}</p>
               <p className="text-sm pt-5">
                 Certificate ID: #{selectedModule._id}
               </p>
