@@ -19,9 +19,10 @@ const Notification = () => {
   useEffect(() => {
     const fetchNotifications = async () => {
       const token = await auth.currentUser.getIdToken();
+      console.log(token)
       try {
         const response = await fetch(
-          `https://course-compass-backend-zh7c.onrender.com/api/student/update/notifications`,
+          `https://course-compass-backend-zh7c.onrender.com/api/student/notifications`,
           {
             method: "GET",
             headers: {
@@ -31,10 +32,13 @@ const Notification = () => {
           }
         );
 
-        if (!response.ok) throw new Error(`Failed to fetch notifications: ${response.status}`);
+        if (!response.ok)
+          throw new Error(`Failed to fetch notifications: ${response.status}`);
 
         const data = await response.json();
-        setNotifications(data.notificationArray); 
+        setNotifications(data.notificationArray);
+        if (!response.ok) throw new Error(`Failed to fetch notifications: ${response.status}`);
+
       } catch (error) {
         console.error("Error fetching notifications:", error.message);
       } finally {
@@ -48,11 +52,10 @@ const Notification = () => {
   // Delete a notification
   const deleteNotification = async (index) => {
     const token = await auth.currentUser.getIdToken();
-    const userId = auth.currentUser.uid;
 
     try {
       const response = await fetch(
-        `https://course-compass-backend-zh7c.onrender.com/api/student/${userId}/notifications/${index}`,
+        `https://course-compass-backend-zh7c.onrender.com/api/student/notifications/${index}`,
         {
           method: "DELETE",
           headers: {
@@ -62,7 +65,8 @@ const Notification = () => {
         }
       );
 
-      if (!response.ok) throw new Error(`Failed to delete notification: ${response.status}`);
+      if (!response.ok)
+        throw new Error(`Failed to delete notification: ${response.status}`);
 
       console.log("Notification deleted successfully");
 
@@ -82,7 +86,7 @@ const Notification = () => {
 
     try {
       const response = await fetch(
-        `https://course-compass-backend-zh7c.onrender.com/api/student/${userId}/notifications/${index}/read`,
+        `https://course-compass-backend-zh7c.onrender.com/api/student/notifications/${index}/read`,
         {
           method: "PUT", // Use PUT for marking as read
           headers: {
@@ -93,7 +97,10 @@ const Notification = () => {
         }
       );
 
-      if (!response.ok) throw new Error(`Failed to mark notification as read: ${response.status}`);
+      if (!response.ok)
+        throw new Error(
+          `Failed to mark notification as read: ${response.status}`
+        );
 
       console.log("Notification marked as read");
 

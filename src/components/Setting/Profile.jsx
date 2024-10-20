@@ -1,4 +1,3 @@
-import pic from "../../assets/Image/per.png";
 import git from "../../assets/Image/git_icon.png";
 import LinkedIn from "../../assets/Image/LinkedIn.png";
 import { useState, useEffect} from "react";
@@ -6,7 +5,7 @@ import {auth} from "../../firebase";
 
 const Profile = () => {
 
-  const [picture, setPicture] = useState( pic)
+  const [picture, setPicture] = useState("../../assets/Image/per.png")
   
   useEffect(()=>{
     const fetchProfile = async () => {
