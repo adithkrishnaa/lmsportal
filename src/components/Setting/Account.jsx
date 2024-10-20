@@ -1,8 +1,106 @@
-import pic from "../../assets/Image/per.png";
 import { IoEye } from "react-icons/io5";
+import {auth} from "../../firebase";
+import {useEffect, useState} from 'react';
 
 const Account = () => {
+  const [profile, setProfile] = useState({
+    _id : "Loading..",
+    username : "Loading..",
+    email : "Loading..",
+    displayName : "Loading..",
+    profilePicture: "../../assets/Image/per.png",
+    title: "Loading..",
+    firstName: "Loading..",
+    lastName: "Loading..",
+    phoneNumber: "Loading....",
+  })
   
+  useEffect(()=>{
+    const fetchProfile = async () => {
+      try {
+        const token = await auth.currentUser.getIdToken();
+        const response = await fetch("https://course-compass-backend-zh7c.onrender.com/api/student/profile-data", {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+          console.log(data)
+          setProfile(data); // Assuming the response has courses in data.courses
+        } else {
+          console.error("Failed to fetch purchases:", data.message);
+        }
+      } catch (error) {
+        console.error("Failed to fetch purchases:", error);
+      }
+    };
+    fetchProfile();
+  },[])
+
+  const handleDisplayName = (e) => {
+    setProfile(prevProfile => ({
+      ...prevProfile,
+      displayName: e.target.value
+    }));
+  };
+
+  const handleFirstName = (e) => {
+    setProfile(prevProfile => ({
+      ...prevProfile,
+      firstName: e.target.value
+    }));
+  }
+
+  const handleLastName = (e) => {
+    setProfile(prevProfile => ({
+      ...prevProfile,
+      lastName: e.target.value
+    }));
+  }
+
+  const handlePhoneNumber = (e) => {
+    setProfile(prevProfile => ({
+      ...prevProfile,
+      phoneNumber: e.target.value.toString(10).replace(/[^0-9]/g,'')
+    }));
+  }
+
+  const handleEmail = (e) => {
+    setProfile(prevProfile => ({
+      ...prevProfile,
+      email: e.target.value
+    }));
+  }
+
+
+  const updateProfile = async () => {
+    try {
+      console.log(profile)
+      const token = await auth.currentUser.getIdToken();
+      const response = await fetch("http://localhost:3000/api/student/profile-data", {
+        method: "PUT",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body : JSON.stringify(profile)
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        alert("Data updated successfully!");
+      }
+    } catch (error) {
+      console.error("Failed to fetch update data:", error);
+    }
+  }
+
   return (
     <>
       <div className="">
@@ -15,7 +113,7 @@ const Account = () => {
             <div className="flex ">
               <img
                 className="rounded-full  size-10 bg-secondary"
-                src={pic}
+                src={profile.profilePicture}
                 alt="User"
               />
               <h3 className="ml-4 font-inter my-auto">Profile Picture</h3>
@@ -45,7 +143,8 @@ const Account = () => {
                     <input
                       type="text"
                       className="p-3 pl-12 relative mt-2 bg-four rounded-lg w-full "
-                      placeholder="Enter your Display Name..."
+                      placeholder={profile.displayName}
+                      onChange = {handleDisplayName}
                     />
                     <IoEye
                       className=" absolute mx-auto top-14 left-4 text-secondary"
@@ -59,7 +158,8 @@ const Account = () => {
                     <input
                       type="text"
                       className="p-3 pl-12 relative mt-2 bg-four rounded-lg  w-full"
-                      placeholder="Enter your Titel..."
+                      placeholder={profile.title}
+                      onChange = {handleDisplayName}
                     />
                     <IoEye
                       className=" absolute mx-auto top-14 left-4 text-secondary"
@@ -85,7 +185,8 @@ const Account = () => {
                     <input
                       type="text"
                       className="p-3 pl-12 relative mt-2 bg-four rounded-lg w-full "
-                      placeholder="Enter your First Name..."
+                      placeholder={profile.firstName}
+                      onChange = {handleFirstName}
                     />
                     <IoEye
                       className=" absolute mx-auto top-14 left-4 text-secondary"
@@ -99,7 +200,8 @@ const Account = () => {
                     <input
                       type="text"
                       className="p-3 pl-12 relative mt-2 bg-four rounded-lg  w-full"
-                      placeholder="Enter your Last Name..."
+                      placeholder={profile.lastName}
+                      onChange = {handleLastName}
                     />
                     <IoEye
                       className=" absolute mx-auto top-14 left-4 text-secondary"
@@ -111,9 +213,10 @@ const Account = () => {
                   <label className="block py-3 relative" htmlFor="">
                     Phone Number
                     <input
-                      type="text"
+                      type="number"
                       className="p-3 pl-12 relative mt-2 bg-four rounded-lg  w-full"
-                      placeholder="Enter your Phone Number..."
+                      placeholder={profile.phoneNumber}
+                      onChange = {handlePhoneNumber}
                     />
                     <IoEye
                       className=" absolute mx-auto top-14 left-4 text-secondary"
@@ -142,7 +245,8 @@ const Account = () => {
                   <input
                     type="email"
                     className="p-2 pl-12 relative mt-2 bg-four rounded-lg  "
-                    placeholder="johndoe@gmail.com..."
+                    placeholder={profile.email}
+                    onChange = {handleEmail}
                   />
                   <IoEye
                     className=" absolute mx-auto top-16 left-4 text-secondary"
@@ -219,7 +323,7 @@ const Account = () => {
 
         <div className=" container pr-4 py-5">
           <div className="flex justify-end gap-5">
-            <button className="mt-5 p-3 bg-black text-sm text-white font-inter rounded-full">
+            <button className="mt-5 p-3 bg-black text-sm text-white font-inter rounded-full" onClick={updateProfile} >
               Update Info
             </button>
             <button className="mt-5 p-3 border-black border-[0.05px] text-sm font-medium text-black font-inter rounded-full">
