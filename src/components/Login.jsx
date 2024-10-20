@@ -15,6 +15,9 @@ const Login = () => {
         // If user is logged in, redirect to the desired page
         navigate('/dashboard');
       } 
+      else{
+        navigate("/login")
+      }
     });
 
     // Cleanup the subscription on unmount
@@ -82,7 +85,6 @@ const Login = () => {
       }
 
       const result = await response.json();
-      console.log(result);
     } catch (e) {
       console.error("Error sending token to backend", e);
     }

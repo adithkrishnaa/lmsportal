@@ -1,83 +1,51 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Aicalender from "../components/Aicalender";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
-import module11 from "../assets/Image/cer4.png";
-import module1 from "../assets/Image/cer1.png";
-import module2 from "../assets/Image/cer2.png";
-import module3 from "../assets/Image/cer3.png";
-import module4 from "../assets/Image/cer1.png";
-import cerbanner from "../assets/Image/celebanner.png";
-import cercup from "../assets/Image/celecup.png";
 import { IoMdShare } from "react-icons/io";
 import { LuArrowDownToLine } from "react-icons/lu";
+import { auth } from "../firebase";
+import cerbanner from "../assets/Image/celebanner.png";
+import cercup from "../assets/Image/celecup.png";
 
 const MyCertificates = () => {
-  // State to track the selected module and modal visibility
+  const [modules, setModules] = useState([
+    {
+      title: "Loading...",
+      description: "Loading...",
+      image: "Loading...",
+      detailedDescription: "Loading...",
+    },
+  ]);
+  const [loading, setLoading] = useState(true); // Add a loading state
   const [selectedModule, setSelectedModule] = useState(null);
 
-  const modules = [
-    {
-      id: 1,
-      name: "Certificate #1",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur. Diam id tortor euismod maecenas quis scelerisque risus in.",
-      image: module1,
+  useEffect(() => {
+    const fetchCertificates = async () => {
+      try {
+        const token = await auth.currentUser.getIdToken();
+        const response = await fetch(
+          "https://course-compass-backend-zh7c.onrender.com/api/student/get-certificates",
+          {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
+            },
+          }
+        );
 
-      detailedDescription:
-        "Lorem ipsum dolor sit amet consectetur. Habitant scelerisque nunc lacinia augue elit faucibus at. Vulputate risus consequat tempus at faucibus facilisi vitae. Aliquam hendrerit risus eu in. Congue leo quis enim accumsan in metus aliquet cras.Lorem ipsum dolor sit amet consectetur. Habitant scelerisque nunc lacinia augue elit faucibus at. Vulputate risus consequat tempus at faucibus facilisi vitae. Aliquam hendrerit risus eu in. Congue leo quis enim accumsan in metus aliquet cras.Lorem ipsum dolor sit amet consectetur. Habitant scelerisque nunc lacinia augue elit faucibus at. Vulputate risus consequat tempus at faucibus facilisi vitae. Aliquam hendrerit risus eu in. Congue leo quis enim accumsan in metus aliquet cras.",
-    },
-    {
-      id: 2,
-      name: "Certificate #1",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur. Diam id tortor euismod maecenas quis scelerisque risus in.",
-      image: module2,
+        const data = await response.json();
+        setModules(data.certificates); // Assuming your API returns an array of certificates
+      } catch (error) {
+        console.error("Failed to fetch certificates:", error);
+      } finally {
+        setLoading(false); // Set loading to false after the fetch
+      }
+    };
 
-      detailedDescription:
-        "Lorem ipsum dolor sit amet consectetur. Habitant scelerisque nunc lacinia augue elit faucibus at. Vulputate risus consequat tempus at faucibus facilisi vitae. Aliquam hendrerit risus eu in. Congue leo quis enim accumsan in metus aliquet cras.Lorem ipsum dolor sit amet consectetur. Habitant scelerisque nunc lacinia augue elit faucibus at. Vulputate risus consequat tempus at faucibus facilisi vitae. Aliquam hendrerit risus eu in. Congue leo quis enim accumsan in metus aliquet cras.Lorem ipsum dolor sit amet consectetur. Habitant scelerisque nunc lacinia augue elit faucibus at. Vulputate risus consequat tempus at faucibus facilisi vitae. Aliquam hendrerit risus eu in. Congue leo quis enim accumsan in metus aliquet cras.",
-    },
-    {
-      id: 3,
-      name: "Certificate #1",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur. Diam id tortor euismod maecenas quis scelerisque risus in.",
-      image: module3,
-
-      detailedDescription:
-        "Lorem ipsum dolor sit amet consectetur. Habitant scelerisque nunc lacinia augue elit faucibus at. Vulputate risus consequat tempus at faucibus facilisi vitae. Aliquam hendrerit risus eu in. Congue leo quis enim accumsan in metus aliquet cras.Lorem ipsum dolor sit amet consectetur. Habitant scelerisque nunc lacinia augue elit faucibus at. Vulputate risus consequat tempus at faucibus facilisi vitae. Aliquam hendrerit risus eu in. Congue leo quis enim accumsan in metus aliquet cras.Lorem ipsum dolor sit amet consectetur. Habitant scelerisque nunc lacinia augue elit faucibus at. Vulputate risus consequat tempus at faucibus facilisi vitae. Aliquam hendrerit risus eu in. Congue leo quis enim accumsan in metus aliquet cras.",
-    },
-    {
-      id: 4,
-      name: "Certificate #1",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur. Diam id tortor euismod maecenas quis scelerisque risus in.",
-      image: module4,
-
-      detailedDescription:
-        "Lorem ipsum dolor sit amet consectetur. Habitant scelerisque nunc lacinia augue elit faucibus at. Vulputate risus consequat tempus at faucibus facilisi vitae. Aliquam hendrerit risus eu in. Congue leo quis enim accumsan in metus aliquet cras.Lorem ipsum dolor sit amet consectetur. Habitant scelerisque nunc lacinia augue elit faucibus at. Vulputate risus consequat tempus at faucibus facilisi vitae. Aliquam hendrerit risus eu in. Congue leo quis enim accumsan in metus aliquet cras.Lorem ipsum dolor sit amet consectetur. Habitant scelerisque nunc lacinia augue elit faucibus at. Vulputate risus consequat tempus at faucibus facilisi vitae. Aliquam hendrerit risus eu in. Congue leo quis enim accumsan in metus aliquet cras.",
-    },
-    {
-      id: 5,
-      name: "Certificate #1",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur. Diam id tortor euismod maecenas quis scelerisque risus in.",
-      image: module3,
-
-      detailedDescription:
-        "Lorem ipsum dolor sit amet consectetur. Habitant scelerisque nunc lacinia augue elit faucibus at. Vulputate risus consequat tempus at faucibus facilisi vitae. Aliquam hendrerit risus eu in. Congue leo quis enim accumsan in metus aliquet cras.Lorem ipsum dolor sit amet consectetur. Habitant scelerisque nunc lacinia augue elit faucibus at. Vulputate risus consequat tempus at faucibus facilisi vitae. Aliquam hendrerit risus eu in. Congue leo quis enim accumsan in metus aliquet cras.Lorem ipsum dolor sit amet consectetur. Habitant scelerisque nunc lacinia augue elit faucibus at. Vulputate risus consequat tempus at faucibus facilisi vitae. Aliquam hendrerit risus eu in. Congue leo quis enim accumsan in metus aliquet cras.",
-    },
-    {
-      id: 6,
-      name: "Certificate #1",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur. Diam id tortor euismod maecenas quis scelerisque risus in.",
-      image: module11,
-
-      detailedDescription:
-        "Lorem ipsum dolor sit amet consectetur. Habitant scelerisque nunc lacinia augue elit faucibus at. Vulputate risus consequat tempus at faucibus facilisi vitae. Aliquam hendrerit risus eu in. Congue leo quis enim accumsan in metus aliquet cras.Lorem ipsum dolor sit amet consectetur. Habitant scelerisque nunc lacinia augue elit faucibus at. Vulputate risus consequat tempus at faucibus facilisi vitae. Aliquam hendrerit risus eu in. Congue leo quis enim accumsan in metus aliquet cras.Lorem ipsum dolor sit amet consectetur. Habitant scelerisque nunc lacinia augue elit faucibus at. Vulputate risus consequat tempus at faucibus facilisi vitae. Aliquam hendrerit risus eu in. Congue leo quis enim accumsan in metus aliquet cras.",
-    },
-  ];
+    fetchCertificates();
+  }, []);
 
   // Function to open the modal with the selected module's details
   const openModule = (module) => {
@@ -89,6 +57,10 @@ const MyCertificates = () => {
     setSelectedModule(null);
   };
 
+  if (loading) {
+    return <div>Loading...</div>; // Render loading screen until data is ready
+  }
+
   return (
     <>
       <Navbar />
@@ -96,7 +68,7 @@ const MyCertificates = () => {
       <div>
         <div className="pt-24 space-y-4 px-20">
           <div className="flex my-auto space-x-2">
-            <h2 className="font-inter text-3xl font-bold">My Certificates </h2>
+            <h2 className="font-inter text-3xl font-bold">My Certificates</h2>
           </div>
         </div>
 
@@ -110,7 +82,7 @@ const MyCertificates = () => {
               <img
                 src={module.image}
                 className="rounded-t-xl "
-                alt={module.name}
+                alt={module.title}
               />
               <div className="p-2 space-y-2 p py-4">
                 <h3 className="font-inter text-xl font-semibold">
@@ -143,42 +115,38 @@ const MyCertificates = () => {
         <div className="fixed inset-0 z-50 flex justify-center items-center bg-black bg-opacity-60">
           <div className="bg-white w-4/12 p-4 rounded-2xl relative">
             {/* Close Button */}
-
-            <div className=" relative mb-20">
+            <div className="relative mb-20">
               <img
                 src={cerbanner}
-                className=" mt-4 rounded-lg "
-                alt={selectedModule.name}
+                className="mt-4 rounded-lg"
+                alt={selectedModule.title}
               />
               <img
                 src={cercup}
-                className=" -bottom-10 left-1/2 -translate-x-8 absolute w-20 rounded-lg "
-                alt={selectedModule.name}
+                className="-bottom-10 left-1/2 -translate-x-8 absolute w-20 rounded-lg"
+                alt={selectedModule.title}
               />
             </div>
 
             <div className="text-center px-8">
               <h2 className="font-inter text-2xl font-bold mb-4">
-                Congratulations on achieving {selectedModule.name}
+                Congratulations on achieving {selectedModule.title}
               </h2>
-              <p className=" text-sm">
-                Lorem ipsum dolor sit amet consectetur. Diam id tortor euismod
-                maecenas quis scelerisque risus in.
+              <p className="text-sm">{selectedModule.detailedDescription}</p>
+              <p className="text-sm pt-5">
+                Certificate ID: #{selectedModule._id}
               </p>
-              <p className=" text-sm pt-5">
-                Certificate ID : #s235jb14oaf2515195fwrr35
-              </p>
-              <p className=" text-sm  py-5  whitespace-nowrap">
-                Certificate URL: https://CClms/#s235jb14oaf2515195fwrr35
+              <p className="text-sm py-5 whitespace-nowrap">
+                Certificate URL: {selectedModule.image}
               </p>
             </div>
 
             <div className="pt-8 flex justify-between my-auto">
               <div className="flex">
-                <button className="flex p-2  mx-auto   rounded-lg font-inter">
+                <button className="flex p-2 mx-auto rounded-lg font-inter">
                   <IoMdShare className="my-auto ml-2" size={22} />
                 </button>
-                <button className="flex p-2  mx-auto  rounded-lg font-inter">
+                <button className="flex p-2 mx-auto rounded-lg font-inter">
                   <LuArrowDownToLine className="my-auto ml-2" size={22} />
                 </button>
               </div>

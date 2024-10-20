@@ -1,8 +1,39 @@
 import pic from "../../assets/Image/per.png";
 import git from "../../assets/Image/git_icon.png";
 import LinkedIn from "../../assets/Image/LinkedIn.png";
+import { useState, useEffect} from "react";
+import {auth} from "../../firebase";
 
 const Profile = () => {
+
+  const [picture, setPicture] = useState( pic)
+  
+  useEffect(()=>{
+    const fetchProfile = async () => {
+      try {
+        const token = await auth.currentUser.getIdToken();
+        const response = await fetch("https://course-compass-backend-zh7c.onrender.com/api/student/profile/picture", {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+          setPicture(data.profilePicture); // Assuming the response has courses in data.courses
+        } else {
+          console.error("Failed to fetch purchases:", data.message);
+        }
+      } catch (error) {
+        console.error("Failed to fetch purchases:", error);
+      }
+    };
+    fetchProfile();
+  },[])
+
   return (
     <>
       <div className="px-4 py-4">
@@ -17,7 +48,7 @@ const Profile = () => {
           <div className="flex items-center">
             <img
               className="rounded-full size-14 bg-secondary"
-              src={pic}
+              src={picture}
               alt="User"
             />
             <div className="block">
