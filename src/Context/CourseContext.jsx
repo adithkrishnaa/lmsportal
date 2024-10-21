@@ -8,13 +8,20 @@ export const useCourse = () => {
 
 export const CourseProvider = ({ children }) => {
   const [joinedCourse, setJoinedCourse] = useState(null); 
+  const [currentCourses, setCurrentCourses] = useState([]);
+  const [selectedCourse, setSelectedCourse] = useState(null); // Add state for the selected course
 
   const joinCourse = (course) => {
     setJoinedCourse(course);
   };
 
+  const selectCourse = (courseId) => {
+    const course = currentCourses.find((c) => c.courseId === courseId);
+    setSelectedCourse(course); // Update the selected course
+  };
+
   return (
-    <CourseContext.Provider value={{ joinedCourse, joinCourse }}>
+    <CourseContext.Provider value={{ joinedCourse, joinCourse, currentCourses, setCurrentCourses, selectedCourse, selectCourse }}>
       {children}
     </CourseContext.Provider>
   );

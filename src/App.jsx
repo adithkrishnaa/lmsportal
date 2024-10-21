@@ -40,6 +40,9 @@ import LuctherForgotPassword from "./components/Instructor/LuctherForgotPassword
 import LuctherPasswordcode from "./components/Instructor/LuctherPasswordcode";
 import LuctherChangePassword from "./components/Instructor/LuctherChangePassword";
 import LuctherSetting from "./pages/InstructorPages/LuctherSetting";
+import Classroam from "./pages/InstructorPages/Classroam";
+import Grading from "./pages/InstructorPages/Grading";
+import Studentmark from "./pages/InstructorPages/Studentmark";
 
 function App() {
   return (
@@ -87,6 +90,12 @@ function App() {
           <Route path="/luctherdashboard" element={<LuctherDashboard />} />
           <Route path="/calanderpage" element={<CalanderPage />} />
           <Route path="/livepage" element={<Livepage />} />
+          <Route path="/classroam/:id" element={<Classroam />} />
+          <Route path="/grading/:assessmentId" element={<Grading />} />
+          <Route
+            path="/studentmark/:assessmentId/:studentId/:studentname"
+            element={<Studentmark />}
+          />
 
           {/* Dashboard and Course Overview Routes */}
           <Route path="/dashboard" element={<Dashboard />} />

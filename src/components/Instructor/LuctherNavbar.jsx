@@ -19,9 +19,6 @@ const LuctherNavbar = () => {
               <li className="list-none">Dashboard</li>
             </Link>
             <Link to="">
-              <li className="list-none">Courses Syllabus</li>
-            </Link>
-            <Link to="">
               <li className="list-none">Host Live</li>
             </Link>
             <Link to="">
@@ -34,11 +31,7 @@ const LuctherNavbar = () => {
            
             <Link className=" relative " to=" ">
               <IoIosNotificationsOutline size={25} />
-              <div className=" absolute -top-2 border-2  w-5 p-1 h-5 rounded-full bg-red-600 -right-1">
-                <p className="-mt-1 ml-[2px] text-white font-inter text-[10px]">
-                  1
-                </p>
-              </div>
+              
             </Link>
 
             {/* Use SettingsDropdown */}

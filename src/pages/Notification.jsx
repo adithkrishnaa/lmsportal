@@ -116,7 +116,7 @@ const Notification = () => {
               <h2 className="text-3xl font-semibold font-inter leading-10">
                 Notifications
               </h2>
-             
+              
             </div>
             <span className="text-secondary px-3 py-2 bg-four rounded-xl text-[15px] font-semibold">
               All

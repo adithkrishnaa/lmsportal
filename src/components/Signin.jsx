@@ -57,7 +57,7 @@ const Signin = () => {
     const token = await auth.currentUser.getIdToken(); // Get Firebase auth token
     try {
       const response = await fetch(
-        "https://course-compass-backend-zh7c.onrender.com/api/instructor/save-user",
+        "https://course-compass-backend-zh7c.onrender.com/api/student/save-user",
         {
           method: "POST",
           headers: {

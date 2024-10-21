@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React,{ useState } from "react";
 import Ai from "../assets/Image/ailogo.png";
 import cal from "../assets/Image/clalogo.png";
 import per from "../assets/Image/person.png";
@@ -16,7 +16,9 @@ const Aicalender = () => {
   const [isChatMinimized, setIsChatMinimized] = useState(false); // State to minimize the chat
   const [chatHistory, setChatHistory] = useState([]); // Chat history
   const [inputMessage, setInputMessage] = useState(""); // To handle input message
-
+  const [selectedDate, setSelectedDate] = useState(null);
+  const lectureDays = [2, 4, 5, 6, 7];
+  const currentDay = new Date().getDate();
   // Handle AI click to show the chat
   const handleAiClick = () => {
     setShowChat(true);
@@ -292,57 +294,248 @@ const Aicalender = () => {
                 </div>
               </div>
             </div>
-            <div className="grid grid-cols-7 bg-white p-1 font-inter">
-              <div>
-                <div className="mx-auto p-[2px] rounded-xl">
-                  <p className="text-base text-center font-medium">Mon</p>
-                  <p className="text-center font-medium text-2xl">1</p>
-                </div>
-              </div>
+           <div className="grid grid-cols-7 bg-white p-1 font-inter py-2">
+  {/* Date 1 - Monday */}
+  <div className="relative">
+    <div
+      className={`mx-auto cursor-pointer ${selectedDate === '1' ? 'bg-[#00AF46] text-white' : ''}`}
+      onClick={() => setSelectedDate('1')}
+      style={{
+        width: '35.789px',
+        height: '74.862px',
+        borderRadius: '10.116px',
+        background: selectedDate === '1' ? '#00AF46' : 'transparent',
+        alignSelf: 'stretch',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        color: selectedDate === '1' ? '#FFF' : '#000',
+        fontFamily: 'Inter',
+        fontSize: '40.466px',
+        fontWeight: '500',
+        lineHeight: '40.466px',
+        textAlign: 'center',
+      }}
+    >
+      <p className="text-base font-medium">Mon</p>
+      <p className="date-container font-medium">{1}</p>
+    </div>
+  </div>
 
-              <div className=" relative">
-                {" "}
-                <div className="mx-auto  bg-[#00AF46] text-white rounded-xl">
-                  <p className="text-base text-center font-medium">Tue</p>
-                  <p className="text-center font-medium text-2xl">2</p>
-                </div>
-                <p className="w-1 mx-auto mt-1 bg-[#FF0000] p-1 rounded-full"></p>
-              </div>
-              <div>
-                {" "}
-                <div className="mx-auto p-[2px] rounded-xl">
-                  <p className="text-base text-center font-medium">Wed</p>
-                  <p className="text-center font-medium text-2xl">3</p>
-                </div>
-              </div>
-              <div>
-                {" "}
-                <div className="mx-auto p-[2px] rounded-xl">
-                  <p className="text-base text-center font-medium">Thu</p>
-                  <p className="text-center font-medium text-2xl">4</p>
-                </div>
-              </div>
-              <div>
-                <div className="mx-auto p-[2px] rounded-xl">
-                  <p className="text-base text-center font-medium">Fri</p>
-                  <p className="text-center font-medium text-2xl">5</p>
-                </div>
-              </div>
-              <div>
-                <div className="mx-auto p-[2px] rounded-xl">
-                  <p className="text-base text-center font-medium">Sat</p>
-                  <p className="text-center font-medium text-2xl">6</p>
-                </div>
-              </div>
-              <div>
-                <div className="mx-auto p-[2px] rounded-xl">
-                  <p className="text-base text-center font-medium">Sun</p>
-                  <p className="text-center font-medium text-2xl">7</p>
-                </div>
-              </div>
-            </div>
+  {/* Date 2 - Tuesday */}
+  <div className="relative">
+    <div
+      className={`mx-auto cursor-pointer ${selectedDate === '2' ? 'bg-[#00AF46] text-white' : ''}`}
+      onClick={() => setSelectedDate('2')}
+      style={{
+        width: '35.789px',
+        height: '64.862px',
+        borderRadius: '10.116px',
+        background: selectedDate === '2' ? '#00AF46' : 'transparent',
+        alignSelf: 'stretch',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        color: selectedDate === '2' ? '#FFF' : '#000',
+        fontFamily: 'Inter',
+        fontSize: '40.466px',
+        fontWeight: '500',
+        lineHeight: '40.466px',
+        textAlign: 'center',
+      }}
+    >
+      <p className="text-base font-medium">Tue</p>
+      <p className="date-container font-medium">{2}</p>
+    </div>
+    {(selectedDate === '2' || '2' === '2') && (
+      <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2"
+           style={{
+             width: '8px',
+             height: '8px',
+             backgroundColor: 'red',
+             borderRadius: '50%',
+             flexShrink: '0',
+           }}
+      ></div>
+    )}
+  </div>
 
-            <div className="  ">
+  {/* Date 3 - Wednesday */}
+  <div className="relative">
+    <div
+      className={`mx-auto cursor-pointer ${selectedDate === '3' ? 'bg-[#00AF46] text-white' : ''}`}
+      onClick={() => setSelectedDate('3')}
+      style={{
+        width: '35.789px',
+        height: '64.862px',
+        borderRadius: '10.116px',
+        background: selectedDate === '3' ? '#00AF46' : 'transparent',
+        alignSelf: 'stretch',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        color: selectedDate === '3' ? '#FFF' : '#000',
+        fontFamily: 'Inter',
+        fontSize: '40.466px',
+        fontWeight: '500',
+        lineHeight: '40.466px',
+        textAlign: 'center',
+      }}
+    >
+      <p className="text-base font-medium">Wed</p>
+      <p className="date-container font-medium">{3}</p>
+    </div>
+  </div>
+
+  {/* Date 4 - Thursday */}
+  <div className="relative">
+    <div
+      className={`mx-auto cursor-pointer ${selectedDate === '4' ? 'bg-[#00AF46] text-white' : ''}`}
+      onClick={() => setSelectedDate('4')}
+      style={{
+        width: '35.789px',
+        height: '64.862px',
+        borderRadius: '10.116px',
+        background: selectedDate === '4' ? '#00AF46' : 'transparent',
+        alignSelf: 'stretch',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        color: selectedDate === '4' ? '#FFF' : '#000',
+        fontFamily: 'Inter',
+        fontSize: '40.466px',
+        fontWeight: '500',
+        lineHeight: '40.466px',
+        textAlign: 'center',
+      }}
+    >
+      <p className="text-base font-medium">Thu</p>
+      <p className="date-container font-medium">{4}</p>
+    </div>
+    {(selectedDate === '4' || '4' === '4') && (
+      <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2"
+           style={{
+             width: '8px',
+             height: '8px',
+             backgroundColor: 'red',
+             borderRadius: '50%',
+             flexShrink: '0',
+           }}
+      ></div>
+    )}
+  </div>
+
+  {/* Date 5 - Friday */}
+  <div className="relative">
+    <div
+      className={`mx-auto cursor-pointer ${selectedDate === '5' ? 'bg-[#00AF46] text-white' : ''}`}
+      onClick={() => setSelectedDate('5')}
+      style={{
+        width: '35.789px',
+        height: '64.862px',
+        borderRadius: '10.116px',
+        background: selectedDate === '5' ? '#00AF46' : 'transparent',
+        alignSelf: 'stretch',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        color: selectedDate === '5' ? '#FFF' : '#000',
+        fontFamily: 'Inter',
+        fontSize: '40.466px',
+        fontWeight: '500',
+        lineHeight: '40.466px',
+        textAlign: 'center',
+      }}
+    >
+      <p className="text-base font-medium">Fri</p>
+      <p className="date-container font-medium">{5}</p>
+    </div>
+    {(selectedDate === '5' || '5' === '5') && (
+      <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2"
+           style={{
+             width: '8px',
+             height: '8px',
+             backgroundColor: 'red',
+             borderRadius: '50%',
+             flexShrink: '0',
+           }}
+      ></div>
+    )}
+  </div>
+
+  {/* Date 6 - Saturday */}
+  <div className="relative">
+    <div
+      className={`mx-auto cursor-pointer ${selectedDate === '6' ? 'bg-[#00AF46] text-white' : ''}`}
+      onClick={() => setSelectedDate('6')}
+      style={{
+        width: '35.789px',
+        height: '64.862px',
+        borderRadius: '10.116px',
+        background: selectedDate === '6' ? '#00AF46' : 'transparent',
+        alignSelf: 'stretch',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        color: selectedDate === '6' ? '#FFF' : '#000',
+        fontFamily: 'Inter',
+        fontSize: '40.466px',
+        fontWeight: '500',
+        lineHeight: '40.466px',
+        textAlign: 'center',
+      }}
+    >
+      <p className="text-base font-medium">Sat</p>
+      <p className="date-container font-medium">{6}</p>
+    </div>
+    {(selectedDate === '6' || '6' === '6') && (
+      <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2"
+           style={{
+             width: '8px',
+             height: '8px',
+             backgroundColor: 'red',
+             borderRadius: '50%',
+             flexShrink: '0',
+           }}
+      ></div>
+    )}
+  </div>
+
+  {/* Date 7 - Sunday */}
+  <div className="relative">
+    <div
+      className={`mx-auto cursor-pointer ${selectedDate === '7' ? 'bg-[#00AF46] text-white' : ''}`}
+      onClick={() => setSelectedDate('7')}
+      style={{
+        width: '35.789px',
+        height: '64.862px',
+        borderRadius: '10.116px',
+        background: selectedDate === '7' ? '#00AF46' : 'transparent',
+        alignSelf: 'stretch',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        color: selectedDate === '7' ? '#FFF' : '#000',
+        fontFamily: 'Inter',
+        fontSize: '40.466px',
+        fontWeight: '500',
+        lineHeight: '40.466px',
+        textAlign: 'center',
+      }}
+    >
+      <p className="text-base font-medium">Sun</p>
+      <p className="date-container font-medium">{7}</p>
+    </div>
+  </div>
+  </div>
+  <div className="  ">
               <h2 className="font-inter font-semibold text-center py-2 text-xl text-white">
                 Upcoming Lectures!
               </h2>
@@ -391,3 +584,4 @@ const Aicalender = () => {
 };
 
 export default Aicalender;
+

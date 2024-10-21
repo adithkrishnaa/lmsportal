@@ -1,8 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { AiOutlineGlobal } from "react-icons/ai";
 import { IoSettingsOutline } from "react-icons/io5";
 import { Link, useNavigate } from "react-router-dom";
-import pic from "../../assets/Image/per.png"; // Ensure the correct path to your image
 import Help from "./Help"; // Import the Help component
 import { RxCross2 } from "react-icons/rx";
 import {signOut} from 'firebase/auth';
@@ -13,13 +12,51 @@ const SettingsDropdown = () => {
   const [showHelp, setShowHelp] = useState(false); // Help modal visibility
   const [showLogoutConfirm, setShowLogoutConfirm] = useState(false); // Logout confirmation visibility
   const Navigate = useNavigate();
+  const [profile, setProfile] = useState({
+    _id : "Loading..",
+    username : "Loading..",
+    email : "Loading..",
+    displayName : "Loading..",
+    profilePicture: "../../assets/Image/per.png",
+    title: "Loading..",
+    firstName: "Loading..",
+    lastName: "Loading..",
+    phoneNumber: "Loading..",
+  })
+  
+  useEffect(()=>{
+    const fetchProfile = async () => {
+      try {
+        const token = await auth.currentUser.getIdToken();
+        const response = await fetch("https://course-compass-backend-zh7c.onrender.com/api/student/profile-data", {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+          setProfile(data); // Assuming the response has courses in data.courses
+        } else {
+          console.error("Failed to fetch purchases:", data.message);
+        }
+      } catch (error) {
+        console.error("Failed to fetch purchases:", error);
+      }
+    };
+    fetchProfile();
+  },[])
+
 
   // Log Out
 
   const logOut = async () => {
     try {
       await signOut(auth);
-
+      Navigate("/login");
       console.log("User logged out and tokens removed");
     } catch (e) {
       console.error("Error logging out", e);
@@ -49,12 +86,6 @@ const SettingsDropdown = () => {
   };
 
   // Handle the confirmation dialog
-  const confirmLogout = () => {
-    // Add the logic for logging out, e.g., clearing tokens or redirecting to a login page
-
-    logOut()
-    Navigate("/login"); // Close the confirmation dialog
-  };
 
   const cancelLogout = () => {
     setShowLogoutConfirm(false); // Close the confirmation dialog without logging out
@@ -75,12 +106,12 @@ const SettingsDropdown = () => {
             <div className="flex justify-center items-center w-full p-4 border-b-[1px] border-secondary">
               <img
                 className="rounded-full size-10 bg-secondary"
-                src={pic}
+                src={profile.profilePicture}
                 alt="User"
               />
               <div className="ml-2">
-                <h2 className="text-sm">Name</h2>
-                <p className="text-xs text-secondary">email@gmail.com</p>
+                <h2 className="text-sm">{profile.firstName + " " + profile.lastName}</h2>
+                <p className="text-xs text-secondary">{profile.email}</p>
               </div>
             </div>
 
@@ -173,7 +204,7 @@ const SettingsDropdown = () => {
             </p>
             <div className=" place-items-center space-y-4 w-full px-8 mt-8">
               <button
-                onClick={confirmLogout}
+                onClick={logOut}
                 className="bg-black w-full text-white py-2 px-6 rounded-lg"
               >
                 Log out
