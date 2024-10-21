@@ -41,7 +41,7 @@ const Module = () => {
   };
 
   const renderDayContent = (day, courseData) => {
-    const courseForDay = courseData.find(course => course.day === day);
+    const courseForDay = courseData[day];
 
     // Check if the course is available for the day
     if (courseForDay) {
@@ -72,15 +72,15 @@ const Module = () => {
       try {
         // Replace ':courseId' with actual course ID if needed
         const responseMonth1 = await axios.get(`/get-month1/courses/:courseId/month1`);
-        if (Array.isArray(responseMonth1.data)) {
-          setCourseDataMonth1(responseMonth1.data);
+        if (responseMonth1.data && responseMonth1.data.courses) {
+          setCourseDataMonth1(responseMonth1.data.courses);
         } else {
           console.error("Unexpected data format for Month 1:", responseMonth1.data);
         }
 
         const responseMonth2 = await axios.get(`/get-month2/course/:courseId`);
-        if (Array.isArray(responseMonth2.data)) {
-          setCourseDataMonth2(responseMonth2.data);
+        if (responseMonth2.data && responseMonth2.data.courses) {
+          setCourseDataMonth2(responseMonth2.data.courses);
         } else {
           console.error("Unexpected data format for Month 2:", responseMonth2.data);
         }
@@ -197,7 +197,7 @@ const Module = () => {
               {/* Month 2 Dropdown */}
               <div className="mt-5">
                 <h3 className="text-lg text-white bg-secondary p-3 rounded-xl flex justify-between cursor-pointer" onClick={toggleMonth2}>
-                  Month 2 <GoDot className="my-auto" size={22} />
+                  Month 2 <GoDot className="my-auto " size={22} />
                 </h3>
                 {month2Expanded && (
                   <ul className="pl-5 py-2 space-y-4">
@@ -206,12 +206,12 @@ const Module = () => {
                     </li>
                     {week1Expanded && (
                       <ul className="border-2 py-2 space-y-3 text-sm rounded-xl shadow-2xl font-medium">
-                        <Link to={"modulevideo"}>
+                        <Link>
                           <li className="w-full border-b-2 pl-3 p-2 flex justify-between">
                             1.1 Day 1 {renderDayContent(1, courseDataMonth2)}
                           </li>
                         </Link>
-                        <Link to={"videolive"}>
+                        <Link>
                           <li className="w-full border-b-2 pl-3 p-2 flex justify-between">
                             1.2 Day 2 {renderDayContent(2, courseDataMonth2)}
                           </li>
@@ -229,11 +229,6 @@ const Module = () => {
                         <Link>
                           <li className="w-full border-b-2 pl-3 p-2 flex justify-between">
                             1.5 Day 5 {renderDayContent(5, courseDataMonth2)}
-                          </li>
-                        </Link>
-                        <Link>
-                          <li className="w-full border-b-2 pl-3 p-2 flex justify-between">
-                            1.6 Day 6 {renderDayContent(6, courseDataMonth2)}
                           </li>
                         </Link>
                       </ul>
@@ -268,11 +263,6 @@ const Module = () => {
                             2.5 Day 5 {renderDayContent(5, courseDataMonth2)}
                           </li>
                         </Link>
-                        <Link>
-                          <li className="w-full border-b-2 pl-3 p-2 flex justify-between">
-                            2.6 Day 6 {renderDayContent(6, courseDataMonth2)}
-                          </li>
-                        </Link>
                       </ul>
                     )}
                   </ul>
@@ -282,8 +272,8 @@ const Module = () => {
           )}
         </div>
 
-        {/* Main Content */}
-        <div className="w-3/4">
+        {/* Right Section for Content */}
+        <div className={`transition-all duration-300 ${isMinimized ? "w-full" : "w-9/12"}`}>
           <Outlet />
         </div>
       </div>
