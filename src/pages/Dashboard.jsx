@@ -1,6 +1,6 @@
 import { TbCertificate } from "react-icons/tb";
 import { MdAccessTime } from "react-icons/md";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Navbar from "../components/Navbar";
 
@@ -13,42 +13,54 @@ import { IoMdLock } from "react-icons/io";
 import profileimg from "../assets/Image/person2.png";
 import { useCourse } from "../Context/CourseContext";
 import FooterDashboard from "../components/FooterDashboard";
+import { auth } from "../firebase";
 
 const Dashboard = () => {
+  const [loading, setLoading] = useState(true);
   const { joinedCourse, joinCourse } = useCourse(); // Get the joined course and function to join a course
-
-  const courses = [
-    {
-      id: "generative-ai",
-      name: "Generative AI",
-      image: ai,
-      instructor: "Priya Chawla",
-      duration: "3 hours",
-      description:
-        "Start your journey today and gain the cutting-edge skills driving innovation across industries worldwide",
-    },
-    {
-      id: "data-science",
-      name: "Data Science",
-      image: data,
-      instructor: "Priya Chawla",
-      duration: "3 hours",
-      description:
-        "Start your journey today and gain the cutting-edge skills driving innovation across industries worldwide",
-    },
-    {
-      id: "prompt-engineering",
-      name: "Prompt Engineering",
-      image: ml,
-      instructor: "Priya Chawla",
-      duration: "3 hours",
-      description:
-        "Start your journey today and gain the cutting-edge skills driving innovation across industries worldwide",
-    },
-  ];
-
+  const [courses, setCourses] = useState([]); // State to store fetched courses
   const [selectedCourse, setSelectedCourse] = useState(null); // To store the selected course
   const [showJoinPopup, setShowJoinPopup] = useState(false); // To show the confirmation pop-up
+
+  // Function to fetch all courses from the backend
+  const allCourses = async () => {
+    const currentUser = auth.currentUser; // Get the current user from Firebase auth
+
+    if (!currentUser) {
+      console.error("No user is currently signed in");
+      return; // If no user is signed in, exit the function
+    }
+
+    try {
+      const token = await currentUser.getIdToken(); // Fetch the token if the user is signed in
+      const response = await fetch(
+        "https://course-compass-backend-zh7c.onrender.com/api/course/get-courses",
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      console.log("Courses data", data);
+      setCourses(data); // Assuming the response has a 'courses' field
+      setLoading(false);
+    } catch (e) {
+      console.error("Error getting courses", e);
+    }
+  };
+
+  // Fetch courses when the component mounts
+  useEffect(() => {
+    allCourses();
+  }, []);
 
   // Handle when the Join button is clicked
   const handleJoin = (course) => {
@@ -98,7 +110,8 @@ const Dashboard = () => {
                 joinedCourse && joinedCourse.id !== course.id
                   ? "opacity-50 pointer-events-none" // Disable other courses once one is joined
                   : ""
-              }`}>
+              }`}
+            >
               {joinedCourse && joinedCourse.id !== course.id && (
                 <div className="absolute inset-0 bg-black bg-opacity-60 rounded-3xl flex items-center justify-center">
                   <IoMdLock size={40} className="text-white" />
@@ -199,12 +212,14 @@ const Dashboard = () => {
             <div className="space-y-3 px-10">
               <button
                 className="px-4 py-2 bg-black text-white rounded-lg w-full"
-                onClick={handleConfirmJoin}>
+                onClick={handleConfirmJoin}
+              >
                 Join
               </button>
               <button
                 className="px-4 py-2 rounded-lg w-full"
-                onClick={handleCancelJoin}>
+                onClick={handleCancelJoin}
+              >
                 Cancel
               </button>
             </div>
