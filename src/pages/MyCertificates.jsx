@@ -75,7 +75,7 @@ const MyCertificates = () => {
         <div className="grid grid-cols-4 mt-6 gap-4 gap-y-10 px-20">
           {modules.map((module) => (
             <div
-              key={module.id}
+              key={module._id}
               className="border-2  rounded-xl drop-shadow-xl cursor-pointer"
               onClick={() => openModule(module)}
             >
