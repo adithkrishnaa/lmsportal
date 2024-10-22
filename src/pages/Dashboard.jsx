@@ -105,7 +105,7 @@ const Dashboard = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 pr-6 lg:grid-cols-3 gap-8 mt-6">
           {courses.map((course) => (
             <div
-              key={course.id}
+              key={course._id}
               className={`relative shadow-2xl border-2 rounded-3xl ${
                 joinedCourse && joinedCourse.id !== course.id
                   ? "opacity-50 pointer-events-none" // Disable other courses once one is joined
