@@ -17,7 +17,7 @@ import { auth } from "../firebase";
 
 const Dashboard = () => {
   const [loading, setLoading] = useState(true);
-  const { joinedCourse, joinCourse } = useCourse(); // Get the joined course and function to join a course
+  const { joinedCourse, joinCourse, courseProgress } = useCourse(); // Get the joined course and function to join a course
   const [courses, setCourses] = useState([]); // State to store fetched courses
   const [selectedCourse, setSelectedCourse] = useState(null); // To store the selected course
   const [showJoinPopup, setShowJoinPopup] = useState(false); // To show the confirmation pop-up
@@ -195,7 +195,7 @@ const Dashboard = () => {
                 {joinedCourse ? joinedCourse.name : "No Course Enrolled Yet!"}
               </h2>
               <p className="border-[1px] mt-1 mx-auto text-center w-48 lg:w-80 rounded-full text-black font-inter font-semibold border-secondary">
-                {joinedCourse ? "50%" : "0%"}
+                {courseProgress !== null ? `${courseProgress}%` : "0%"}
               </p>
             </li>
           </div>

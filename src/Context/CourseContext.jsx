@@ -14,11 +14,28 @@ export const CourseProvider = ({ children }) => {
 
   const joinCourse = (course) => {
     setJoinedCourse(course);
+    fetchCourseProgress(course._id);
   };
 
   const selectCourse = (courseId) => {
     const course = currentCourses.find((c) => c.courseId === courseId);
     setSelectedCourse(course); // Update the selected course
+  };
+
+  const fetchCourseProgress = async (courseId) => {
+    try {
+      const response = await fetch(
+        `https://course-compass-backend-zh7c.onrender.com/course-progress/course/${courseId}`
+      );
+      if (!response.ok) {
+        throw new Error(`Error fetching course progress: ${response.status}`);
+      }
+      const data = await response.json();
+      setCourseProgress(data.progress);
+    } catch (error) {
+      console.error("Error fetching course progress:", error);
+      setCourseProgress(null);
+    }
   };
 
   return (
@@ -30,6 +47,7 @@ export const CourseProvider = ({ children }) => {
         setCurrentCourses,
         selectedCourse,
         selectCourse,
+        courseProgress,
       }}
     >
       {children}
