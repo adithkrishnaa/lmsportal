@@ -125,10 +125,19 @@ const Dashboard = () => {
                 <p className="rounded-full text-white text-xs top-6 right-5 text-left absolute bg-red-600 ml-2 p-2">
                   Top Recommended
                 </p>
-                <h2 className="text-2xl flex xl:text-4xl font-semibold font-inter absolute ml-2 bottom-0 left-3">
-                  <img className="pr-4 -mt-2" src={course.image} alt="logo" />
-                  {course.name}
-                </h2>
+
+                <div className="flex items-center absolute bottom-0 left-3 ml-2">
+                  <div className="pr-4">
+                    <img
+                      className="h-12 w-12 object-contain"
+                      src={course.image}
+                      alt="logo"
+                    />
+                  </div>
+                  <h2 className="text-2xl xl:text-4xl font-semibold font-inter">
+                    {course.title}
+                  </h2>
+                </div>
               </div>
 
               <div className="text-black mx-auto rounded-b-3xl px-5 py-4">
@@ -142,14 +151,15 @@ const Dashboard = () => {
                       src={profileimg}
                       alt="profileimg"
                     />
-                    {course.instructor}
+                    {course.author}
                   </p>
                   <p className="flex font-light items-center font-inter">
                     <MdAccessTime size={25} className="mr-2" />{" "}
                     {course.duration}
                   </p>
                   <p className="flex font-light items-center font-inter">
-                    <TbCertificate size={25} className="mr-2" /> Certification
+                    <TbCertificate size={25} className="mr-2" />{" "}
+                    {course.certificate}
                   </p>
                 </div>
 

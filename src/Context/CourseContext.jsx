@@ -7,9 +7,10 @@ export const useCourse = () => {
 };
 
 export const CourseProvider = ({ children }) => {
-  const [joinedCourse, setJoinedCourse] = useState(null); 
+  const [joinedCourse, setJoinedCourse] = useState(null);
   const [currentCourses, setCurrentCourses] = useState([]);
   const [selectedCourse, setSelectedCourse] = useState(null); // Add state for the selected course
+  const [courseProgress, setCourseProgress] = useState(null);
 
   const joinCourse = (course) => {
     setJoinedCourse(course);
@@ -21,7 +22,16 @@ export const CourseProvider = ({ children }) => {
   };
 
   return (
-    <CourseContext.Provider value={{ joinedCourse, joinCourse, currentCourses, setCurrentCourses, selectedCourse, selectCourse }}>
+    <CourseContext.Provider
+      value={{
+        joinedCourse,
+        joinCourse,
+        currentCourses,
+        setCurrentCourses,
+        selectedCourse,
+        selectCourse,
+      }}
+    >
       {children}
     </CourseContext.Provider>
   );
