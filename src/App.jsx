@@ -139,7 +139,7 @@ function App() {
             <Route path="/quizreport" element={<QuizReport />} />
             <Route path="/assessmentreport" element={<AssessmentReport />} />
             <Route
-              path="/assessmentminiproject"
+              path="/project"
               element={<AssessmentMiniproject />}
             />
           </Routes>

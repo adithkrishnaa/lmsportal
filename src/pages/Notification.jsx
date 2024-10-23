@@ -20,6 +20,7 @@ const Notification = () => {
   useEffect(() => {
     const fetchNotifications = async () => {
       const token = await auth.currentUser.getIdToken();
+      console.log(token)
       try {
         const response = await fetch(
           `https://course-compass-backend-zh7c.onrender.com/api/student/notifications`,

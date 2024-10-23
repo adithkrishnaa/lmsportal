@@ -8,9 +8,13 @@ import ai from "../assets/Image/ai.png";
 import { GoPlus } from "react-icons/go";
 import { useState } from "react";
 import { IoClose } from "react-icons/io5"; 
+import { useLocation } from 'react-router-dom';
+
 
 
 const AssessmentMiniproject = () => {
+  const location = useLocation();
+  const { project} = location.state || {};
   const [showLink, setshowLink] = useState(false);
   const [link, setLink] = useState(""); // State to store the link
   const [addedLink, setAddedLink] = useState(null); // State to store added link
@@ -67,13 +71,13 @@ const AssessmentMiniproject = () => {
               <img src={ai} alt="AI Project" />
               <div className="space-y-4">
                 <h2 className="text-3xl flex font-medium">
-                  Week 2: Mini Project 1
+                  {project.title}
                   <div className="ml-2 space-x-2">
-                    <span className="text-[13px] font-light p-1 px-2 bg-[#E67E22] text-white rounded-3xl">
+                    {/* <span className="text-[13px] font-light p-1 px-2 bg-[#E67E22] text-white rounded-3xl">
                       Intermediate
-                    </span>
+                    </span> */}
                     <span className="text-[13px] font-light p-1 px-2 bg-quiz text-white rounded-3xl">
-                      Week 2: All Topics
+                      {project.topics}
                     </span>
                   </div>
                 </h2>
@@ -81,7 +85,7 @@ const AssessmentMiniproject = () => {
             </div>
             <div className="flex py-5 justify-between">
               <div className="flex space-x-3">
-                <p>Priya Chawla</p>
+                <p>{project.author}</p>
                 <span>.</span>
                 <p>Sep 13</p>
               </div>
@@ -92,21 +96,14 @@ const AssessmentMiniproject = () => {
             </div>
             <div className="text-left space-y-4 text-base font-medium">
               <p>
-                Lorem ipsum dolor sit amet consectetur. Diam id tortor euismod
-                maecenas quis scelerisque risus in.
-              </p>
-              <p>
-                Lorem ipsum dolor sit amet consectetur. Diam id tortor euismod
-                maecenas quis scelerisque risus in. Lorem ipsum dolor sit amet
-                consectetur. Diam id tortor euismod maecenas quis scelerisque
-                risus in. dolor sit amet consectetur.
+                {project.description}
               </p>
             </div>
           </div>
           <div className="w-3/12 space-y-3 px-10">
             <div className="flex justify-between">
               <h3 className="text-xl font-semibold">Your work</h3>
-              <p className="text-[#2F7D31] font-medium">{status}</p>
+              <p className="text-[#2F7D31] font-medium">{project.status}</p>
             </div>
 
             {/* Show the added link if it exists */}
