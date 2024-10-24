@@ -1,6 +1,6 @@
 import { TbCertificate } from "react-icons/tb";
 import { MdAccessTime } from "react-icons/md";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Navbar from "../components/Navbar";
 
@@ -13,42 +13,54 @@ import { IoMdLock } from "react-icons/io";
 import profileimg from "../assets/Image/person2.png";
 import { useCourse } from "../Context/CourseContext";
 import FooterDashboard from "../components/FooterDashboard";
+import { auth } from "../firebase";
 
 const Dashboard = () => {
-  const { joinedCourse, joinCourse } = useCourse(); // Get the joined course and function to join a course
-
-  const courses = [
-    {
-      id: "generative-ai",
-      name: "Generative AI",
-      image: ai,
-      instructor: "Priya Chawla",
-      duration: "3 hours",
-      description:
-        "Start your journey today and gain the cutting-edge skills driving innovation across industries worldwide",
-    },
-    {
-      id: "data-science",
-      name: "Data Science",
-      image: data,
-      instructor: "Priya Chawla",
-      duration: "3 hours",
-      description:
-        "Start your journey today and gain the cutting-edge skills driving innovation across industries worldwide",
-    },
-    {
-      id: "prompt-engineering",
-      name: "Prompt Engineering",
-      image: ml,
-      instructor: "Priya Chawla",
-      duration: "3 hours",
-      description:
-        "Start your journey today and gain the cutting-edge skills driving innovation across industries worldwide",
-    },
-  ];
-
+  const [loading, setLoading] = useState(true);
+  const { joinedCourse, joinCourse, courseProgress } = useCourse(); // Get the joined course and function to join a course
+  const [courses, setCourses] = useState([]); // State to store fetched courses
   const [selectedCourse, setSelectedCourse] = useState(null); // To store the selected course
   const [showJoinPopup, setShowJoinPopup] = useState(false); // To show the confirmation pop-up
+
+  // Function to fetch all courses from the backend
+  const allCourses = async () => {
+    const currentUser = auth.currentUser; // Get the current user from Firebase auth
+
+    if (!currentUser) {
+      console.error("No user is currently signed in");
+      return; // If no user is signed in, exit the function
+    }
+
+    try {
+      const token = await currentUser.getIdToken(); // Fetch the token if the user is signed in
+      const response = await fetch(
+        "https://course-compass-backend-zh7c.onrender.com/api/course/get-courses",
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      console.log("Courses data", data);
+      setCourses(data); // Assuming the response has a 'courses' field
+      setLoading(false);
+    } catch (e) {
+      console.error("Error getting courses", e);
+    }
+  };
+
+  // Fetch courses when the component mounts
+  useEffect(() => {
+    allCourses();
+  }, []);
 
   // Handle when the Join button is clicked
   const handleJoin = (course) => {
@@ -93,12 +105,13 @@ const Dashboard = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 pr-6 lg:grid-cols-3 gap-8 mt-6">
           {courses.map((course) => (
             <div
-              key={course.id}
+              key={course._id}
               className={`relative shadow-2xl border-2 rounded-3xl ${
                 joinedCourse && joinedCourse.id !== course.id
                   ? "opacity-50 pointer-events-none" // Disable other courses once one is joined
                   : ""
-              }`}>
+              }`}
+            >
               {joinedCourse && joinedCourse.id !== course.id && (
                 <div className="absolute inset-0 bg-black bg-opacity-60 rounded-3xl flex items-center justify-center">
                   <IoMdLock size={40} className="text-white" />
@@ -112,10 +125,19 @@ const Dashboard = () => {
                 <p className="rounded-full text-white text-xs top-6 right-5 text-left absolute bg-red-600 ml-2 p-2">
                   Top Recommended
                 </p>
-                <h2 className="text-2xl flex xl:text-4xl font-semibold font-inter absolute ml-2 bottom-0 left-3">
-                  <img className="pr-4 -mt-2" src={course.image} alt="logo" />
-                  {course.name}
-                </h2>
+
+                <div className="flex items-center absolute bottom-0 left-3 ml-2">
+                  <div className="pr-4">
+                    <img
+                      className="h-12 w-12 object-contain"
+                      src={course.image}
+                      alt="logo"
+                    />
+                  </div>
+                  <h2 className="text-2xl xl:text-4xl font-semibold font-inter">
+                    {course.title}
+                  </h2>
+                </div>
               </div>
 
               <div className="text-black mx-auto rounded-b-3xl px-5 py-4">
@@ -129,14 +151,15 @@ const Dashboard = () => {
                       src={profileimg}
                       alt="profileimg"
                     />
-                    {course.instructor}
+                    {course.author}
                   </p>
                   <p className="flex font-light items-center font-inter">
                     <MdAccessTime size={25} className="mr-2" />{" "}
                     {course.duration}
                   </p>
                   <p className="flex font-light items-center font-inter">
-                    <TbCertificate size={25} className="mr-2" /> Certification
+                    <TbCertificate size={25} className="mr-2" />{" "}
+                    {course.certificate}
                   </p>
                 </div>
 
@@ -172,7 +195,7 @@ const Dashboard = () => {
                 {joinedCourse ? joinedCourse.name : "No Course Enrolled Yet!"}
               </h2>
               <p className="border-[1px] mt-1 mx-auto text-center w-48 lg:w-80 rounded-full text-black font-inter font-semibold border-secondary">
-                {joinedCourse ? "50%" : "0%"}
+                {courseProgress !== null ? `${courseProgress}%` : "0%"}
               </p>
             </li>
           </div>
@@ -199,12 +222,14 @@ const Dashboard = () => {
             <div className="space-y-3 px-10">
               <button
                 className="px-4 py-2 bg-black text-white rounded-lg w-full"
-                onClick={handleConfirmJoin}>
+                onClick={handleConfirmJoin}
+              >
                 Join
               </button>
               <button
                 className="px-4 py-2 rounded-lg w-full"
-                onClick={handleCancelJoin}>
+                onClick={handleCancelJoin}
+              >
                 Cancel
               </button>
             </div>
