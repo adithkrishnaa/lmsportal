@@ -1,53 +1,88 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { AiOutlineGlobal } from "react-icons/ai";
 import { IoSettingsOutline } from "react-icons/io5";
 import { Link, useNavigate } from "react-router-dom";
-import pic from "../../../assets/Image/per.png"; // Ensure the correct path to your image
-import Help from "./Help"; // Import the Help component
+import Help from "./Help"; // Import Help component
 import { RxCross2 } from "react-icons/rx";
+import { signOut } from "firebase/auth";
+import { auth } from "../../../firebase"; // Adjust firebase import if needed
 
 const SettingsDropdown = () => {
   const [isDropdownVisible, setIsDropdownVisible] = useState(false); // Dropdown visibility
   const [showHelp, setShowHelp] = useState(false); // Help modal visibility
-  const [showLogoutConfirm, setShowLogoutConfirm] = useState(false); // Logout confirmation visibility
-const Navigate = useNavigate();
+  const [showLogoutConfirm, setShowLogoutConfirm] = useState(false); // Logout confirmation
+  const Navigate = useNavigate();
+  const [profile, setProfile] = useState({
+    _id: "Loading...",
+    username: "Loading...",
+    email: "Loading...",
+    displayName: "Loading...",
+    profilePicture: "../../assets/Image/per.png",
+    title: "Loading...",
+    firstName: "Loading...",
+    lastName: "Loading...",
+    phoneNumber: "Loading...",
+  });
+
+  // Fetch profile data on component mount
+  useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        const token = await auth.currentUser.getIdToken();
+        const response = await fetch(
+          "https://course-compass-backend-zh7c.onrender.com/api/instructor/profile-data",
+          {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        const data = await response.json();
+        if (response.ok) {
+          setProfile(data);
+        } else {
+          console.error("Failed to fetch profile:", data.message);
+        }
+      } catch (error) {
+        console.error("Error fetching profile:", error);
+      }
+    };
+    fetchProfile();
+  }, []);
+
+  // Logout functionality
+  const logOut = async () => {
+    try {
+      await signOut(auth);
+      Navigate("/luctherhomelayout/luctherlogin");
+      console.log("User logged out");
+    } catch (error) {
+      console.error("Error logging out:", error);
+    }
+  };
 
   // Toggle dropdown visibility
-  const toggleDropdown = () => {
-    setIsDropdownVisible(!isDropdownVisible);
-  };
+  const toggleDropdown = () => setIsDropdownVisible(!isDropdownVisible);
 
-  // Open Help modal
+  // Handle Help modal open/close
   const handleHelpClick = () => {
     setShowHelp(true);
-    setIsDropdownVisible(false); // Close the dropdown when opening the help modal
+    setIsDropdownVisible(false);
   };
+  const handleCloseHelp = () => setShowHelp(false);
 
-  // Close Help modal
-  const handleCloseHelp = () => {
-    setShowHelp(false);
-  };
-
-  // Open Logout confirmation dialog
+  // Handle Logout confirmation modal
   const handleLogoutClick = () => {
     setShowLogoutConfirm(true);
-    setIsDropdownVisible(false); // Close the dropdown when opening the confirmation dialog
+    setIsDropdownVisible(false);
   };
-
-  // Handle the confirmation dialog
-  const confirmLogout = () => {
-    // Add the logic for logging out, e.g., clearing tokens or redirecting to a login page
-    Navigate("/luctherhomelayout");
-    ; // Close the confirmation dialog
-  };
-
-  const cancelLogout = () => {
-    setShowLogoutConfirm(false); // Close the confirmation dialog without logging out
-  };
+  const cancelLogout = () => setShowLogoutConfirm(false);
 
   return (
     <>
-      <div className="relative ">
+      <div className="relative">
         {/* Settings Icon */}
         <button onClick={toggleDropdown} className="focus:outline-none">
           <IoSettingsOutline size={23} />
@@ -60,19 +95,24 @@ const Navigate = useNavigate();
             <div className="flex justify-center items-center w-full p-4 border-b-[1px] border-secondary">
               <img
                 className="rounded-full size-10 bg-secondary"
-                src={pic}
+                src={profile.profilePicture}
                 alt="User"
               />
               <div className="ml-2">
-                <h2 className="text-sm">Name</h2>
-                <p className="text-xs text-secondary">email@gmail.com</p>
+                <h2 className="text-sm">
+                  {profile.firstName + " " + profile.lastName}
+                </h2>
+                <p className="text-xs text-secondary">{profile.email}</p>
               </div>
             </div>
 
             {/* Menu Items */}
             <div className="px-3">
-              <Link to="/lucthersetting/account">
+              <Link to="/setting/account">
                 <li className="py-2">Account settings</li>
+              </Link>
+              <Link to="/setting/purchase">
+                <li className="py-2">Purchase history</li>
               </Link>
             </div>
 
@@ -98,14 +138,12 @@ const Navigate = useNavigate();
       {showHelp && (
         <div className="fixed top-0 h-full right-0 w-full min-h-screen bg-black bg-opacity-60 flex justify-center z-50 items-center">
           <div className="w-1/2 rounded-3xl shadow-lg relative">
-            {/* Close button */}
             <button
               className="absolute top-5 right-5 text-white"
-              onClick={handleCloseHelp}>
+              onClick={handleCloseHelp}
+            >
               <RxCross2 size={30} />
             </button>
-
-            {/* Help content */}
             <Help />
           </div>
         </div>
@@ -121,7 +159,8 @@ const Navigate = useNavigate();
                 width="40"
                 height="40"
                 viewBox="0 0 35 35"
-                fill="none">
+                fill="none"
+              >
                 <path
                   fillRule="evenodd"
                   clipRule="evenodd"
@@ -135,7 +174,8 @@ const Navigate = useNavigate();
                     y1="0.700001"
                     x2="35"
                     y2="35.7"
-                    gradientUnits="userSpaceOnUse">
+                    gradientUnits="userSpaceOnUse"
+                  >
                     <stop stopColor="#49FFA7" />
                     <stop offset="1" stopColor="#1976D2" />
                   </linearGradient>
@@ -151,14 +191,16 @@ const Navigate = useNavigate();
             </p>
             <div className=" place-items-center space-y-4 w-full px-8 mt-8">
               <button
-                onClick={confirmLogout}
-                className="bg-black w-full text-white py-2 px-6 rounded-lg">
+                onClick={logOut}
+                className="bg-black w-full text-white py-2 px-6 rounded-lg"
+              >
                 Log out
               </button>
               <br />
               <button
                 onClick={cancelLogout}
-                className="bg-gray-300 text-black w-full py-2 px-6 rounded-lg">
+                className="bg-gray-300 text-black w-full py-2 px-6 rounded-lg"
+              >
                 Cancel
               </button>
             </div>
