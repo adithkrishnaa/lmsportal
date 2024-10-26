@@ -69,6 +69,15 @@ const LuctherLogin = () => {
       const token = await auth.currentUser.getIdToken();
       console.log("Generated Firebase token:", token);
 
+      // Ensure fields are populated properly.
+      const payload = {
+        uid: uid || "N/A",
+        email: email || "N/A",
+        displayName: displayName || "Anonymous",
+        photoURL: photoURL || "",
+      };
+      console.log("Sending payload:", payload);
+
       const response = await fetch(
         "https://course-compass-backend-zh7c.onrender.com/api/instructor/save-user",
         {
@@ -77,17 +86,26 @@ const LuctherLogin = () => {
             Authorization: `Bearer ${token}`,
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ uid, email, displayName, photoURL }),
+          body: JSON.stringify(payload),
         }
       );
 
       if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.message}`);
-      }
+        const errorData = await response.json();
+        console.error("Backend response:", errorData);
 
-      const result = await response.json();
-    } catch (e) {
-      console.error("Error sending token to backend", e);
+        if (errorData.message === "Username already taken") {
+          setErrorMessage("Account already exists. Please sign in instead.");
+        } else {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+      } else {
+        const result = await response.json();
+        console.log("User saved successfully:", result);
+      }
+    } catch (error) {
+      console.error("Error sending token to backend:", error);
+      setErrorMessage("An unexpected error occurred. Please try again.");
     }
   };
 

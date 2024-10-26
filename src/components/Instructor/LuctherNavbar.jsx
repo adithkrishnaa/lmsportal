@@ -28,10 +28,13 @@ const LuctherNavbar = () => {
 
           {/* Icon Links */}
           <div className="flex justify-end space-x-10 mt-4 md:mt-0">
-           
-            <Link className=" relative " to=" ">
+            <Link className="relative" to="/lucthernotification">
               <IoIosNotificationsOutline size={25} />
-              
+              <div className="absolute -top-2 border-2 w-5 p-1 h-5 rounded-full bg-red-600 -right-1">
+                <p className="-mt-1 ml-[2px] text-white font-inter text-[10px]">
+                  1
+                </p>
+              </div>
             </Link>
 
             {/* Use SettingsDropdown */}

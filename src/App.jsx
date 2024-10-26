@@ -15,6 +15,7 @@ import Purchase from "./components/Setting/Purchase";
 import CourseOverview from "./pages/CourseOverview";
 import MyCertificates from "./pages/MyCertificates";
 import Notification from "./pages/Notification";
+import LuctherNotification from "./components/Instructor/LuctherNotification";
 import Cart from "./pages/Cart";
 import MyCourses from "./pages/MyCourses";
 import CoursesModule from "./pages/CoursesModule";
@@ -104,6 +105,7 @@ function App() {
             element={<CourseOverview />}
           />
           <Route path="/notification" element={<Notification />} />
+          <Route path="/lucthernotification" element={<LuctherNotification />} />
           <Route path="/cart" element={<Cart />} />
 
           {/* Setting Page with Nested Routes */}
