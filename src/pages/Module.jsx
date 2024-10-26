@@ -12,7 +12,7 @@ const Module = ({ courseId }) => {
   const [isMinimized, setIsMinimized] = useState(false);
   const [month1Expanded, setMonth1Expanded] = useState(false);
   const [month2Expanded, setMonth2Expanded] = useState(false);
-
+  
   // State for week expansions
   const [week1ExpandedMonth1, setWeek1ExpandedMonth1] = useState(false);
   const [week2ExpandedMonth1, setWeek2ExpandedMonth1] = useState(false);
@@ -28,49 +28,17 @@ const Module = ({ courseId }) => {
   const [courseDataMonth1, setCourseDataMonth1] = useState([]);
   const [courseDataMonth2, setCourseDataMonth2] = useState([]);
 
-  const toggleMinimize = () => {
-    setIsMinimized(!isMinimized);
-  };
-
-  const toggleMonth1 = () => {
-    setMonth1Expanded(!month1Expanded);
-  };
-
-  const toggleMonth2 = () => {
-    setMonth2Expanded(!month2Expanded);
-  };
-
-  const toggleWeek1Month1 = () => {
-    setWeek1ExpandedMonth1(!week1ExpandedMonth1);
-  };
-
-  const toggleWeek2Month1 = () => {
-    setWeek2ExpandedMonth1(!week2ExpandedMonth1);
-  };
-
-  const toggleWeek3Month1 = () => {
-    setWeek3ExpandedMonth1(!week3ExpandedMonth1);
-  };
-
-  const toggleWeek4Month1 = () => {
-    setWeek4ExpandedMonth1(!week4ExpandedMonth1);
-  };
-
-  const toggleWeek1Month2 = () => {
-    setWeek1ExpandedMonth2(!week1ExpandedMonth2);
-  };
-
-  const toggleWeek2Month2 = () => {
-    setWeek2ExpandedMonth2(!week2ExpandedMonth2);
-  };
-
-  const toggleWeek3Month2 = () => {
-    setWeek3ExpandedMonth2(!week3ExpandedMonth2);
-  };
-
-  const toggleWeek4Month2 = () => {
-    setWeek4ExpandedMonth2(!week4ExpandedMonth2);
-  };
+  const toggleMinimize = () => setIsMinimized(!isMinimized);
+  const toggleMonth1 = () => setMonth1Expanded(!month1Expanded);
+  const toggleMonth2 = () => setMonth2Expanded(!month2Expanded);
+  const toggleWeek1Month1 = () => setWeek1ExpandedMonth1(!week1ExpandedMonth1);
+  const toggleWeek2Month1 = () => setWeek2ExpandedMonth1(!week2ExpandedMonth1);
+  const toggleWeek3Month1 = () => setWeek3ExpandedMonth1(!week3ExpandedMonth1);
+  const toggleWeek4Month1 = () => setWeek4ExpandedMonth1(!week4ExpandedMonth1);
+  const toggleWeek1Month2 = () => setWeek1ExpandedMonth2(!week1ExpandedMonth2);
+  const toggleWeek2Month2 = () => setWeek2ExpandedMonth2(!week2ExpandedMonth2);
+  const toggleWeek3Month2 = () => setWeek3ExpandedMonth2(!week3ExpandedMonth2);
+  const toggleWeek4Month2 = () => setWeek4ExpandedMonth2(!week4ExpandedMonth2);
 
   const renderDayContent = (day, week, month) => {
     const courseForDay =
@@ -101,29 +69,23 @@ const Module = ({ courseId }) => {
     const fetchCourseData = async () => {
       try {
         const responseMonth1 = await axios.get(
-          `/get-month1/courses/${courseId}/month1`
+          `https://course-compass-backend-zh7c.onrender.com/api/course/get-month1/courses/${courseId}/month1`
         );
-        console.log("Month 1 Data:", responseMonth1.data); // Log the data received
+        console.log("Month 1 Data:", responseMonth1.data); 
         if (responseMonth1.data && responseMonth1.data.courses) {
           setCourseDataMonth1(responseMonth1.data.courses);
         } else {
-          console.error(
-            "Unexpected data format for Month 1:",
-            responseMonth1.data
-          );
+          console.error("Unexpected data format for Month 1:", responseMonth1.data);
         }
 
         const responseMonth2 = await axios.get(
-          `/get-month2/course/${courseId}`
+          `https://course-compass-backend-zh7c.onrender.com/api/course/get-month2/course/${courseId}`
         );
-        console.log("Month 2 Data:", responseMonth2.data); // Log the data received
+        console.log("Month 2 Data:", responseMonth2.data); 
         if (responseMonth2.data && responseMonth2.data.courses) {
           setCourseDataMonth2(responseMonth2.data.courses);
         } else {
-          console.error(
-            "Unexpected data format for Month 2:",
-            responseMonth2.data
-          );
+          console.error("Unexpected data format for Month 2:", responseMonth2.data);
         }
       } catch (error) {
         console.error("Error fetching course data:", error);
@@ -139,9 +101,7 @@ const Module = ({ courseId }) => {
       <Aicalender />
       <div className="w-full px-2 font-inter pt-24 flex">
         <div
-          className={`transition-all duration-300 ${
-            isMinimized ? "w-16" : "w-3/12"
-          }`}
+          className={`transition-all duration-300 ${isMinimized ? "w-16" : "w-3/12"}`}
         >
           <div className="flex justify-between items-center">
             <h2 className={`text-2xl font-semibold ${isMinimized ? "hidden" : ""}`}>
@@ -178,7 +138,13 @@ const Module = ({ courseId }) => {
                         {eval(`week${week}ExpandedMonth1`) && (
                           <ul className="border-2 py-2 space-y-3 text-sm rounded-xl shadow-2xl font-medium">
                             {[1, 2, 3, 4, 5, 6, 7].map((day) => (
-                              <Link to={`modulevideo`} key={day}>
+                              <Link 
+                                to={`/modulevideo/${week}/${day}`} 
+                                key={day}
+                                state={{
+                                  dayData: courseDataMonth1[week - 1]?.days[day - 1] || null,
+                                }}
+                              >
                                 <li className="w-full border-b-2 pl-3 p-2 flex justify-between">
                                   {`${week}.${day} Day ${day}`}{" "}
                                   {renderDayContent(day, week, 1)}
@@ -214,7 +180,13 @@ const Module = ({ courseId }) => {
                         {eval(`week${week}ExpandedMonth2`) && (
                           <ul className="border-2 py-2 space-y-3 text-sm rounded-xl shadow-2xl font-medium">
                             {[1, 2, 3, 4, 5, 6, 7].map((day) => (
-                              <Link to={`modulevideo`} key={day}>
+                              <Link 
+                                to={`/modulevideo/${week}/${day}`} 
+                                key={day}
+                                state={{
+                                  dayData: courseDataMonth2[week - 1]?.days[day - 1] || null,
+                                }}
+                              >
                                 <li className="w-full border-b-2 pl-3 p-2 flex justify-between">
                                   {`${week}.${day} Day ${day}`}{" "}
                                   {renderDayContent(day, week, 2)}
@@ -232,11 +204,7 @@ const Module = ({ courseId }) => {
           )}
         </div>
 
-        <div
-          className={`transition-all duration-300 w-full ${
-            isMinimized ? "hidden" : "block"
-          }`}
-        >
+        <div className="w-3/4 mx-5">
           <Outlet />
         </div>
       </div>
