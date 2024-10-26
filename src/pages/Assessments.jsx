@@ -15,13 +15,13 @@ const Assessments = () => {
   const [ongoingAssessments, setOngoingAssessments] = useState([]);
 
   const navigate = useNavigate();
-
+  const courseId = "6712a07bde57de8f762e9894";
   useEffect(() => {
     const fetchCourseProgress = async () => {
       const token = await auth.currentUser.getIdToken();
       try {
         const response = await fetch(
-          `https://course-compass-backend-zh7c.onrender.com/api/student/course-progress/course/6712a07bde57de8f762e9894`,
+          `https://course-compass-backend-zh7c.onrender.com/api/student/course-progress/course/${courseId}`,
           {
             method: "GET",
             headers: {
@@ -43,7 +43,7 @@ const Assessments = () => {
       const token = await auth.currentUser.getIdToken();
       try {
         const response = await fetch(
-          `https://course-compass-backend-zh7c.onrender.com/api/course/get-course/course/6712a07bde57de8f762e9894`,
+          `https://course-compass-backend-zh7c.onrender.com/api/course/get-course/course/${courseId}`,
           {
             method: "GET",
             headers: {
@@ -148,7 +148,12 @@ const Assessments = () => {
             ? week.miniProject.projectDescription
             : "Yet to be updated",
           type: "project",
-          status: projectWeek[i]?.projectStatus ?? "Not started",
+          status: projectWeek[i]?.projectStatus ?? "Missing",
+          submission : projectWeek[i]?.submissionUrl ?? "",
+          courseId : courseId,
+          index : i,
+          location : "project-week-project"
+
         };
 
         (projectWeek && projectWeek[i]?.projectStatus === "submitted"
@@ -228,6 +233,7 @@ const Assessments = () => {
           ? test.assignmentDescription
           : "Yet to be updated",
         type: "assessment",
+        
       };
 
       (week5_test && week5_test?.quizSubmitted === true
@@ -250,7 +256,11 @@ const Assessments = () => {
         topics: finalProject.topics ? finalProject.topics : "Yet to be updated",
         description: finalProject.projectDescription,
         type: "project",
-        status: finalProjectCourse?.projectStatus ?? "Not started",
+        status: finalProjectCourse?.projectStatus ?? "Missing",
+        submission : finalProjectCourse?.submissionUrl ?? "",
+        courseId : courseId,
+        location : "final-project"
+
       };
 
       (finalProjectCourse && finalProjectCourse?.projectStatus === "submitted"

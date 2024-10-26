@@ -42,13 +42,14 @@ import LuctherChangePassword from "./components/Instructor/LuctherChangePassword
 import LuctherSetting from "./pages/InstructorPages/LuctherSetting";
 import Classroam from "./pages/InstructorPages/Classroam";
 import Grading from "./pages/InstructorPages/Grading";
-import Studentmark from "./pages/InstructorPages/Studentmark";
+import Studentmark from "./pages/InstructorPages/Studentmark.jsx";
+import LuctherNotification from './components/Instructor/LuctherNotification.jsx';
 import { AuthProvider } from "./Context/AuthProvider";
 
 function App() {
   return (
     <Router>
-      <AuthProvider>
+      {/* <AuthProvider> */}
         <CourseProvider>
           {" "}
           {/* Wrap the entire Router with CourseProvider */}
@@ -94,6 +95,7 @@ function App() {
             <Route path="/livepage" element={<Livepage />} />
             <Route path="/classroam/:id" element={<Classroam />} />
             <Route path="/grading/:assessmentId" element={<Grading />} />
+            <Route path="/lucthernotification" element={<LuctherNotification />} />
             <Route
               path="/studentmark/:assessmentId/:studentId/:studentname"
               element={<Studentmark />}
@@ -144,7 +146,7 @@ function App() {
             />
           </Routes>
         </CourseProvider>
-      </AuthProvider>
+      {/* </AuthProvider> */}
     </Router>
   );
 }
