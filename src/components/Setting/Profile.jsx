@@ -1,38 +1,93 @@
 import git from "../../assets/Image/git_icon.png";
 import LinkedIn from "../../assets/Image/LinkedIn.png";
-import { useState, useEffect} from "react";
-import {auth} from "../../firebase";
+import { useState, useEffect } from "react";
+import { auth } from "../../firebase";
 
 const Profile = () => {
+  const [picture, setPicture] = useState("../../assets/Image/per.png");
+  const [about, setAbout] = useState("Write something about yourself...");
 
-  const [picture, setPicture] = useState("../../assets/Image/per.png")
-  
-  useEffect(()=>{
-    const fetchProfile = async () => {
+  useEffect(() => {
+    const fetchProfilePicture = async () => {
       try {
         const token = await auth.currentUser.getIdToken();
-        const response = await fetch("https://course-compass-backend-zh7c.onrender.com/api/student/profile/picture", {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-        });
+        const response = await fetch(
+          "https://course-compass-backend-zh7c.onrender.com/api/student/profile/picture",
+          {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
+            },
+          }
+        );
 
         const data = await response.json();
 
         if (response.ok) {
           setPicture(data.profilePicture); // Assuming the response has courses in data.courses
         } else {
-          console.error("Failed to fetch purchases:", data.message);
+          console.error("Failed to fetch pfp:", data.message);
         }
       } catch (error) {
-        console.error("Failed to fetch purchases:", error);
+        console.error("Failed to fetch pfp:", error);
       }
     };
-    fetchProfile();
-  },[])
 
+    const fetchAbout= async () => {
+      try {
+        const token = await auth.currentUser.getIdToken();
+        const response = await fetch(
+          "https://course-compass-backend-zh7c.onrender.com/api/student/about",
+          {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
+            },
+          }
+        );
+
+        const data = await response.json();
+        console.log(data)
+
+        if (response.ok) {
+          setAbout(data.about); // Assuming the response has courses in data.courses
+        } else {
+          console.error("Failed to fetch about:", data.message);
+        }
+      } catch (error) {
+        console.error("Failed to fetch about:", error);
+      }
+    };
+
+    fetchProfilePicture();
+    fetchAbout();
+  }, []);
+  const handleAbout = (e) => {
+    setAbout(e.target.value);
+  }
+  const updateAbout = async () => {
+    try {
+      const token = await auth.currentUser.getIdToken();
+      const response = await fetch("https://course-compass-backend-zh7c.onrender.com/api/student/update/about", {
+        method: "PUT",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body : JSON.stringify({ "about" : `${about}`})
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        alert("Data updated successfully!");
+      }
+    } catch (error) {
+      console.error("Failed to fetch update data:", error);
+    }
+  }
   return (
     <>
       <div className="px-4 py-4">
@@ -72,8 +127,14 @@ const Profile = () => {
           <h3 className="font-inter text-base">About</h3>
           <textarea
             className="p-3 pl-5 focus:outline-none relative mt-2 bg-four rounded-lg w-full h-32 resize-none"
-            placeholder="Write something about yourself..."
+            onChange={handleAbout}
+            placeholder={about}
           />
+          <div className="flex space-x-5 justify-end">
+            <button className="px-4 py-1 rounded-lg bg-black font-inter text-white" onClick={updateAbout}>
+              Update
+            </button>
+          </div>
           <div>
             <h2>Connect with me on:</h2>
             <div className=" list-none py-5 flex space-x-3">

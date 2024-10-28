@@ -82,7 +82,8 @@ const Account = () => {
     try {
       console.log(profile)
       const token = await auth.currentUser.getIdToken();
-      const response = await fetch("http://localhost:3000/api/student/profile-data", {
+      console.log(profile)
+      const response = await fetch("https://course-compass-backend-zh7c.onrender.com/api/student/profile-data", {
         method: "PUT",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -152,7 +153,7 @@ const Account = () => {
                     />
                   </label>
                 </div>
-                <div className=" w-1/2">
+                {/* <div className=" w-1/2">
                   <label className="block py-3 relative" htmlFor="">
                     Title
                     <input
@@ -166,7 +167,7 @@ const Account = () => {
                       size={21}
                     />
                   </label>
-                </div>
+                </div> */}
               </div>
             </form>
           </div>
@@ -253,7 +254,8 @@ const Account = () => {
                     size={21}
                   />
                   <button className="ml-5 p-2 bg-black text-sm text-white font-inter rounded-xl">
-                    Change Password
+                  Change Email
+
                   </button>
                 </div>
                 <div className=" relative ">
@@ -270,14 +272,14 @@ const Account = () => {
                     size={21}
                   />
                   <button className="ml-5 p-2 bg-black text-sm text-white font-inter rounded-xl">
-                    Change Email
+                  Phone Number
                   </button>
                 </div>
               </div>
             </form>
           </div>
 
-          {/*Visibility and Privacy */}
+          {/* Visibility and Privacy
 
           <div className="mt-7">
             <h3 className="font-inter text-base">Visibility and Privacy</h3>
@@ -305,12 +307,12 @@ const Account = () => {
                 </div>
               </div>
             </form>
-          </div>
+          </div> */}
 
           {/*Profile Privacy
            */}
 
-          <div className="mt-7">
+          {/* <div className="mt-7">
             <h3 className="font-inter text-base">Profile Privacy</h3>
             <p className="font-inter text-sm text-secondary">
               Hide your profile page, and social aspects of your account.
@@ -318,8 +320,8 @@ const Account = () => {
             <button className="mt-5 p-3 bg-black text-sm text-white font-inter rounded-full">
               Make Profile Private
             </button>
-          </div>
-        </div>
+          </div> */}
+        </div> 
 
         <div className=" container pr-4 py-5">
           <div className="flex justify-end gap-5">

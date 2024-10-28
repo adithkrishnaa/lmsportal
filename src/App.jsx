@@ -15,7 +15,6 @@ import Purchase from "./components/Setting/Purchase";
 import CourseOverview from "./pages/CourseOverview";
 import MyCertificates from "./pages/MyCertificates";
 import Notification from "./pages/Notification";
-import LuctherNotification from "./components/Instructor/LuctherNotification";
 import Cart from "./pages/Cart";
 import MyCourses from "./pages/MyCourses";
 import CoursesModule from "./pages/CoursesModule";
@@ -43,60 +42,64 @@ import LuctherChangePassword from "./components/Instructor/LuctherChangePassword
 import LuctherSetting from "./pages/InstructorPages/LuctherSetting";
 import Classroam from "./pages/InstructorPages/Classroam";
 import Grading from "./pages/InstructorPages/Grading";
-import Studentmark from "./pages/InstructorPages/Studentmark";
+import Studentmark from "./pages/InstructorPages/Studentmark.jsx";
+import LuctherNotification from './components/Instructor/LuctherNotification.jsx';
+import { AuthProvider } from "./Context/AuthProvider";
 
 function App() {
   return (
-    <CourseProvider>
-      {" "}
-      {/* Wrap the entire Router with CourseProvider */}
-      <Router>
-        <Routes>
-          {/* Home Layout and Authentication Routes */}
-          <Route path="/" element={<HomeLayout />}>
-            <Route index element={<Login />} />
-            <Route path="login" element={<Login />} />
-            <Route path="signin" element={<Signin />} />
-            <Route path="register" element={<Register />} />
-            <Route path="siginpassword" element={<SigninPassword />} />
-            <Route path="forgotpassword" element={<ForgotPassword />} />
-            <Route path="passwordcode" element={<Passwordcode />} />
-            <Route path="changepassword" element={<ChangePassword />} />
-          </Route>
+    <Router>
+      {/* <AuthProvider> */}
+        <CourseProvider>
+          {" "}
+          {/* Wrap the entire Router with CourseProvider */}
+          <Routes>
+            {/* Home Layout and Authentication Routes */}
+            <Route path="/" element={<HomeLayout />}>
+              <Route index element={<Login />} />
+              <Route path="login" element={<Login />} />
+              <Route path="signin" element={<Signin />} />
+              <Route path="register" element={<Register />} />
+              <Route path="siginpassword" element={<SigninPassword />} />
+              <Route path="forgotpassword" element={<ForgotPassword />} />
+              <Route path="passwordcode" element={<Passwordcode />} />
+              <Route path="changepassword" element={<ChangePassword />} />
+            </Route>
 
-          {/* Instructor Pages */}
-          <Route path="/luctherhomelayout" element={<LuctherHomeLayout />}>
-            <Route index element={<LuctherLogin />} />
-            <Route path="luctherlogin" element={<LuctherLogin />} />
-            <Route path="luctherregister" element={<LuctherRegister />} />
-            <Route path="lucthersignin" element={<LuctherSignin />} />
-            <Route
-              path="lucthersiginpassword"
-              element={<LuctherSigninPassword />}
-            />
-            <Route
-              path="luctherforgotpassword"
-              element={<LuctherForgotPassword />}
-            />
-            <Route
-              path="luctherpasswordcode"
-              element={<LuctherPasswordcode />}
-            />
-            <Route
-              path="luctherchangepassword"
-              element={<LuctherChangePassword />}
-            />
-          </Route>
+            {/* Instructor Pages */}
+            <Route path="/luctherhomelayout" element={<LuctherHomeLayout />}>
+              <Route index element={<LuctherLogin />} />
+              <Route path="luctherlogin" element={<LuctherLogin />} />
+              <Route path="luctherregister" element={<LuctherRegister />} />
+              <Route path="lucthersignin" element={<LuctherSignin />} />
+              <Route
+                path="lucthersiginpassword"
+                element={<LuctherSigninPassword />}
+              />
+              <Route
+                path="luctherforgotpassword"
+                element={<LuctherForgotPassword />}
+              />
+              <Route
+                path="luctherpasswordcode"
+                element={<LuctherPasswordcode />}
+              />
+              <Route
+                path="luctherchangepassword"
+                element={<LuctherChangePassword />}
+              />
+            </Route>
 
-          <Route path="/luctherdashboard" element={<LuctherDashboard />} />
-          <Route path="/calanderpage" element={<CalanderPage />} />
-          <Route path="/livepage" element={<Livepage />} />
-          <Route path="/classroam/:id" element={<Classroam />} />
-          <Route path="/grading/:assessmentId" element={<Grading />} />
-          <Route
-            path="/studentmark/:assessmentId/:studentId/:studentname"
-            element={<Studentmark />}
-          />
+            <Route path="/luctherdashboard" element={<LuctherDashboard />} />
+            <Route path="/calanderpage" element={<CalanderPage />} />
+            <Route path="/livepage" element={<Livepage />} />
+            <Route path="/classroam/:id" element={<Classroam />} />
+            <Route path="/grading/:assessmentId" element={<Grading />} />
+            <Route path="/lucthernotification" element={<LuctherNotification />} />
+            <Route
+              path="/studentmark/:assessmentId/:studentId/:studentname"
+              element={<Studentmark />}
+            />
 
           {/* Dashboard and Course Overview Routes */}
           <Route path="/dashboard" element={<Dashboard />} />
@@ -105,46 +108,46 @@ function App() {
             element={<CourseOverview />}
           />
           <Route path="/notification" element={<Notification />} />
-          <Route path="/lucthernotification" element={<LuctherNotification />} />
           <Route path="/cart" element={<Cart />} />
 
-          {/* Setting Page with Nested Routes */}
-          <Route path="/setting" element={<Setting />}>
-            <Route path="profile" element={<Profile />} />
-            <Route path="account" element={<Account />} />
-            <Route path="purchase" element={<Purchase />} />
-          </Route>
+            {/* Setting Page with Nested Routes */}
+            <Route path="/setting" element={<Setting />}>
+              <Route path="profile" element={<Profile />} />
+              <Route path="account" element={<Account />} />
+              <Route path="purchase" element={<Purchase />} />
+            </Route>
 
-          {/* Setting Page with Nested Routes */}
-          <Route path="/lucthersetting" element={<LuctherSetting />}>
-            <Route path="profile" element={<Profile />} />
-            <Route path="account" element={<Account />} />
-            <Route path="purchase" element={<Purchase />} />
-          </Route>
+            {/* Setting Page with Nested Routes */}
+            <Route path="/lucthersetting" element={<LuctherSetting />}>
+              <Route path="profile" element={<Profile />} />
+              <Route path="account" element={<Account />} />
+              <Route path="purchase" element={<Purchase />} />
+            </Route>
 
-          <Route path="/mycertificates" element={<MyCertificates />} />
-          <Route path="/assessments" element={<Assessments />} />
-          <Route path="/mycourses" element={<MyCourses />} />
-          <Route path="/coursesmodule" element={<CoursesModule />} />
+            <Route path="/mycertificates" element={<MyCertificates />} />
+            <Route path="/assessments" element={<Assessments />} />
+            <Route path="/mycourses" element={<MyCourses />} />
+            <Route path="/coursesmodule" element={<CoursesModule />} />
 
-          {/* Module */}
-          <Route path="/module" element={<Module />}>
-            <Route index element={<ModuleVideo />} />
-            <Route path="quiztest" element={<QuizTest />} />
-            <Route path="assessementtest" element={<AssessementTest />} />
-            <Route path="modulevideo" element={<ModuleVideo />} />
-            <Route path="videolive" element={<VideoLive />} />
-          </Route>
+            {/* Module */}
+            <Route path="/module" element={<Module />}>
+              <Route index element={<ModuleVideo />} />
+              <Route path="quiztest" element={<QuizTest />} />
+              <Route path="assessementtest" element={<AssessementTest />} />
+              <Route path="modulevideo" element={<ModuleVideo />} />
+              <Route path="videolive" element={<VideoLive />} />
+            </Route>
 
-          <Route path="/quizreport" element={<QuizReport />} />
-          <Route path="/assessmentreport" element={<AssessmentReport />} />
-          <Route
-            path="/assessmentminiproject"
-            element={<AssessmentMiniproject />}
-          />
-        </Routes>
-      </Router>
-    </CourseProvider>
+            <Route path="/quizreport" element={<QuizReport />} />
+            <Route path="/assessmentreport" element={<AssessmentReport />} />
+            <Route
+              path="/project"
+              element={<AssessmentMiniproject />}
+            />
+          </Routes>
+        </CourseProvider>
+      {/* </AuthProvider> */}
+    </Router>
   );
 }
 

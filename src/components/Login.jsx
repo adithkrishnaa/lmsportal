@@ -12,7 +12,6 @@ const Login = () => {
     // Listen for auth state change
     const unsubscribe = auth.onAuthStateChanged(user => {
       if (user) {
-        // If user is logged in, redirect to the desired page
         navigate('/dashboard');
       } 
       else{

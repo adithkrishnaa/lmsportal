@@ -1,71 +1,289 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { BiSolidLock } from "react-icons/bi";
 import Aicalender from "../components/Aicalender";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import { useNavigate } from "react-router-dom";
+import { auth } from "../firebase";
 
 const Assessments = () => {
   const [activeTab, setActiveTab] = useState("ongoing");
+  const [courseProgress, setCourseProgress] = useState();
+  const [assessments, setAssessments] = useState({});
+  const [course, setCourse] = useState();
+  const [completedAssessments, setCompletedAssessments] = useState([]);
+  const [ongoingAssessments, setOngoingAssessments] = useState([]);
+
   const navigate = useNavigate();
+  const courseId = "6712a07bde57de8f762e9894";
+  useEffect(() => {
+    const fetchCourseProgress = async () => {
+      const token = await auth.currentUser.getIdToken();
+      try {
+        const response = await fetch(
+          `https://course-compass-backend-zh7c.onrender.com/api/student/course-progress/course/${courseId}`,
+          {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
+            },
+          }
+        );
 
-  const ongoingAssessments = [
-    {
-      id: 1,
-      title: "Week 1 Assessment",
-      level: "Intermediate",
-      topics: "Week 1: All Topics",
-      description: "Test your understanding of JavaScript fundamentals.",
-      type: "assessment",
-      status: "unlocked",
-    },
-    {
-      id: 2,
-      title: "Week 2 Mini Project",
-      level: "Intermediate",
-      topics: "Week 2: All Topics",
-      description: "Create a simple project using the DOM.",
-      type: "miniproject",
-      status: "unlocked",
-    },
-    {
-      id: 3,
-      title: "Week 3 Mini Project",
-      level: "Intermediate",
-      topics: "Week 3: All Topics",
-      description: "Work on a mini project using async/await.",
-      type: "miniproject",
-      status: "locked",
-    },
-    {
-      id: 4,
-      title: "Week 4 Final Project",
-      level: "Advanced",
-      topics: "Week 4: All Topics",
-      description: "Final project covering all concepts.",
-      type: "miniproject",
-      status: "locked",
-    },
-  ];
+        if (!response.ok) throw new Error(`Failed to fetch course progress`);
 
-  const completedAssessments = [
-    {
-      id: 5,
-      title: "Week 1: Assessment",
-      level: "Intermediate",
-      topics: "Week 1: All Topics",
-      description: "Completed the JavaScript basics assessment.",
-    },
-  ];
+        const data = await response.json();
+        setCourseProgress(data);
+      } catch (error) {
+        console.error("Error fetching course progress:", error.message);
+      }
+    };
+    const fetchCourse = async () => {
+      const token = await auth.currentUser.getIdToken();
+      try {
+        const response = await fetch(
+          `https://course-compass-backend-zh7c.onrender.com/api/course/get-course/course/${courseId}`,
+          {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
+            },
+          }
+        );
+
+        if (!response.ok) throw new Error(`Failed to fetch course progress`);
+
+        const data = await response.json();
+        setCourse(data);
+      } catch (error) {
+        console.error("Error fetching course:", error.message);
+      }
+    };
+    fetchCourseProgress();
+    fetchCourse();
+  }, []);
+
+  useEffect(() => {
+    if (
+      course &&
+      courseProgress &&
+      Object.keys(course).length > 0 &&
+      Object.keys(courseProgress).length > 0
+    ) {
+      mergeData(course, courseProgress);
+    }
+  }, [course, courseProgress]);
+
+  console.log(ongoingAssessments);
+
+  const mergeData = (course, courseProgress) => {
+    const fetchedOngoingAssessments = [];
+    const fetchedCompletedAssessments = [];
+
+    // Month 1 Week 1 Quizzes
+    if (course.month1.week1.day) {
+      let t = course.month1.week1.day;
+
+      //Check if days array exists in the courseProgress
+      const days = courseProgress?.month1?.week1?.days;
+
+      t.forEach((e, i) => {
+        // Create the assessment object
+        const assessment = {
+          id: i + 1,
+          title: `Week 1 Day ${i + 1} Quiz`,
+          level: e.difficulty,
+          topics: e.topics ?? "Yet to be updated",
+          description: e.description ?? "Yet to be updated",
+          type: "assessment",
+        };
+
+        // Append to the correct array based on the quizSubmitted status
+        (days && days[i]?.quizSubmitted === true
+          ? fetchedCompletedAssessments
+          : fetchedOngoingAssessments
+        ).push(assessment);
+      });
+    }
+
+    // Month 1 Week 1 MiniTest
+    if (course.month1.week1.miniTest) {
+      let t = course.month1.week1.miniTest;
+
+      //Check if miniTest object exists in courseProgress
+      const miniTest = courseProgress?.month1?.week1?.miniTest;
+
+      const assessment = {
+        id: 7,
+        title: "Week 1: Mini Test",
+        level: t.difficulty,
+        topics: t.topics ? t.topics : "Yet to be updated",
+        description: t.description ? t.description : "Yet to be updated",
+        type: "assessment",
+      };
+      (miniTest && miniTest.quizSubmitted === true
+        ? fetchedCompletedAssessments
+        : fetchedOngoingAssessments
+      ).push(assessment);
+    }
+
+    // Month 1 Project Week Projects
+    if (course.month1.projectWeeks) {
+      let weeks = course.month1.projectWeeks;
+
+      //Check if the projectWeek array exists in the courseProgress
+      const projectWeek = courseProgress?.month1?.projectWeek;
+
+      weeks.forEach((week, i) => {
+        const project = {
+          author: course.author ?? "Yet to be updated",
+          id: 8 + i,
+          title: week.miniProject.projectName,
+          topics: week.miniProject.topics
+            ? week.miniProject.topics
+            : "Yet to be updated",
+          description: week.miniProject.projectDescription
+            ? week.miniProject.projectDescription
+            : "Yet to be updated",
+          type: "project",
+          status: projectWeek[i]?.projectStatus ?? "Missing",
+          submission : projectWeek[i]?.submissionUrl ?? "",
+          courseId : courseId,
+          index : i,
+          location : "project-week-project"
+
+        };
+
+        (projectWeek && projectWeek[i]?.projectStatus === "submitted"
+          ? fetchedCompletedAssessments
+          : fetchedOngoingAssessments
+        ).push(project);
+      });
+    }
+    // Month 1 Project Week Tests
+    if (course.month1.projectWeeks) {
+      let weeks = course.month1.projectWeeks;
+
+      //Check if the projectWeek array exists in the courseProgress
+      const projectWeek = courseProgress?.month1?.projectWeek;
+
+      weeks.forEach((week, i) => {
+        const assignment = {
+          id: 8 + i,
+          title: `Project Week ${i + 1} Small Test`,
+          level: week.smallTest.difficulty,
+          topics: week.smallTest.topics
+            ? e.smallTest.topics
+            : "Yet to be updated",
+          description: week.smallTest.projectDescription
+            ? week.smallTest.projectDescription
+            : "Yet to be updated",
+          type: "assessment",
+        };
+
+        (projectWeek && projectWeek[i]?.quizSubmitted === true
+          ? fetchedCompletedAssessments
+          : fetchedOngoingAssessments
+        ).push(assignment);
+      });
+    }
+
+    // Month 2 Weekly Assignments
+    if (course.month2.weeklyAssignments) {
+      let weeks = course.month2.weeklyAssignments;
+
+      //Check if the weeks array exists in the courseProgress
+      const weeksProgress = courseProgress?.month2?.weeks;
+
+      weeks.forEach((week, i) => {
+        const assignment = {
+          id: 15 + i,
+          title: `Project Month Weekly Assignment ${i + 1}: ${
+            week.assignmentName
+          }`,
+          level: week.difficulty,
+          topics: week.topics ? week.topics : "Yet to be updated",
+          description: week.assignmentDescription
+            ? week.assignmentDescription
+            : "Yet to be updated",
+          type: "assessment",
+        };
+
+        (weeksProgress && weeksProgress[i]?.assignmentStatus === "submitted"
+          ? fetchedCompletedAssessments
+          : fetchedOngoingAssessments
+        ).push(assignment);
+      });
+    }
+    // Month 2 Week 5 Test
+    if (course.month2.week5Test) {
+      let test = course.month2.week5Test;
+
+      //Check if week5_test object exists in courseProgress
+      const week5_test = courseProgress?.month2.week5_test;
+
+      const assignment = {
+        id: 22,
+        title: `Project Month Week 5 Test`,
+        level: test.difficulty,
+        topics: test.topics ? test.topics : "Yet to be updated",
+        description: test.assignmentDescription
+          ? test.assignmentDescription
+          : "Yet to be updated",
+        type: "assessment",
+        
+      };
+
+      (week5_test && week5_test?.quizSubmitted === true
+        ? fetchedCompletedAssessments
+        : fetchedOngoingAssessments
+      ).push(assignment);
+    }
+
+    // Month 2 Project
+    if (course.month2.project) {
+      let finalProject = course.month2.project;
+
+      // Check if finalProject object exists in courseProgress
+      const finalProjectCourse = courseProgress?.month2?.finalProject;
+
+      const project = {
+        author: course.author ?? "Yet to be updated",
+        id: 23,
+        title: `Final Project: ${finalProject.projectName}`,
+        topics: finalProject.topics ? finalProject.topics : "Yet to be updated",
+        description: finalProject.projectDescription,
+        type: "project",
+        status: finalProjectCourse?.projectStatus ?? "Missing",
+        submission : finalProjectCourse?.submissionUrl ?? "",
+        courseId : courseId,
+        location : "final-project"
+
+      };
+
+      (finalProjectCourse && finalProjectCourse?.projectStatus === "submitted"
+        ? fetchedCompletedAssessments
+        : fetchedOngoingAssessments
+      ).push(project);
+    }
+    setOngoingAssessments(fetchedOngoingAssessments);
+    setCompletedAssessments(fetchedCompletedAssessments);
+  };
 
   const handleStartTest = (assessment) => {
     if (assessment.status === "unlocked") {
-      navigate("/module/assessementtest");
+      navigate("/module/assessmenttest");
     }
   };
 
-  const handleViewMore = () => {
-    navigate("/assessmentminiproject");
+  const handleViewMore = (project) => {
+    navigate("/project", {
+      state: {
+        project: project,
+      },
+    });
   };
 
   return (
@@ -101,106 +319,123 @@ const Assessments = () => {
           </div>
 
           {/* Ongoing Assessments */}
-          {activeTab === "ongoing" && ongoingAssessments.length > 0 ? (
-            ongoingAssessments.map((assessment, index) => (
-              <div
-                key={index}
-                className={`flex justify-between  px-8 mt-10 relative p-4 rounded-lg ${
-                  assessment.status === "locked"
-                    ? "bg-opacity-60 bg-black z-50  "
-                    : ""
-                } ${
-                  assessment.status === "locked"
-                    ? " fixed z-50 bg-opacity-40 bg-gray-800  cursor-not-allowed   "
-                    : "bg-white"
-                }`}
-              >
-                <div className="space-y-4  ">
-                  <h2 className="text-3xl space-x-2 font-bold">
-                    {assessment.title}{" "}
-                    <span className="text-[10px] font-light p-1 px-2 bg-[#E67E22] text-white rounded-3xl">
-                      {assessment.level}
-                    </span>
-                    <span className="text-[10px] font-light p-1 px-2 bg-quiz text-white rounded-3xl">
-                      {assessment.topics}
-                    </span>
-                  </h2>
-                  <p className="text-xs">{assessment.description}</p>
-                </div>
-
-                <div className="flex items-center space-x-4">
-                  {assessment.type === "assessment" ? (
-                    <button
-                      className={`p-2 px-4 font-light rounded-lg text-white ${
-                        assessment.status === "unlocked"
-                          ? "bg-[#007EFA]"
-                          : "cursor-not-allowed"
-                      }`}
-                      disabled={assessment.status === "locked"}
-                      onClick={() => handleStartTest(assessment)}
-                    >
-                      {assessment.status === "locked" ? (
-                        <>
-                          <BiSolidLock className="inline mr-2" /> Locked
-                        </>
+          {activeTab === "ongoing" ? (
+            ongoingAssessments.length > 0 ? (
+              ongoingAssessments.map((assessment, index) => (
+                <div
+                  key={index}
+                  className={`flex justify-between  px-8 mt-10 relative p-4 rounded-lg ${
+                    assessment.status === "locked"
+                      ? "bg-opacity-60 bg-black z-50  "
+                      : ""
+                  } ${
+                    assessment.attended === "locked"
+                      ? " fixed z-50 bg-opacity-40 bg-gray-800  cursor-not-allowed   "
+                      : "bg-white"
+                  }`}
+                >
+                  <div className="space-y-4  ">
+                    <h2 className="text-3xl space-x-2 font-bold">
+                      {assessment.title}{" "}
+                      {assessment.level ? (
+                        <span className="text-[10px] font-light p-1 px-2 bg-[#E67E22] text-white rounded-3xl">
+                          {assessment.level}
+                        </span>
                       ) : (
-                        "Start the Test"
+                        <></>
                       )}
-                    </button>
-                  ) : assessment.type === "miniproject" ? (
-                    <button
-                      className={`p-2 px-4 font-light rounded-lg text-white ${
-                        assessment.status === "unlocked"
-                          ? "bg-[#007EFA]"
-                          : "bg-gray-400 cursor-not-allowed"
-                      }`}
-                      disabled={assessment.status === "locked"}
-                      onClick={() => handleViewMore(assessment)}
-                    >
-                      {assessment.status === "locked"
-                        ? "View More"
-                        : "View More"}
-                    </button>
-                  ) : null}
+                      <span className="text-[10px] font-light p-1 px-2 bg-quiz text-white rounded-3xl">
+                        {assessment.topics}
+                      </span>
+                    </h2>
+                    <p className="text-xs">{assessment.description}</p>
+                  </div>
 
-                  {/* Show lock icon if locked */}
-                  {assessment.status === "locked" && (
-                    <BiSolidLock
-                      className="text-white z-50 right-20 absolute "
-                      size={30}
-                    />
-                  )}
+                  <div className="flex items-center space-x-4">
+                    {assessment.type === "assessment" ? (
+                      <button
+                        className={`p-2 px-4 font-light rounded-lg text-white ${
+                          assessment.status === "unlocked"
+                            ? "bg-[#007EFA]"
+                            : "cursor-not-allowed"
+                        }`}
+                        disabled={assessment.status === "locked"}
+                        onClick={() => handleStartTest(assessment)}
+                      >
+                        {assessment.status === "locked" ? (
+                          <>
+                            <BiSolidLock className="inline mr-2" /> Locked
+                          </>
+                        ) : (
+                          "Start the Test"
+                        )}
+                      </button>
+                    ) : assessment.type === "project" ? (
+                      <button
+                        className={`p-2 px-4 font-light rounded-lg text-white ${
+                          assessment.status === "unlocked"
+                            ? "bg-[#007EFA]"
+                            : "bg-gray-400 cursor-not-allowed"
+                        }`}
+                        disabled={assessment.status === "locked"}
+                        onClick={() => handleViewMore(assessment)}
+                      >
+                        {assessment.status === "locked"
+                          ? "View More"
+                          : "View More"}
+                      </button>
+                    ) : null}
+
+                    {/* Show lock icon if locked */}
+                    {assessment.status === "locked" && (
+                      <BiSolidLock
+                        className="text-white z-50 right-20 absolute "
+                        size={30}
+                      />
+                    )}
+                  </div>
+                </div>
+              ))
+            ) : (
+              // No Ongoing Assessments
+              <div className="flex justify-between px-8 mt-10">
+                <div className="space-y-4">
+                  <h2 className="text-3xl font-bold">
+                    No Ongoing Assessments!
+                  </h2>
+                  <p className="text-xs">
+                    You have no ongoing assessments at the moment.
+                  </p>
+                </div>
+                <div>
+                  <button
+                    onClick={() => {
+                      navigate("/dashboard");
+                    }}
+                    className="p-3 px-4 font-light bg-[#822CE8] text-sm rounded-lg text-white"
+                  >
+                    Go to Dashboard
+                  </button>
                 </div>
               </div>
-            ))
-          ) : (
-            // No Ongoing Assessments
-            <div className="flex justify-between px-8 mt-10">
-              <div className="space-y-4">
-                <h2 className="text-3xl font-bold">No Ongoing Assessments!</h2>
-                <p className="text-xs">
-                  You have no ongoing assessments at the moment.
-                </p>
-              </div>
-              <div>
-                <button className="p-3 px-4 font-light bg-[#822CE8] text-sm rounded-lg text-white">
-                  Go to Dashboard
-                </button>
-              </div>
-            </div>
-          )}
+            )
+          ) : null}
 
           {/* Completed Assessments */}
-          {activeTab === "completed" &&
-            (completedAssessments.length > 0 ? (
+          {activeTab === "completed" ? (
+            completedAssessments.length > 0 ? (
               completedAssessments.map((assessment, index) => (
                 <div key={index} className="flex justify-between px-8 mt-10">
                   <div className="space-y-4">
                     <h2 className="text-3xl space-x-2 font-bold">
                       {assessment.title}{" "}
-                      <span className="text-[10px] font-light p-1 px-2 bg-[#E67E22] text-white rounded-3xl">
-                        {assessment.level}
-                      </span>
+                      {assessment.level ? (
+                        <span className="text-[10px] font-light p-1 px-2 bg-[#E67E22] text-white rounded-3xl">
+                          {assessment.level}
+                        </span>
+                      ) : (
+                        <></>
+                      )}
                       <span className="text-[10px] font-light p-1 px-2 bg-quiz text-white rounded-3xl">
                         {assessment.topics}
                       </span>
@@ -232,7 +467,8 @@ const Assessments = () => {
                   </button>
                 </div>
               </div>
-            ))}
+            )
+          ) : null}
         </div>
       </div>
       <Footer />
