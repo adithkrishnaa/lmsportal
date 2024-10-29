@@ -1,10 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { auth } from "../firebase";
-import {
-  setPersistence,
-  browserLocalPersistence,
-  onAuthStateChanged,
-} from "firebase/auth";
+import { onAuthStateChanged, setPersistence, browserLocalPersistence } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 
 const AuthContext = createContext();
@@ -12,47 +8,29 @@ export const useAuth = () => useContext(AuthContext);
 
 export const AuthProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(null);
-  const [userRole, setUserRole] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [hasNavigated, setHasNavigated] = useState(false); // Prevent multiple navigations
   const navigate = useNavigate();
 
   useEffect(() => {
-    setPersistence(auth, browserLocalPersistence)
-      .then(() => {
-        const unsubscribe = onAuthStateChanged(auth, async (user) => {
-          if (user) {
-            const token = await user.getIdTokenResult();
-            const role = token?.claims?.role || "student";
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      setCurrentUser(user);
+      setLoading(false);
+      if (user) {
+        // User is signed in, do not redirect here
+      } else {
+        // User is not signed in, can choose to navigate to a specific page
+        // navigate("/"); // Uncomment if you want to redirect unauthenticated users
+      }
+    });
 
-            setCurrentUser(user);
-            setUserRole(role);
+    setPersistence(auth, browserLocalPersistence).catch((error) => {
+      console.error("Error setting persistence:", error);
+    });
 
-            // Ensure navigation happens only once
-            if (!hasNavigated) {
-              setHasNavigated(true);
-              role === "instructor"
-                ? navigate("/luctherhomelayout/luctherlogin")
-                : navigate("/dashboard");
-            }
-          } else {
-            if (!hasNavigated) {
-              setHasNavigated(true);
-              navigate("/");
-            }
-          }
-          setLoading(false);
-        });
+    return () => unsubscribe();
+  }, [navigate]);
 
-        return () => unsubscribe();
-      })
-      .catch((error) => {
-        console.error("Error setting persistence:", error);
-        setLoading(false);
-      });
-  }, [navigate, hasNavigated]);
-
-  const value = { currentUser, userRole };
+  const value = { currentUser };
 
   return (
     <AuthContext.Provider value={value}>
