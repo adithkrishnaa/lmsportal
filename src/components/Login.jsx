@@ -152,7 +152,7 @@ const Login = () => {
               Host account?{" "}
               <span className=" underline text-sm  text-black font-inter  font-medium">
                 {" "}
-                <Link to={"/luctherhomelayout"}>
+                <Link to={"/luctherhomelayout/luctherlogin"}>
                   Are you a instructor at Course Compass
                 </Link>
               </span>{" "}
