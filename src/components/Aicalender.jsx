@@ -10,11 +10,11 @@ import { BsBoxArrowUpRight } from "react-icons/bs";
 import { RxCross2 } from "react-icons/rx";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import { auth } from "../firebase";
-import svg1 from "../assets/Image/svg1.svg";
-import svg2 from "../assets/Image/svg2.svg";
-import svg3 from "../assets/Image/svg3.svg";
-import svg4 from "../assets/Image/svg4.svg";
-import svg5 from "../assets/Image/svg5.svg";
+import svg1 from "../assets/Image/AiTutor/svg1.svg";
+import svg2 from "../assets/Image/AiTutor/svg2.svg";
+import svg3 from "../assets/Image/AiTutor/svg3.svg";
+import svg4 from "../assets/Image/AiTutor/svg4.svg";
+import svg5 from "../assets/Image/AiTutor//svg5.svg";
 
 const Aicalender = () => {
   const [showChat, setShowChat] = useState(false); // State to control chat visibility
@@ -52,7 +52,7 @@ const Aicalender = () => {
     const token = await auth.currentUser.getIdToken();
     if (inputMessage.trim()) {
       const response = await fetch(
-        "http://localhost:3000/api/chatbot/invoke-rag",
+        "https://course-compass-backend-zh7c.onrender.com/api/chatbot/invoke-rag",
         {
           method: "POST",
           headers: {
