@@ -1,40 +1,44 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { auth } from "../firebase";
 import { onAuthStateChanged, setPersistence, browserLocalPersistence } from "firebase/auth";
-import { useNavigate } from "react-router-dom";
 
 const AuthContext = createContext();
 export const useAuth = () => useContext(AuthContext);
 
 export const AuthProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(null);
+  const [userRole, setUserRole] = useState(null); // To store user role if applicable
   const [loading, setLoading] = useState(true);
-  const navigate = useNavigate();
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      setCurrentUser(user);
-      setLoading(false);
-      if (user) {
-        // User is signed in, do not redirect here
-      } else {
-        // User is not signed in, can choose to navigate to a specific page
-        // navigate("/"); // Uncomment if you want to redirect unauthenticated users
-      }
-    });
-
+    // Set persistence for Firebase Auth
     setPersistence(auth, browserLocalPersistence).catch((error) => {
       console.error("Error setting persistence:", error);
     });
 
-    return () => unsubscribe();
-  }, [navigate]);
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        setCurrentUser(user);
+        // Optionally get user role from claims or your database
+        const token = await user.getIdTokenResult();
+        const role = token?.claims?.role || "student"; // Default to "student"
+        setUserRole(role);
+      } else {
+        // User is signed out
+        setCurrentUser(null);
+        setUserRole(null);
+      }
+      setLoading(false);
+    });
 
-  const value = { currentUser };
+    return () => unsubscribe(); // Cleanup subscription on unmount
+  }, []);
+
+  const value = { currentUser, userRole }; // Expose user role if needed
 
   return (
     <AuthContext.Provider value={value}>
-      {!loading && children}
+      {!loading && children} {/* Render children only when not loading */}
     </AuthContext.Provider>
   );
 };
