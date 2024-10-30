@@ -56,7 +56,7 @@ const AssessmentMiniproject = () => {
 
     try {
       // Make the API call
-      const response = await fetch("http://localhost:3000/api/student/update-project-submission", {
+      const response = await fetch("https://course-compass-backend-zh7c.onrender.com/api/student/update-project-submission", {
         method: "PUT",
         headers: {
           Authorization: `Bearer ${token}`,

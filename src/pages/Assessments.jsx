@@ -98,6 +98,7 @@ const Assessments = () => {
           topics: e.topics ?? "Yet to be updated",
           description: e.description ?? "Yet to be updated",
           type: "assessment",
+          attended : course?.month1?.week1?.day[i]?.attended ?? false,
         };
 
         // Append to the correct array based on the quizSubmitted status
@@ -122,6 +123,7 @@ const Assessments = () => {
         topics: t.topics ? t.topics : "Yet to be updated",
         description: t.description ? t.description : "Yet to be updated",
         type: "assessment",
+        attended : courseProgress?.month1?.week1?.day?.[6]?.attended ?? false
       };
       (miniTest && miniTest.quizSubmitted === true
         ? fetchedCompletedAssessments
@@ -152,7 +154,8 @@ const Assessments = () => {
           submission : projectWeek[i]?.submissionUrl ?? "",
           courseId : courseId,
           index : i,
-          location : "project-week-project"
+          location : "project-week-project",
+          attended : courseProgress?.month1?.projectWeek[i]?.attended ?? false
 
         };
 
@@ -181,6 +184,8 @@ const Assessments = () => {
             ? week.smallTest.projectDescription
             : "Yet to be updated",
           type: "assessment",
+          attended : courseProgress?.month1?.projectWeek[i]?.attended ?? false
+
         };
 
         (projectWeek && projectWeek[i]?.quizSubmitted === true
@@ -209,6 +214,7 @@ const Assessments = () => {
             ? week.assignmentDescription
             : "Yet to be updated",
           type: "assessment",
+          attended : courseProgress?.month2?.weeks[i]?.attended ?? false
         };
 
         (weeksProgress && weeksProgress[i]?.assignmentStatus === "submitted"
@@ -233,6 +239,7 @@ const Assessments = () => {
           ? test.assignmentDescription
           : "Yet to be updated",
         type: "assessment",
+        attended : courseProgress?.month2?.week5_test?.attended ?? false
         
       };
 
@@ -259,7 +266,8 @@ const Assessments = () => {
         status: finalProjectCourse?.projectStatus ?? "Missing",
         submission : finalProjectCourse?.submissionUrl ?? "",
         courseId : courseId,
-        location : "final-project"
+        location : "final-project",
+        attended : courseProgress?.month2?.finalProject?.attended ?? false
 
       };
 
@@ -329,7 +337,7 @@ const Assessments = () => {
                       ? "bg-opacity-60 bg-black z-50  "
                       : ""
                   } ${
-                    assessment.attended === "locked"
+                    !assessment.attended
                       ? " fixed z-50 bg-opacity-40 bg-gray-800  cursor-not-allowed   "
                       : "bg-white"
                   }`}

@@ -43,6 +43,7 @@ const Aitutore = () => {
     <div>
       <div className="fixed z-50 bottom-9 right-2 p-3 rounded-full drop-shadow-xl">
         {/* AI Chat Button */}
+        
         <div
           className="rounded-full bg-black p-2 cursor-pointer"
           onClick={handleAiClick}>
@@ -225,7 +226,7 @@ const Aitutore = () => {
                 </button>
                 <input
                   type="text"
-                  placeholder="Message Tutor AI"
+                  placeholder="Message Tutor AT"
                   value={inputMessage}
                   onChange={(e) => setInputMessage(e.target.value)}
                   className="w-full p-2 pl-12 border font-inter text-base focus:outline-none border-gray-300 rounded-xl"
