@@ -12,6 +12,10 @@ import Setting from "./pages/Setting";
 import Profile from "./components/Setting/Profile";
 import Account from "./components/Setting/Account";
 import Purchase from "./components/Setting/Purchase";
+import LuctherSetting  from "./pages/InstructorPages/LuctherSetting.jsx";
+import AccountIN from "./components/Instructor/Setting/Account.jsx";
+import Help from "./components/Instructor/Setting/Help.jsx";
+import ProfileIN from "./components/Instructor/Setting/Profile.jsx";
 import CourseOverview from "./pages/CourseOverview";
 import MyCertificates from "./pages/MyCertificates";
 import Notification from "./pages/Notification";
@@ -39,7 +43,7 @@ import LuctherSigninPassword from "./components/Instructor/LuctherSigninPassword
 import LuctherForgotPassword from "./components/Instructor/LuctherForgotPassword";
 import LuctherPasswordcode from "./components/Instructor/LuctherPasswordcode";
 import LuctherChangePassword from "./components/Instructor/LuctherChangePassword";
-import LuctherSetting from "./pages/InstructorPages/LuctherSetting";
+// import LuctherSetting from "./pages/InstructorPages/LuctherSetting";
 import Classroam from "./pages/InstructorPages/Classroam";
 import Grading from "./pages/InstructorPages/Grading";
 import Studentmark from "./pages/InstructorPages/Studentmark.jsx";
@@ -127,11 +131,13 @@ function App() {
               <Route path="purchase" element={<Purchase />} />
             </Route>
 
+
+
             {/* Setting Page with Nested Routes */}
             <Route path="/lucthersetting" element={<LuctherSetting />}>
-              <Route path="profile" element={<Profile />} />
-              <Route path="account" element={<Account />} />
-              <Route path="purchase" element={<Purchase />} />
+              <Route path="profile" element={<ProfileIN />} />
+              <Route path="account" element={<AccountIN />} />
+              <Route path="help" element={<Help />} />
             </Route>
 
             <Route path="/mycertificates" element={<MyCertificates />} />

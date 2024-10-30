@@ -108,11 +108,11 @@ const SettingsDropdown = () => {
 
             {/* Menu Items */}
             <div className="px-3">
-              <Link to="/setting/account">
+              <Link to="/lucthersetting/account">
                 <li className="py-2">Account settings</li>
               </Link>
-              <Link to="/setting/purchase">
-                <li className="py-2">Purchase history</li>
+              <Link to="/lucthersetting/help">
+                <li className="py-2">Help</li>
               </Link>
             </div>
 

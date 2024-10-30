@@ -1,4 +1,4 @@
-// src/components/ProtectedRoute.jsx
+
 import { useAuth } from "../Context/AuthProvider";
 import { Navigate, Outlet } from "react-router-dom";
 
