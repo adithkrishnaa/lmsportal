@@ -213,4 +213,8 @@ const LuctherNotification = () => {
   );
 };
 
+
 export default LuctherNotification;
+
+export default LuctherNotification;
+
