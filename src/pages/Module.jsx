@@ -69,7 +69,11 @@ const Module = ({ courseId }) => {
     const fetchCourseData = async () => {
       try {
         const responseMonth1 = await axios.get(
+ aryan-feature-branch
+          `https://course-compass-backend-zh7c.onrender.com/api/course/get-month1/courses/${courseId}/month1`
+
           `https://course-compass-backend-zh7c.onrender.com/api/course/get-month1/course/${courseId}`
+main
         );
         console.log("Month 1 Data:", responseMonth1.data); 
         if (responseMonth1.data && responseMonth1.data.courses) {
