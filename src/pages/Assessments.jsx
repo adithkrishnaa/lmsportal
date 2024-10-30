@@ -15,13 +15,13 @@ const Assessments = () => {
   const [ongoingAssessments, setOngoingAssessments] = useState([]);
 
   const navigate = useNavigate();
-
+  const courseId = "6712a07bde57de8f762e9894";
   useEffect(() => {
     const fetchCourseProgress = async () => {
       const token = await auth.currentUser.getIdToken();
       try {
         const response = await fetch(
-          `https://course-compass-backend-zh7c.onrender.com/api/student/course-progress/course/6712a07bde57de8f762e9894`,
+          `https://course-compass-backend-zh7c.onrender.com/api/student/course-progress/course/${courseId}`,
           {
             method: "GET",
             headers: {
@@ -43,7 +43,7 @@ const Assessments = () => {
       const token = await auth.currentUser.getIdToken();
       try {
         const response = await fetch(
-          `https://course-compass-backend-zh7c.onrender.com/api/course/get-course/course/6712a07bde57de8f762e9894`,
+          `https://course-compass-backend-zh7c.onrender.com/api/course/get-course/course/${courseId}`,
           {
             method: "GET",
             headers: {
@@ -98,6 +98,7 @@ const Assessments = () => {
           topics: e.topics ?? "Yet to be updated",
           description: e.description ?? "Yet to be updated",
           type: "assessment",
+          attended : course?.month1?.week1?.day[i]?.attended ?? false,
         };
 
         // Append to the correct array based on the quizSubmitted status
@@ -122,6 +123,7 @@ const Assessments = () => {
         topics: t.topics ? t.topics : "Yet to be updated",
         description: t.description ? t.description : "Yet to be updated",
         type: "assessment",
+        attended : courseProgress?.month1?.week1?.day?.[6]?.attended ?? false
       };
       (miniTest && miniTest.quizSubmitted === true
         ? fetchedCompletedAssessments
@@ -148,7 +150,13 @@ const Assessments = () => {
             ? week.miniProject.projectDescription
             : "Yet to be updated",
           type: "project",
-          status: projectWeek[i]?.projectStatus ?? "Not started",
+          status: projectWeek[i]?.projectStatus ?? "Missing",
+          submission : projectWeek[i]?.submissionUrl ?? "",
+          courseId : courseId,
+          index : i,
+          location : "project-week-project",
+          attended : courseProgress?.month1?.projectWeek[i]?.attended ?? false
+
         };
 
         (projectWeek && projectWeek[i]?.projectStatus === "submitted"
@@ -176,6 +184,8 @@ const Assessments = () => {
             ? week.smallTest.projectDescription
             : "Yet to be updated",
           type: "assessment",
+          attended : courseProgress?.month1?.projectWeek[i]?.attended ?? false
+
         };
 
         (projectWeek && projectWeek[i]?.quizSubmitted === true
@@ -204,6 +214,7 @@ const Assessments = () => {
             ? week.assignmentDescription
             : "Yet to be updated",
           type: "assessment",
+          attended : courseProgress?.month2?.weeks[i]?.attended ?? false
         };
 
         (weeksProgress && weeksProgress[i]?.assignmentStatus === "submitted"
@@ -228,6 +239,8 @@ const Assessments = () => {
           ? test.assignmentDescription
           : "Yet to be updated",
         type: "assessment",
+        attended : courseProgress?.month2?.week5_test?.attended ?? false
+        
       };
 
       (week5_test && week5_test?.quizSubmitted === true
@@ -250,7 +263,12 @@ const Assessments = () => {
         topics: finalProject.topics ? finalProject.topics : "Yet to be updated",
         description: finalProject.projectDescription,
         type: "project",
-        status: finalProjectCourse?.projectStatus ?? "Not started",
+        status: finalProjectCourse?.projectStatus ?? "Missing",
+        submission : finalProjectCourse?.submissionUrl ?? "",
+        courseId : courseId,
+        location : "final-project",
+        attended : courseProgress?.month2?.finalProject?.attended ?? false
+
       };
 
       (finalProjectCourse && finalProjectCourse?.projectStatus === "submitted"
@@ -319,7 +337,7 @@ const Assessments = () => {
                       ? "bg-opacity-60 bg-black z-50  "
                       : ""
                   } ${
-                    assessment.attended === "locked"
+                    !assessment.attended
                       ? " fixed z-50 bg-opacity-40 bg-gray-800  cursor-not-allowed   "
                       : "bg-white"
                   }`}

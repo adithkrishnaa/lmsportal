@@ -56,7 +56,7 @@ const SettingsDropdown = () => {
   const logOut = async () => {
     try {
       await signOut(auth);
-      Navigate("/login");
+      Navigate("/luctherhomelayout/luctherlogin");
       console.log("User logged out and tokens removed");
     } catch (e) {
       console.error("Error logging out", e);
