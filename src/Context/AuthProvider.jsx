@@ -1,47 +1,44 @@
-import React, { createContext, useContext, useEffect, useState } from 'react';
-import { auth } from '../firebase'; // Firebase auth setup
-import { setPersistence, browserLocalPersistence } from 'firebase/auth';
-import { useNavigate } from 'react-router-dom';
+import React, { createContext, useContext, useEffect, useState } from "react";
+import { auth } from "../firebase";
+import { onAuthStateChanged, setPersistence, browserLocalPersistence } from "firebase/auth";
 
-// Create Auth Context
 const AuthContext = createContext();
-
-// Hook to use AuthContext
 export const useAuth = () => useContext(AuthContext);
 
-// AuthProvider component
 export const AuthProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(null);
-  const [loading, setLoading] = useState(true); // To avoid rendering until auth status is resolved
-  const navigate = useNavigate();
+  const [userRole, setUserRole] = useState(null); // To store user role if applicable
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Set Firebase persistence to browser local (persistent even after page reload)
-    setPersistence(auth, browserLocalPersistence)
-      .then(() => {
-        // Listen for authentication state changes
-        const unsubscribe = auth.onAuthStateChanged(user => {
-          if (user) {
-            setCurrentUser(user);
-          } else {
-            navigate('/login'); // Redirect to login if no user is found
-          }
-          setLoading(false); // Loading complete once auth is checked
-        });
+    // Set persistence for Firebase Auth
+    setPersistence(auth, browserLocalPersistence).catch((error) => {
+      console.error("Error setting persistence:", error);
+    });
 
-        return () => unsubscribe(); // Clean up the listener on component unmount
-      })
-      .catch(error => {
-        console.error('Error setting persistence:', error);
-      });
-  }, [navigate]);
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        setCurrentUser(user);
+        // Optionally get user role from claims or your database
+        const token = await user.getIdTokenResult();
+        const role = token?.claims?.role || "student"; // Default to "student"
+        setUserRole(role);
+      } else {
+        // User is signed out
+        setCurrentUser(null);
+        setUserRole(null);
+      }
+      setLoading(false);
+    });
 
-  const value = { currentUser };
+    return () => unsubscribe(); // Cleanup subscription on unmount
+  }, []);
 
-  // Only render children if not loading (auth status resolved)
+  const value = { currentUser, userRole }; // Expose user role if needed
+
   return (
     <AuthContext.Provider value={value}>
-      {!loading && children}
+      {!loading && children} {/* Render children only when not loading */}
     </AuthContext.Provider>
   );
 };
