@@ -1,6 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { auth } from "../firebase";
-
 import {
   setPersistence,
   browserLocalPersistence,
@@ -8,27 +7,25 @@ import {
 } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 
-import { onAuthStateChanged, setPersistence, browserLocalPersistence } from "firebase/auth";
-
-
 const AuthContext = createContext();
 export const useAuth = () => useContext(AuthContext);
 
 export const AuthProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(null);
-
-  const [userRole, setUserRole] = useState(null);
+  const [userRole, setUserRole] = useState(null); // To store user role if applicable
   const [loading, setLoading] = useState(true);
   const [hasNavigated, setHasNavigated] = useState(false); // Prevent multiple navigations
   const navigate = useNavigate();
 
   useEffect(() => {
+    // Set persistence for Firebase Auth
     setPersistence(auth, browserLocalPersistence)
       .then(() => {
+        // Set up onAuthStateChanged listener
         const unsubscribe = onAuthStateChanged(auth, async (user) => {
           if (user) {
             const token = await user.getIdTokenResult();
-            const role = token?.claims?.role || "student";
+            const role = token?.claims?.role || "student"; // Default to "student"
 
             setCurrentUser(user);
             setUserRole(role);
@@ -41,6 +38,11 @@ export const AuthProvider = ({ children }) => {
                 : navigate("/dashboard");
             }
           } else {
+            // User is signed out
+            setCurrentUser(null);
+            setUserRole(null);
+
+            // Ensure navigation happens only once
             if (!hasNavigated) {
               setHasNavigated(true);
               navigate("/");
@@ -49,6 +51,7 @@ export const AuthProvider = ({ children }) => {
           setLoading(false);
         });
 
+        // Cleanup subscription on unmount
         return () => unsubscribe();
       })
       .catch((error) => {
@@ -58,36 +61,6 @@ export const AuthProvider = ({ children }) => {
   }, [navigate, hasNavigated]);
 
   const value = { currentUser, userRole };
-
-  const [userRole, setUserRole] = useState(null); // To store user role if applicable
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    // Set persistence for Firebase Auth
-    setPersistence(auth, browserLocalPersistence).catch((error) => {
-      console.error("Error setting persistence:", error);
-    });
-
-    const unsubscribe = onAuthStateChanged(auth, async (user) => {
-      if (user) {
-        setCurrentUser(user);
-        // Optionally get user role from claims or your database
-        const token = await user.getIdTokenResult();
-        const role = token?.claims?.role || "student"; // Default to "student"
-        setUserRole(role);
-      } else {
-        // User is signed out
-        setCurrentUser(null);
-        setUserRole(null);
-      }
-      setLoading(false);
-    });
-
-    return () => unsubscribe(); // Cleanup subscription on unmount
-  }, []);
-
-  const value = { currentUser, userRole }; // Expose user role if needed
-
 
   return (
     <AuthContext.Provider value={value}>

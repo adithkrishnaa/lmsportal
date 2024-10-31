@@ -6,15 +6,15 @@ import syllbus from "../../assets/Image/syllbus.png";
 import calender from "../../assets/Image/calendar.png";
 import LuctherNavbar from "../../components/Instructor/LuctherNavbar";
 import Aitutore from "../../components/Instructor/Aitutore";
-import ai from "../../assets/Image/ai.png";
-import data from "../../assets/Image/data.png";
-import ml from "../../assets/Image/ml.png";
+// import ai from "../../assets/Image/ai.png";
+// import data from "../../assets/Image/data.png";
+// import ml from "../../assets/Image/ml.png";
 import { MdAccessTime } from "react-icons/md";
 import { BsChevronDoubleLeft, BsChevronDoubleRight } from "react-icons/bs";
 import { Link, useNavigate } from "react-router-dom";
 import {auth} from '../../firebase';
-import svg1 from '../../assets/Image/LuctherDashboard/svg1.svg'
-import svg2 from '../../assets/Image/LuctherDashboard/svg2.svg'
+// import svg1 from '../../assets/Image/LuctherDashboard/svg1.svg'
+// import svg2 from '../../assets/Image/LuctherDashboard/svg2.svg'
 import svg3 from '../../assets/Image/LuctherDashboard/svg3.svg'
 import svg4 from '../../assets/Image/LuctherDashboard/svg4.svg'
 import svg5 from '../../assets/Image/LuctherDashboard/svg5.svg'
