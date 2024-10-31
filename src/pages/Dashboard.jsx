@@ -3,7 +3,6 @@ import { MdAccessTime } from "react-icons/md";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import Navbar from "../components/Navbar";
-
 import Searchbar from "../Searchbar/searchbar";
 import Aicalender from "../components/Aicalender";
 import ai from "../assets/Image/ai.png";
