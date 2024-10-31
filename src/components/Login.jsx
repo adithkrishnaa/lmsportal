@@ -1,8 +1,12 @@
 import google from "../assets/Image/Goo_icon.webp";
 import git from "../assets/Image/git_icon.png";
-import { Link, useNavigate} from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { auth, googleProvider, githubProvider } from "../firebase"; // Import Firebase setup
-import { signInWithPopup, setPersistence, browserLocalPersistence } from "firebase/auth";
+import {
+  signInWithPopup,
+  setPersistence,
+  browserLocalPersistence,
+} from "firebase/auth";
 import { useEffect } from "react";
 
 const Login = () => {
@@ -10,13 +14,11 @@ const Login = () => {
 
   useEffect(() => {
     // Listen for auth state change
-    const unsubscribe = auth.onAuthStateChanged(user => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user) {
-        // If user is logged in, redirect to the desired page
-        navigate('/dashboard');
-      } 
-      else{
-        navigate("/login")
+        navigate("/dashboard");
+      } else {
+        navigate("/login");
       }
     });
 
@@ -65,7 +67,7 @@ const Login = () => {
     displayName = "",
     photoURL = ""
   ) => {
-    const token = await auth.currentUser.getIdToken(); 
+    const token = await auth.currentUser.getIdToken();
 
     try {
       const response = await fetch(
@@ -73,7 +75,7 @@ const Login = () => {
         {
           method: "POST",
           headers: {
-            "Authorization": `Bearer ${token}`,
+            Authorization: `Bearer ${token}`,
             "Content-Type": "application/json",
           },
           body: JSON.stringify({ uid, email, displayName, photoURL }),
@@ -153,7 +155,7 @@ const Login = () => {
               Host account?{" "}
               <span className=" underline text-sm  text-black font-inter  font-medium">
                 {" "}
-                <Link to={"/luctherhomelayout"}>
+                <Link to={"/luctherhomelayout/luctherlogin"}>
                   Are you a instructor at Course Compass
                 </Link>
               </span>{" "}
