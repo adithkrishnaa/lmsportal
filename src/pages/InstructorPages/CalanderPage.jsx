@@ -1,3 +1,4 @@
+import React, { useState, useEffect } from "react";
 import LuctherNavbar from "../../components/Instructor/LuctherNavbar";
 import { useCalendarApp } from "@schedule-x/react";
 import {
@@ -7,45 +8,14 @@ import {
 } from "@schedule-x/calendar";
 import { createEventsServicePlugin } from "@schedule-x/events-service";
 import Footer from "../../components/Footer";
-import { useEffect, useState } from "react";
-import { IoIosAdd } from "react-icons/io"; // Icon for the plus sign
-import { HiCalendar } from "react-icons/hi"; // Import calendar icon
+import { IoIosAdd } from "react-icons/io";
+import { HiCalendar } from "react-icons/hi";
+import { auth } from "../../firebase";
 
 const CalanderPage = () => {
   const plugins = [createEventsServicePlugin()];
-
-  const [events, setEvents] = useState([
-    {
-      id: "1",
-      title: "GA_D2: Topic name",
-      start: "2023-09-18T09:00",
-      end: "2023-09-18T10:00",
-    },
-    {
-      id: "2",
-      title: "GA_D3: Topic name",
-      start: "2023-09-18T11:00",
-      end: "2023-09-18T12:00",
-    },
-    {
-      id: "3",
-      title: "GA_D5: Topic name",
-      start: "2023-09-18T12:00",
-      end: "2023-09-18T13:00",
-    },
-    {
-      id: "4",
-      title: "GA_D4: Topic name",
-      start: "2023-09-18T14:00",
-      end: "2023-09-18T15:00",
-    },
-    {
-      id: "5",
-      title: "GA_D6: Topic name",
-      start: "2023-09-18T17:00",
-      end: "2023-09-18T18:00",
-    },
-  ]);
+  const [events, setEvents] = useState([]);
+  const [courseId, setCourseId] = useState(null);
 
   const calendar = useCalendarApp(
     {
@@ -55,25 +25,86 @@ const CalanderPage = () => {
     plugins
   );
 
+  // Step 1: Prompt for course ID and fetch course details
   useEffect(() => {
-    // Optional: Add code to fetch events from an API and set them in the calendar
+    const fetchCourseDetails = async () => {
+      const inputCourseId = prompt("Enter Course ID:");
+      if (!inputCourseId) {
+        alert("Course ID is required.");
+        return;
+      }
+
+      try {
+        const token = await auth.currentUser.getIdToken();
+        const response = await fetch(
+          `https://course-compass-backend-zh7c.onrender.com/api/course/get-course/course/${inputCourseId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
+            },
+          }
+        );
+
+        if (response.ok) {
+          const courseData = await response.json();
+          setCourseId(courseData._id);
+        } else {
+          console.error("Failed to fetch course details.");
+        }
+      } catch (error) {
+        console.error("Error fetching course details:", error);
+      }
+    };
+
+    fetchCourseDetails();
   }, []);
 
-  const handleAddEvent = () => {
+  // Event handler to add a new event
+  const handleAddEvent = async () => {
     const title = prompt("Enter event title:");
     const date = prompt("Enter event date (YYYY-MM-DD):");
     const startTime = prompt("Enter start time (HH:MM, 24-hour format):");
     const endTime = prompt("Enter end time (HH:MM, 24-hour format):");
 
-    if (title && date && startTime && endTime) {
+    if (courseId && title && date && startTime && endTime) {
       const newEvent = {
-        id: (events.length + 1).toString(),
-        title: title,
+        title,
         start: `${date}T${startTime}`,
         end: `${date}T${endTime}`,
       };
 
-      setEvents((prevEvents) => [...prevEvents, newEvent]);
+      try {
+        const token = await auth.currentUser.getIdToken();
+        const response = await fetch(
+          "https://course-compass-backend-zh7c.onrender.com/api/instructor/schedule-class",
+          {
+            method: "POST",
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              courseId: courseId,
+              title: newEvent.title,
+              startTime: newEvent.start,
+              endTime: newEvent.end,
+            }),
+          }
+        );
+
+        if (response.ok) {
+          const data = await response.json();
+          newEvent.id = data.meetingLink;
+          setEvents((prevEvents) => [...prevEvents, newEvent]);
+          alert(`Event created! Join at: ${data.meetingLink}`);
+        } else {
+          alert("Failed to schedule class.");
+        }
+      } catch (error) {
+        alert("An error occurred while scheduling the class.");
+        console.error("Error scheduling class:", error);
+      }
     } else {
       alert("Please provide all details for the event.");
     }
@@ -84,7 +115,8 @@ const CalanderPage = () => {
       <LuctherNavbar />
       <div
         className="flex flex-col items-start mb-4"
-        style={{ marginLeft: "150px", marginTop: "20px" }}>
+        style={{ marginLeft: "150px", marginTop: "20px" }}
+      >
         <div className="flex items-center mb-2">
           <HiCalendar
             size={53.938}
@@ -102,9 +134,10 @@ const CalanderPage = () => {
               fontSize: "23.56px",
               fontStyle: "normal",
               fontWeight: "700",
-              lineHeight: "31px", // 131.579%
+              lineHeight: "31px",
               letterSpacing: "-0.156px",
-            }}>
+            }}
+          >
             My Calendar
           </h2>
         </div>
@@ -112,7 +145,8 @@ const CalanderPage = () => {
         <button
           onClick={handleAddEvent}
           className="flex items-center text-black font-semibold text-[25px] leading-[21px] tracking-[-0.32px] bg-white p-2 rounded-full shadow hover:bg-blue-100"
-          style={{ width: "150.557px", height: "53px", flexShrink: 0 }}>
+          style={{ width: "150.557px", height: "53px", flexShrink: 0 }}
+        >
           <IoIosAdd className="mr-2" size={43} style={{ color: "#0832FF" }} />
           Create
         </button>
@@ -128,26 +162,27 @@ const CalanderPage = () => {
               fontSize: "22px",
               fontStyle: "normal",
               fontWeight: "600",
-              lineHeight: "21px", // 95.455%
+              lineHeight: "21px",
               letterSpacing: "-0.32px",
-            }}>
+            }}
+          >
             Upcoming Classes
           </h2>
 
           <div className="flex flex-col space-y-4">
-            {/* Class Items */}
-            {Array.from({ length: 5 }, (_, index) => (
+            {events.slice(0, 5).map((event) => (
               <div
-                key={index}
-                className="flex justify-between items-center bg-white p-3 rounded-lg shadow-sm">
+                key={event.id}
+                className="flex justify-between items-center bg-white p-3 rounded-lg shadow-sm"
+              >
                 <div>
-                  <p className="font-semibold">Generative AI</p>
+                  <p className="font-semibold">{event.title}</p>
                   <p className="text-sm text-gray-600">
-                    Week 1: Day {index + 3}
-                  </p>
-                  <p className="text-sm text-gray-600">Fundamentals of AI</p>
-                  <p className="text-sm text-red-600">
-                    {10 + index} Sept, {index + 11}:00 AM
+                    {new Date(event.start).toLocaleDateString()} -{" "}
+                    {new Date(event.start).toLocaleTimeString([], {
+                      hour: "2-digit",
+                      minute: "2-digit",
+                    })}
                   </p>
                 </div>
                 <IoIosAdd className="text-blue-600 cursor-pointer" size={25} />
@@ -156,7 +191,6 @@ const CalanderPage = () => {
           </div>
         </div>
 
-        {/* Main Calendar Section */}
         <div className="flex-1 bg-white p-5 rounded-lg shadow-lg border border-gray-200 -mt-40 md:ml-6">
           <table className="w-full text-center">
             <thead>
@@ -171,7 +205,8 @@ const CalanderPage = () => {
                       fontWeight: "600",
                       lineHeight: "21px",
                       letterSpacing: "-0.32px",
-                    }}>
+                    }}
+                  >
                     Sept
                   </h2>
                 </th>
@@ -191,7 +226,8 @@ const CalanderPage = () => {
                       color: "#0832FF",
                       fontFamily: "Inter",
                       fontWeight: "700",
-                    }}>
+                    }}
+                  >
                     {day}
                   </th>
                 ))}
@@ -216,49 +252,48 @@ const CalanderPage = () => {
                       color: "#000",
                       fontFamily: "Inter",
                       fontWeight: "700",
-                    }}>
+                    }}
+                  >
                     {time}
                   </td>
                   {Array(7)
                     .fill(0)
                     .map((_, dayIndex) => (
                       <td key={dayIndex} className="p-2 border">
-                        {events.map((event, eventIndex) => {
-                          const eventStartTime = event.start.split("T")[1];
-                          const eventDay = new Date(event.start).getDay();
-                          const formattedTime = new Date(
-                            `1970-01-01T${eventStartTime}`
-                          ).toLocaleTimeString([], {
-                            hour: "2-digit",
-                            minute: "2-digit",
-                            hour12: true,
-                          });
-
-                          if (
-                            formattedTime === time &&
-                            eventDay === (dayIndex + 1) % 7
-                          ) {
+                        {events
+                          .filter((event) => {
+                            const eventDay =
+                              (new Date(event.start).getDay() + 6) % 7; // Adjust for Mon-Sun start
+                            const eventStartTime = new Date(
+                              event.start
+                            ).toLocaleTimeString([], {
+                              hour: "2-digit",
+                              minute: "2-digit",
+                            });
                             return (
-                              <div
-                                key={eventIndex}
-                                className="bg-black text-white p-2 rounded-md">
-                                {event.title} <br /> {formattedTime}
-                              </div>
+                              eventStartTime === time && eventDay === dayIndex
                             );
-                          }
-                          return null;
-                        })}
+                          })
+                          .map((filteredEvent) => (
+                            <p key={filteredEvent.id} className="text-blue-600">
+                              {filteredEvent.title}
+                            </p>
+                          ))}
                       </td>
                     ))}
                 </tr>
               ))}
             </tbody>
+
           </table>
         </div>
       </div>
+
       <Footer />
     </>
   );
 };
 
 export default CalanderPage;
+
+// 6712a07bde57de8f762e9894

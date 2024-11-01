@@ -50,6 +50,7 @@ import LuctherNotification from "./components/Instructor/LuctherNotification.jsx
 import { AuthProvider } from "./Context/AuthProvider";
 import ProtectedRoute from "./Context/ProtectedRoute.jsx";
 
+
 function App() {
   const idToken = "YOUR_ID_TOKEN"; // Replace with actual token retrieval logic
   const course = {}; // Replace with actual course data retrieval logic
@@ -129,7 +130,11 @@ function App() {
               <Route path="purchase" element={<Purchase />} />
             </Route>
 
+
             {/* Instructor Setting Page with Nested Routes */}
+
+            {/* Setting Page with Nested Routes */}
+
             <Route path="/lucthersetting" element={<LuctherSetting />}>
               <Route path="profile" element={<ProfileIN />} />
               <Route path="account" element={<AccountIN />} />
@@ -138,7 +143,7 @@ function App() {
 
             <Route path="/mycertificates" element={<MyCertificates />} />
             <Route path="/assessments" element={<Assessments />} />
-            <Route path="/mycourses" element={<MyCourses />} />
+            {/* <Route path="/mycourses" element={<MyCourses />} /> */}
             <Route path="/coursesmodule" element={<CoursesModule />} />
 
             {/* Module with Props */}
