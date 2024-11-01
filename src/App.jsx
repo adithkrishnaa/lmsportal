@@ -43,7 +43,6 @@ import LuctherSigninPassword from "./components/Instructor/LuctherSigninPassword
 import LuctherForgotPassword from "./components/Instructor/LuctherForgotPassword";
 import LuctherPasswordcode from "./components/Instructor/LuctherPasswordcode";
 import LuctherChangePassword from "./components/Instructor/LuctherChangePassword";
-// import LuctherSetting from "./pages/InstructorPages/LuctherSetting";
 import Classroam from "./pages/InstructorPages/Classroam";
 import Grading from "./pages/InstructorPages/Grading";
 import Studentmark from "./pages/InstructorPages/Studentmark.jsx";
@@ -53,12 +52,13 @@ import ProtectedRoute from "./Context/ProtectedRoute.jsx";
 
 
 function App() {
+  const idToken = "YOUR_ID_TOKEN"; // Replace with actual token retrieval logic
+  const course = {}; // Replace with actual course data retrieval logic
+
   return (
     <Router>
       <AuthProvider>
         <CourseProvider>
-          {" "}
-          {/* Wrap the entire Router with CourseProvider */}
           <Routes>
             {/* Home Layout and Authentication Routes */}
             <Route path="/" element={<HomeLayout />}>
@@ -117,12 +117,10 @@ function App() {
             </Route>
 
             {/* Dashboard and Course Overview Routes */}
-            {/* <Route path="/dashboard" element={<Dashboard />} /> */}
             <Route
               path="/courseoverview/:courseId"
               element={<CourseOverview />}
             />
-            {/* <Route path="/notification" element={<Notification />} /> */}
             <Route path="/cart" element={<Cart />} />
 
             {/* Setting Page with Nested Routes */}
@@ -132,7 +130,11 @@ function App() {
               <Route path="purchase" element={<Purchase />} />
             </Route>
 
+
+            {/* Instructor Setting Page with Nested Routes */}
+
             {/* Setting Page with Nested Routes */}
+
             <Route path="/lucthersetting" element={<LuctherSetting />}>
               <Route path="profile" element={<ProfileIN />} />
               <Route path="account" element={<AccountIN />} />
@@ -144,8 +146,8 @@ function App() {
             {/* <Route path="/mycourses" element={<MyCourses />} /> */}
             <Route path="/coursesmodule" element={<CoursesModule />} />
 
-            {/* Module */}
-            <Route path="/module" element={<Module />}>
+            {/* Module with Props */}
+            <Route path="/module" element={<Module idToken={idToken} course={course} />}>
               <Route index element={<ModuleVideo />} />
               <Route path="quiztest" element={<QuizTest />} />
               <Route path="assessementtest" element={<AssessementTest />} />

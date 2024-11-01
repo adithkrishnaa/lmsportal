@@ -5,34 +5,57 @@ import {
   IoPlaySkipForwardOutline,
 } from "react-icons/io5";
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
-import PropTypes from "prop-types"; 
+import PropTypes from "prop-types";
 
-const ModuleVideo = ({ courseId, month, setShowQuizTest, setShowAssessmentTest }) => {
+const ModuleVideo = ({ courseId, month, setShowQuizTest, setShowAssessmentTest, authToken }) => {
   const [showQuiz, setShowQuiz] = useState(false);
   const [showAssessment, setShowAssessment] = useState(false);
   const [courseData, setCourseData] = useState(null);
-  
+  const [error, setError] = useState(null); // State to handle errors
+
   // Fetch course data using the courseId and month
   useEffect(() => {
     const fetchCourseData = async () => {
       try {
-        const response = await fetch(`/get-month${month}/courses/${courseId}/month${month}`);
+        const response = await fetch(`/get-month${month}/courses/${courseId}/month${month}`, {
+          headers: {
+            Authorization: `Bearer ${authToken}`, // Include the auth token in the headers
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
         const data = await response.json();
-        setCourseData(data);
+
+        // Add a check to ensure the data structure is valid
+        if (data && data.topic && data.videoUrl) {
+          setCourseData(data);
+          setError(null); // Clear any previous errors
+        } else {
+          throw new Error("Unexpected data structure");
+        }
       } catch (error) {
         console.error("Failed to fetch course data:", error);
+        setError("Failed to load course data. Please try again."); // Set error message
+        setCourseData(null); // Reset course data on error
       }
     };
 
     fetchCourseData();
-  }, [courseId, month]);
+  }, [courseId, month, authToken]);
 
   const handleQuizClick = () => setShowQuiz(true);
   const handleAssessmentClick = () => setShowAssessment(true);
   const handleCloseQuiz = () => setShowQuiz(false);
   const handleCloseAssessment = () => setShowAssessment(false);
-  const startQuizTest = () => setShowQuizTest(true);
-  const startAssessmentTest = () => setShowAssessmentTest(true);
+  const startQuizTest = () => {
+    setShowQuizTest(true);
+  };
+  const startAssessmentTest = () => {
+    setShowAssessmentTest(true);
+  };
 
   return (
     <>
@@ -81,8 +104,11 @@ const ModuleVideo = ({ courseId, month, setShowQuizTest, setShowAssessmentTest }
               Download Notes as PDF <LuDownload size={18} className="ml-2 my-auto" />
             </button>
           </div>
+
+          {/* Display error message if exists */}
+          {error && <div className="text-red-600">{error}</div>}
         </div>
-        
+
         <div className="w-4/12 pl-5 space-y-5">
           <div className="p-1 w-56 text-white flex rounded-xl bg-ai-gradient">
             <h2 className="text-center p-2">Generate Notes with AI</h2>
@@ -158,12 +184,12 @@ const ModuleVideo = ({ courseId, month, setShowQuizTest, setShowAssessmentTest }
               </ul>
             </div>
             <div className="flex text-xs space-x-4">
-              <p className="p-2 bg-[#D1940C] flex-shrink-0 text-white rounded-full">Total Questions: 20</p>
-              <p className="p-2 bg-[#E67E22] text-white rounded-full">Intermediate</p>
+              <p className="p-2 bg-[#D1940C] flex-shrink-0 text-white rounded-full">Total Questions: 10</p>
+              <p className="p-2 bg-[#E67E22] text-white rounded-full">HOTS</p>
             </div>
             <div className="flex font-inter justify-end px-5 space-x-10">
               <button onClick={handleCloseAssessment} className="p-3 text-base border-[1px] border-black px-5 rounded-xl">Cancel</button>
-              <button onClick={startAssessmentTest} className="p-3 text-base text-white bg-[#007EFA] px-5 rounded-xl">Start Test</button>
+              <button onClick={startAssessmentTest} className="p-3 text-base text-white bg-[#007EFA] px-5 rounded-xl">Start Assessment</button>
             </div>
           </div>
         </div>
@@ -172,12 +198,12 @@ const ModuleVideo = ({ courseId, month, setShowQuizTest, setShowAssessmentTest }
   );
 };
 
-// Prop Types Validation
 ModuleVideo.propTypes = {
   courseId: PropTypes.string.isRequired,
   month: PropTypes.number.isRequired,
   setShowQuizTest: PropTypes.func.isRequired,
   setShowAssessmentTest: PropTypes.func.isRequired,
+  authToken: PropTypes.string.isRequired,
 };
 
 export default ModuleVideo;
