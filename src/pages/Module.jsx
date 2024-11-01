@@ -8,7 +8,7 @@ import min from "../assets/Image/modmin.png";
 import { Outlet, Link } from "react-router-dom";
 import axios from "axios";
 
-const Module = ({ courseId }) => {
+const Module = ({ courseId, authToken }) => {  // Assuming authToken is also passed as a prop
   const [isMinimized, setIsMinimized] = useState(false);
   const [month1Expanded, setMonth1Expanded] = useState(false);
   const [month2Expanded, setMonth2Expanded] = useState(false);
@@ -68,12 +68,21 @@ const Module = ({ courseId }) => {
   useEffect(() => {
     const fetchCourseData = async () => {
       try {
+        const headers = {
+          Authorization: `Bearer ${authToken}`,  // Include auth token in headers
+        };
+
         const responseMonth1 = await axios.get(
+<<<<<<< HEAD
+          `https://course-compass-backend-zh7c.onrender.com/api/course/get-month1/course/${courseId}`,
+          { headers }  // Pass headers with request
+=======
  aryan-feature-branch
           `https://course-compass-backend-zh7c.onrender.com/api/course/get-month1/courses/${courseId}/month1`
 
           `https://course-compass-backend-zh7c.onrender.com/api/course/get-month1/course/${courseId}`
 main
+>>>>>>> 072d79f8f0abc644d586fdb86edecb8fe5ed8221
         );
         console.log("Month 1 Data:", responseMonth1.data); 
         if (responseMonth1.data && responseMonth1.data.courses) {
@@ -83,7 +92,8 @@ main
         }
 
         const responseMonth2 = await axios.get(
-          `https://course-compass-backend-zh7c.onrender.com/api/course/get-month2/course/${courseId}`
+          `https://course-compass-backend-zh7c.onrender.com/api/course/get-month2/course/${courseId}`,
+          { headers }  // Pass headers with request
         );
         console.log("Month 2 Data:", responseMonth2.data); 
         if (responseMonth2.data && responseMonth2.data.courses) {
@@ -96,8 +106,12 @@ main
       }
     };
 
-    fetchCourseData();
-  }, [courseId]);
+    if (courseId) {  // Only fetch if courseId is available
+      fetchCourseData();
+    } else {
+      console.error("No courseId provided");
+    }
+  }, [courseId, authToken]);  // Add authToken as a dependency
 
   return (
     <>
@@ -208,9 +222,8 @@ main
           )}
         </div>
 
-        <div className="w-3/4 mx-5">
-          <Outlet />
-        </div>
+        {/* Outlet for child routes */}
+        <Outlet />
       </div>
       <Footer />
     </>
