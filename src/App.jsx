@@ -12,7 +12,7 @@ import Setting from "./pages/Setting";
 import Profile from "./components/Setting/Profile";
 import Account from "./components/Setting/Account";
 import Purchase from "./components/Setting/Purchase";
-import LuctherSetting  from "./pages/InstructorPages/LuctherSetting.jsx";
+import LuctherSetting from "./pages/InstructorPages/LuctherSetting.jsx";
 import AccountIN from "./components/Instructor/Setting/Account.jsx";
 import Help from "./components/Instructor/Setting/Help.jsx";
 import ProfileIN from "./components/Instructor/Setting/Profile.jsx";
@@ -43,7 +43,6 @@ import LuctherSigninPassword from "./components/Instructor/LuctherSigninPassword
 import LuctherForgotPassword from "./components/Instructor/LuctherForgotPassword";
 import LuctherPasswordcode from "./components/Instructor/LuctherPasswordcode";
 import LuctherChangePassword from "./components/Instructor/LuctherChangePassword";
-// import LuctherSetting from "./pages/InstructorPages/LuctherSetting";
 import Classroam from "./pages/InstructorPages/Classroam";
 import Grading from "./pages/InstructorPages/Grading";
 import Studentmark from "./pages/InstructorPages/Studentmark.jsx";
@@ -52,12 +51,13 @@ import { AuthProvider } from "./Context/AuthProvider";
 import ProtectedRoute from "./Context/ProtectedRoute.jsx";
 
 function App() {
+  const idToken = "YOUR_ID_TOKEN"; // Replace with actual token retrieval logic
+  const course = {}; // Replace with actual course data retrieval logic
+
   return (
     <Router>
       <AuthProvider>
         <CourseProvider>
-          {" "}
-          {/* Wrap the entire Router with CourseProvider */}
           <Routes>
             {/* Home Layout and Authentication Routes */}
             <Route path="/" element={<HomeLayout />}>
@@ -95,7 +95,7 @@ function App() {
               />
             </Route>
             <Route element={<ProtectedRoute />}>
-            <Route path="/luctherdashboard" element={<LuctherDashboard />} />
+              <Route path="/luctherdashboard" element={<LuctherDashboard />} />
             </Route>
             <Route path="/calanderpage" element={<CalanderPage />} />
             <Route path="/livepage" element={<Livepage />} />
@@ -116,12 +116,10 @@ function App() {
             </Route>
 
             {/* Dashboard and Course Overview Routes */}
-            {/* <Route path="/dashboard" element={<Dashboard />} /> */}
             <Route
               path="/courseoverview/:courseId"
               element={<CourseOverview />}
             />
-            {/* <Route path="/notification" element={<Notification />} /> */}
             <Route path="/cart" element={<Cart />} />
 
             {/* Setting Page with Nested Routes */}
@@ -131,9 +129,7 @@ function App() {
               <Route path="purchase" element={<Purchase />} />
             </Route>
 
-
-
-            {/* Setting Page with Nested Routes */}
+            {/* Instructor Setting Page with Nested Routes */}
             <Route path="/lucthersetting" element={<LuctherSetting />}>
               <Route path="profile" element={<ProfileIN />} />
               <Route path="account" element={<AccountIN />} />
@@ -145,8 +141,8 @@ function App() {
             <Route path="/mycourses" element={<MyCourses />} />
             <Route path="/coursesmodule" element={<CoursesModule />} />
 
-            {/* Module */}
-            <Route path="/module" element={<Module />}>
+            {/* Module with Props */}
+            <Route path="/module" element={<Module idToken={idToken} course={course} />}>
               <Route index element={<ModuleVideo />} />
               <Route path="quiztest" element={<QuizTest />} />
               <Route path="assessementtest" element={<AssessementTest />} />

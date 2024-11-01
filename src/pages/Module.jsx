@@ -73,16 +73,8 @@ const Module = ({ courseId, authToken }) => {  // Assuming authToken is also pas
         };
 
         const responseMonth1 = await axios.get(
-<<<<<<< HEAD
           `https://course-compass-backend-zh7c.onrender.com/api/course/get-month1/course/${courseId}`,
           { headers }  // Pass headers with request
-=======
- aryan-feature-branch
-          `https://course-compass-backend-zh7c.onrender.com/api/course/get-month1/courses/${courseId}/month1`
-
-          `https://course-compass-backend-zh7c.onrender.com/api/course/get-month1/course/${courseId}`
-main
->>>>>>> 072d79f8f0abc644d586fdb86edecb8fe5ed8221
         );
         console.log("Month 1 Data:", responseMonth1.data); 
         if (responseMonth1.data && responseMonth1.data.courses) {
@@ -222,8 +214,9 @@ main
           )}
         </div>
 
-        {/* Outlet for child routes */}
-        <Outlet />
+        <div className="flex-1 ml-6">
+          <Outlet />
+        </div>
       </div>
       <Footer />
     </>
