@@ -1,0 +1,30 @@
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20"
+                    height="30"
+                    viewBox="0 0 39 49"
+                    fill="none"
+                    className="w-10 h-12 md:w-14 md:h-13 lg:w-15 lg:h-16 xl:w-16 xl:h-20">
+                    <line
+                      x1="1.35447"
+                      y1="0.015625"
+                      x2="1.35447"
+                      y2="37.1892"
+                      stroke="black"
+                      strokeWidth="2.25191"
+                    />
+                    <line
+                      x1="0.791016"
+                      y1="36.0537"
+                      x2="21.0582"
+                      y2="36.0537"
+                      stroke="black"
+                      strokeWidth="2.25191"
+                    />
+                    <path
+                      d="M22.1271 28.1213L35.9186 36.5261L22.1271 44.931L22.1271 28.1213Z"
+                      fill="white"
+                      stroke="black"
+                      strokeWidth="2.60747"
+                    />
+                  </svg>

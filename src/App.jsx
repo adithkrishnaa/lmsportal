@@ -12,6 +12,10 @@ import Setting from "./pages/Setting";
 import Profile from "./components/Setting/Profile";
 import Account from "./components/Setting/Account";
 import Purchase from "./components/Setting/Purchase";
+import LuctherSetting  from "./pages/InstructorPages/LuctherSetting.jsx";
+import AccountIN from "./components/Instructor/Setting/Account.jsx";
+import Help from "./components/Instructor/Setting/Help.jsx";
+import ProfileIN from "./components/Instructor/Setting/Profile.jsx";
 import CourseOverview from "./pages/CourseOverview";
 import MyCertificates from "./pages/MyCertificates";
 import Notification from "./pages/Notification";
@@ -39,11 +43,13 @@ import LuctherSigninPassword from "./components/Instructor/LuctherSigninPassword
 import LuctherForgotPassword from "./components/Instructor/LuctherForgotPassword";
 import LuctherPasswordcode from "./components/Instructor/LuctherPasswordcode";
 import LuctherChangePassword from "./components/Instructor/LuctherChangePassword";
-import LuctherSetting from "./pages/InstructorPages/LuctherSetting";
+// import LuctherSetting from "./pages/InstructorPages/LuctherSetting";
 import Classroam from "./pages/InstructorPages/Classroam";
 import Grading from "./pages/InstructorPages/Grading";
-import Studentmark from "./pages/InstructorPages/Studentmark";
+import Studentmark from "./pages/InstructorPages/Studentmark.jsx";
+import LuctherNotification from "./components/Instructor/LuctherNotification.jsx";
 import { AuthProvider } from "./Context/AuthProvider";
+import ProtectedRoute from "./Context/ProtectedRoute.jsx";
 
 function App() {
   return (
@@ -88,24 +94,34 @@ function App() {
                 element={<LuctherChangePassword />}
               />
             </Route>
-
+            <Route element={<ProtectedRoute />}>
             <Route path="/luctherdashboard" element={<LuctherDashboard />} />
+            </Route>
             <Route path="/calanderpage" element={<CalanderPage />} />
             <Route path="/livepage" element={<Livepage />} />
             <Route path="/classroam/:id" element={<Classroam />} />
             <Route path="/grading/:assessmentId" element={<Grading />} />
             <Route
+              path="/lucthernotification"
+              element={<LuctherNotification />}
+            />
+            <Route
               path="/studentmark/:assessmentId/:studentId/:studentname"
               element={<Studentmark />}
             />
+            <Route element={<ProtectedRoute />}>
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/notification" element={<Notification />} />
+              <Route path="/mycourses" element={<MyCourses />} />
+            </Route>
 
             {/* Dashboard and Course Overview Routes */}
-            <Route path="/dashboard" element={<Dashboard />} />
+            {/* <Route path="/dashboard" element={<Dashboard />} /> */}
             <Route
               path="/courseoverview/:courseId"
               element={<CourseOverview />}
             />
-            <Route path="/notification" element={<Notification />} />
+            {/* <Route path="/notification" element={<Notification />} /> */}
             <Route path="/cart" element={<Cart />} />
 
             {/* Setting Page with Nested Routes */}
@@ -115,11 +131,13 @@ function App() {
               <Route path="purchase" element={<Purchase />} />
             </Route>
 
+
+
             {/* Setting Page with Nested Routes */}
             <Route path="/lucthersetting" element={<LuctherSetting />}>
-              <Route path="profile" element={<Profile />} />
-              <Route path="account" element={<Account />} />
-              <Route path="purchase" element={<Purchase />} />
+              <Route path="profile" element={<ProfileIN />} />
+              <Route path="account" element={<AccountIN />} />
+              <Route path="help" element={<Help />} />
             </Route>
 
             <Route path="/mycertificates" element={<MyCertificates />} />
@@ -138,10 +156,7 @@ function App() {
 
             <Route path="/quizreport" element={<QuizReport />} />
             <Route path="/assessmentreport" element={<AssessmentReport />} />
-            <Route
-              path="/project"
-              element={<AssessmentMiniproject />}
-            />
+            <Route path="/project" element={<AssessmentMiniproject />} />
           </Routes>
         </CourseProvider>
       </AuthProvider>

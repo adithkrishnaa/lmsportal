@@ -6,47 +6,22 @@ import syllbus from "../../assets/Image/syllbus.png";
 import calender from "../../assets/Image/calendar.png";
 import LuctherNavbar from "../../components/Instructor/LuctherNavbar";
 import Aitutore from "../../components/Instructor/Aitutore";
-import ai from "../../assets/Image/ai.png";
-import data from "../../assets/Image/data.png";
-import ml from "../../assets/Image/ml.png";
+// import ai from "../../assets/Image/ai.png";
+// import data from "../../assets/Image/data.png";
+// import ml from "../../assets/Image/ml.png";
 import { MdAccessTime } from "react-icons/md";
 import { BsChevronDoubleLeft, BsChevronDoubleRight } from "react-icons/bs";
 import { Link, useNavigate } from "react-router-dom";
+import {auth} from '../../firebase';
+// import svg1 from '../../assets/Image/LuctherDashboard/svg1.svg'
+// import svg2 from '../../assets/Image/LuctherDashboard/svg2.svg'
+import svg3 from '../../assets/Image/LuctherDashboard/svg3.svg'
+import svg4 from '../../assets/Image/LuctherDashboard/svg4.svg'
+import svg5 from '../../assets/Image/LuctherDashboard/svg5.svg'
 
 const LuctherDashboard = () => {
-  const courses = [
-    {
-      id: "generative-ai",
-      option: "Option 1",
-      name: "Generative AI",
-      image: ai,
-      instructor: "Priya Chawla",
-      duration: "3 hours",
-      description:
-        "Start your journey today and gain the cutting-edge skills driving innovation across industries worldwide",
-    },
-    {
-      id: "data-science",
-      option: "Option 2",
-      name: "Data Science",
-      image: data,
-      instructor: "Priya Chawla",
-      duration: "3 hours",
-      description:
-        "Start your journey today and gain the cutting-edge skills innovation across industries worldwide",
-    },
-    {
-      id: "prompt-engineering",
-      option: "Option 3",
-      name: "Prompt Engineering",
-      image: ml,
-      instructor: "Priya Chawla",
-      duration: "3 hours",
-      description:
-        "Start your journey today and gain the cutting-edge skills driving innovation across industries worldwide",
-    },
-  ];
-
+  const [joinedCourse, setJoinedCourse] = useState({});
+  const [courses, setCourses] = useState([]); // State to store fetched courses
   const [showPopup, setShowPopup] = useState(true);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [showLive, setShowLive] = useState(false);
@@ -55,6 +30,78 @@ const LuctherDashboard = () => {
   const navigate = useNavigate();
   const [liveCourse, setLiveCourse] = useState(null);
   const modalRef = useRef(null);
+  const allCourses = async () => {
+    const currentUser = auth.currentUser; // Get the current user from Firebase auth
+
+    if (!currentUser) {
+      console.error("No user is currently signed in");
+      return; // If no user is signed in, exit the function
+    }
+
+    try {
+      const token = await currentUser.getIdToken(); // Fetch the token if the user is signed in
+      const response = await fetch(
+        "https://course-compass-backend-zh7c.onrender.com/api/course/get-courses",
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      console.log("Courses data", data);
+      setCourses(data); // Assuming the response has a 'courses' field
+    } catch (e) {
+      console.error("Error getting courses", e);
+    }
+  };
+
+
+  const fetchCourse = async () => {
+    const currentUser = auth.currentUser; // Get the current user from Firebase auth
+    if (!currentUser) {
+      console.error("No user is currently signed in");
+      return; // If no user is signed in, exit the function
+    }
+
+    try {
+      const token = await currentUser.getIdToken(); // Fetch the token if the user is signed in
+      const response = await fetch(
+        "https://course-compass-backend-zh7c.onrender.com/api/instructor/enrolledCourse",
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      console.log("Courses data", data);
+      setJoinedCourse(data);
+      if(joinedCourse)
+        setShowPopup(false);
+    } catch (e) {
+      console.error("Error getting course", e);
+    }
+  };
+
+  useEffect(() => {
+    fetchCourse();
+    allCourses();
+  }, []);
 
   // Close the pop-up and confirm the course
   const handleClosePopup = (course) => {
@@ -109,7 +156,7 @@ const LuctherDashboard = () => {
   }, []);
 
   return (
-    <div>
+    <>
       <LuctherNavbar />
       <Searchbar />
       <Aitutore />
@@ -184,9 +231,9 @@ const LuctherDashboard = () => {
                 {courses.slice(currentIndex, currentIndex + 2).map((course) => (
                   <div
                     key={course.id}
-                    className="shadow-2xl  border-2 rounded-3xl  ">
-                    <div className="  flex flex-col rounded-t-3xl relative items-center text-black">
-                      <p className="rounded-full text-white text-xs top-6 text-left absolute bg-custom-gradient ml-2 p-2 px-4">
+                    className="shadow-2xl border-2 rounded-3xl">
+                    <div className="flex flex-col rounded-t-3xl items-center  text-black">
+                      <p className="rounded-full text-white text-xs bg-custom-gradient p-2 px-4">
                         {course.option}
                       </p>
                       <div className="flex p-2 mt-10">
@@ -212,8 +259,8 @@ const LuctherDashboard = () => {
                       </div>
                       <div className="flex text-sm justify-between gap-6 py-5">
                         <button
-                          onClick={handleClosePopup}
-                          className="font-inter font-bold text-white w-full  bg-black border-[1px] p-3 rounded-lg w">
+                          onClick={() => handleClosePopup(course)}
+                          className="font-bold text-white whitespace-nowrap bg-black border-[1px] p-3 rounded-lg w-full">
                           Confirm as host
                         </button>
                       </div>
@@ -221,28 +268,28 @@ const LuctherDashboard = () => {
                   </div>
                 ))}
               </div>
-            </div>
 
-            <div className=" flex justify-between">
-              <button
-                onClick={handlePrevCourse}
-                disabled={currentIndex === 0}
-                className={`left-0 top-1/2 transform -translate-y-1/2 bg-gray-200 p-2 rounded-full ${
-                  currentIndex === 0 ? "opacity-50 cursor-not-allowed" : ""
-                }`}>
-                <BsChevronDoubleLeft size={24} />
-              </button>
+              <div className="flex justify-between">
+                <button
+                  onClick={handlePrevCourse}
+                  disabled={currentIndex === 0}
+                  className={`p-2 rounded-full ${
+                    currentIndex === 0 ? "opacity-50 cursor-not-allowed" : ""
+                  }`}>
+                  <BsChevronDoubleLeft size={24} />
+                </button>
 
-              <button
-                onClick={handleNextCourse}
-                disabled={currentIndex === courses.length - 2}
-                className={` right-0 top-1/2 transform -translate-y-1/2 bg-gray-200 p-2 rounded-full ${
-                  currentIndex === courses.length - 2
-                    ? "opacity-50 cursor-not-allowed"
-                    : ""
-                }`}>
-                <BsChevronDoubleRight size={24} />
-              </button>
+                <button
+                  onClick={handleNextCourse}
+                  disabled={currentIndex >= courses.length - 2}
+                  className={`p-2 rounded-full ${
+                    currentIndex >= courses.length - 2
+                      ? "opacity-50 cursor-not-allowed"
+                      : ""
+                  }`}>
+                  <BsChevronDoubleRight size={24} />
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -272,8 +319,7 @@ const LuctherDashboard = () => {
             </p>
             <button
               onClick={handelshowLive}
-              className="w-60 p-2 bg-black text-white  rounded-lg font-semibold "
-            >
+              className="w-60 p-2 bg-black text-white  rounded-lg font-semibold ">
               Host a Lecture
             </button>
           </div>
@@ -322,8 +368,7 @@ const LuctherDashboard = () => {
             )}
             <button
               onClick={() => navigate(`/classroam/${confirmedCourse.id}`)}
-              className="w-60 p-2 bg-black text-white rounded-lg font-semibold"
-            >
+              className="w-60 p-2 bg-black text-white rounded-lg font-semibold">
               Go to My Classroom
             </button>
           </div>
@@ -344,36 +389,7 @@ const LuctherDashboard = () => {
                   19 Sept, 11.00 am
                 </span>
                 <div className="px-5 mt-2 flex">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="20"
-                    height="30"
-                    viewBox="0 0 39 49"
-                    fill="none"
-                    className="w-10 h-12 md:w-14 md:h-13 lg:w-15 lg:h-16 xl:w-16 xl:h-20">
-                    <line
-                      x1="1.35447"
-                      y1="0.015625"
-                      x2="1.35447"
-                      y2="37.1892"
-                      stroke="black"
-                      strokeWidth="2.25191"
-                    />
-                    <line
-                      x1="0.791016"
-                      y1="36.0537"
-                      x2="21.0582"
-                      y2="36.0537"
-                      stroke="black"
-                      strokeWidth="2.25191"
-                    />
-                    <path
-                      d="M22.1271 28.1213L35.9186 36.5261L22.1271 44.931L22.1271 28.1213Z"
-                      fill="white"
-                      stroke="black"
-                      strokeWidth="2.60747"
-                    />
-                  </svg>
+                <img src={svg3}/>
                 </div>
                 <div className="absolute top-20 space-y-1 left-32">
                   <div className="flex justify-between">
@@ -404,36 +420,7 @@ const LuctherDashboard = () => {
                   20 Sept, 11.00 am
                 </span>
                 <div className="px-5 mt-2 flex">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="20"
-                    height="30"
-                    viewBox="0 0 39 49"
-                    fill="none"
-                    className="w-10 h-12 md:w-14 md:h-13 lg:w-15 lg:h-16 xl:w-16 xl:h-20">
-                    <line
-                      x1="1.35447"
-                      y1="0.015625"
-                      x2="1.35447"
-                      y2="37.1892"
-                      stroke="black"
-                      strokeWidth="2.25191"
-                    />
-                    <line
-                      x1="0.791016"
-                      y1="36.0537"
-                      x2="21.0582"
-                      y2="36.0537"
-                      stroke="black"
-                      strokeWidth="2.25191"
-                    />
-                    <path
-                      d="M22.1271 28.1213L35.9186 36.5261L22.1271 44.931L22.1271 28.1213Z"
-                      fill="white"
-                      stroke="black"
-                      strokeWidth="2.60747"
-                    />
-                  </svg>
+                      <img src={svg4}/>
                 </div>
                 <div className="absolute top-20 space-y-1 left-32">
                   <div className="flex justify-between">
@@ -464,36 +451,7 @@ const LuctherDashboard = () => {
                   21 Sept, 11.00 am
                 </span>
                 <div className="px-5 mt-2 flex">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="20"
-                    height="30"
-                    viewBox="0 0 39 49"
-                    fill="none"
-                    className="w-10 h-12 md:w-14 md:h-13 lg:w-15 lg:h-16 xl:w-16 xl:h-20">
-                    <line
-                      x1="1.35447"
-                      y1="0.015625"
-                      x2="1.35447"
-                      y2="37.1892"
-                      stroke="black"
-                      strokeWidth="2.25191"
-                    />
-                    <line
-                      x1="0.791016"
-                      y1="36.0537"
-                      x2="21.0582"
-                      y2="36.0537"
-                      stroke="black"
-                      strokeWidth="2.25191"
-                    />
-                    <path
-                      d="M22.1271 28.1213L35.9186 36.5261L22.1271 44.931L22.1271 28.1213Z"
-                      fill="white"
-                      stroke="black"
-                      strokeWidth="2.60747"
-                    />
-                  </svg>
+                <img src={svg5} />
                 </div>
                 <div className="absolute top-20 space-y-1 left-32">
                   <div className="flex justify-between">
@@ -540,7 +498,7 @@ const LuctherDashboard = () => {
       )}
 
       <Footer />
-    </div>
+    </>
   );
 };
 
