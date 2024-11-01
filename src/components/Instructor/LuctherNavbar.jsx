@@ -2,6 +2,7 @@ import logo from "../../assets/Image/logo1.png";
 import { Link } from "react-router-dom";
 import { IoIosNotificationsOutline } from "react-icons/io";
 import SettingsDropdown from "../../components/Instructor/Setting/SettingDropdown"; // Import the new SettingsDropdown
+// import CalanderPage from "../../pages/InstructorPages/CalanderPage";
 
 const LuctherNavbar = () => {
   return (
@@ -24,7 +25,7 @@ const LuctherNavbar = () => {
             <Link to="">
               <li className="list-none">Host Live</li>
             </Link>
-            <Link to="">
+            <Link to="/calanderpage">
               <li className="list-none">My Calendar</li>
             </Link>
           </div>

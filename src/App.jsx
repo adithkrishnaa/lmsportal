@@ -12,7 +12,7 @@ import Setting from "./pages/Setting";
 import Profile from "./components/Setting/Profile";
 import Account from "./components/Setting/Account";
 import Purchase from "./components/Setting/Purchase";
-import LuctherSetting  from "./pages/InstructorPages/LuctherSetting.jsx";
+import LuctherSetting from "./pages/InstructorPages/LuctherSetting.jsx";
 import AccountIN from "./components/Instructor/Setting/Account.jsx";
 import Help from "./components/Instructor/Setting/Help.jsx";
 import ProfileIN from "./components/Instructor/Setting/Profile.jsx";
@@ -50,6 +50,7 @@ import Studentmark from "./pages/InstructorPages/Studentmark.jsx";
 import LuctherNotification from "./components/Instructor/LuctherNotification.jsx";
 import { AuthProvider } from "./Context/AuthProvider";
 import ProtectedRoute from "./Context/ProtectedRoute.jsx";
+
 
 function App() {
   return (
@@ -95,7 +96,7 @@ function App() {
               />
             </Route>
             <Route element={<ProtectedRoute />}>
-            <Route path="/luctherdashboard" element={<LuctherDashboard />} />
+              <Route path="/luctherdashboard" element={<LuctherDashboard />} />
             </Route>
             <Route path="/calanderpage" element={<CalanderPage />} />
             <Route path="/livepage" element={<Livepage />} />
@@ -131,8 +132,6 @@ function App() {
               <Route path="purchase" element={<Purchase />} />
             </Route>
 
-
-
             {/* Setting Page with Nested Routes */}
             <Route path="/lucthersetting" element={<LuctherSetting />}>
               <Route path="profile" element={<ProfileIN />} />
@@ -142,7 +141,7 @@ function App() {
 
             <Route path="/mycertificates" element={<MyCertificates />} />
             <Route path="/assessments" element={<Assessments />} />
-            <Route path="/mycourses" element={<MyCourses />} />
+            {/* <Route path="/mycourses" element={<MyCourses />} /> */}
             <Route path="/coursesmodule" element={<CoursesModule />} />
 
             {/* Module */}
