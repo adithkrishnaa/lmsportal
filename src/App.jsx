@@ -51,6 +51,7 @@ import { AuthProvider } from "./Context/AuthProvider";
 import ProtectedRoute from "./Context/ProtectedRoute.jsx";
 import React, { useEffect, useState } from "react";
 
+
 function App() {
   const [idToken, setIdToken] = useState(null);
   const [courseId, setCourseId] = useState(null);
@@ -154,7 +155,11 @@ function App() {
               <Route path="purchase" element={<Purchase />} />
             </Route>
 
+
             {/* Instructor Setting Page with Nested Routes */}
+
+            {/* Setting Page with Nested Routes */}
+
             <Route path="/lucthersetting" element={<LuctherSetting />}>
               <Route path="profile" element={<ProfileIN />} />
               <Route path="account" element={<AccountIN />} />
@@ -163,7 +168,7 @@ function App() {
 
             <Route path="/mycertificates" element={<MyCertificates />} />
             <Route path="/assessments" element={<Assessments />} />
-            <Route path="/mycourses" element={<MyCourses />} />
+            {/* <Route path="/mycourses" element={<MyCourses />} /> */}
             <Route path="/coursesmodule" element={<CoursesModule />} />
 
             {/* Module with Props */}
