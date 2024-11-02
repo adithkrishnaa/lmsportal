@@ -184,12 +184,12 @@ const ModuleVideo = ({ courseId, month, setShowQuizTest, setShowAssessmentTest, 
               </ul>
             </div>
             <div className="flex text-xs space-x-4">
-              <p className="p-2 bg-[#D1940C] flex-shrink-0 text-white rounded-full">Total Questions: 10</p>
-              <p className="p-2 bg-[#E67E22] text-white rounded-full">HOTS</p>
+              <p className="p-2 bg-[#D1940C] flex-shrink-0 text-white rounded-full">Total Questions: 30</p>
+              <p className="p-2 bg-[#E67E22] text-white rounded-full">Intermediate</p>
             </div>
             <div className="flex font-inter justify-end px-5 space-x-10">
               <button onClick={handleCloseAssessment} className="p-3 text-base border-[1px] border-black px-5 rounded-xl">Cancel</button>
-              <button onClick={startAssessmentTest} className="p-3 text-base text-white bg-[#007EFA] px-5 rounded-xl">Start Assessment</button>
+              <button onClick={startAssessmentTest} className="p-3 text-base text-white bg-[#007EFA] px-5 rounded-xl">Start Test</button>
             </div>
           </div>
         </div>

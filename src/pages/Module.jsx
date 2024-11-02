@@ -8,7 +8,7 @@ import min from "../assets/Image/modmin.png";
 import { Outlet, Link } from "react-router-dom";
 import axios from "axios";
 
-const Module = ({ courseId, authToken }) => {  // Assuming authToken is also passed as a prop
+const Module = ({ courseId, authToken }) => {  
   const [isMinimized, setIsMinimized] = useState(false);
   const [month1Expanded, setMonth1Expanded] = useState(false);
   const [month2Expanded, setMonth2Expanded] = useState(false);
@@ -69,14 +69,14 @@ const Module = ({ courseId, authToken }) => {  // Assuming authToken is also pas
     const fetchCourseData = async () => {
       try {
         const headers = {
-          Authorization: `Bearer ${authToken}`,  // Include auth token in headers
+          Authorization: `Bearer ${authToken}`,  
         };
 
         const responseMonth1 = await axios.get(
           `https://course-compass-backend-zh7c.onrender.com/api/course/get-month1/course/${courseId}`,
-          { headers }  // Pass headers with request
+          { headers }  
         );
-        console.log("Month 1 Data:", responseMonth1.data); 
+
         if (responseMonth1.data && responseMonth1.data.courses) {
           setCourseDataMonth1(responseMonth1.data.courses);
         } else {
@@ -85,9 +85,9 @@ const Module = ({ courseId, authToken }) => {  // Assuming authToken is also pas
 
         const responseMonth2 = await axios.get(
           `https://course-compass-backend-zh7c.onrender.com/api/course/get-month2/course/${courseId}`,
-          { headers }  // Pass headers with request
+          { headers }  
         );
-        console.log("Month 2 Data:", responseMonth2.data); 
+
         if (responseMonth2.data && responseMonth2.data.courses) {
           setCourseDataMonth2(responseMonth2.data.courses);
         } else {
@@ -98,12 +98,12 @@ const Module = ({ courseId, authToken }) => {  // Assuming authToken is also pas
       }
     };
 
-    if (courseId) {  // Only fetch if courseId is available
+    if (courseId) {  
       fetchCourseData();
     } else {
       console.error("No courseId provided");
     }
-  }, [courseId, authToken]);  // Add authToken as a dependency
+  }, [courseId, authToken]);  
 
   return (
     <>
@@ -149,7 +149,7 @@ const Module = ({ courseId, authToken }) => {  // Assuming authToken is also pas
                           <ul className="border-2 py-2 space-y-3 text-sm rounded-xl shadow-2xl font-medium">
                             {[1, 2, 3, 4, 5, 6, 7].map((day) => (
                               <Link 
-                                to={`/modulevideo/${week}/${day}`} 
+                                to={`/modulevideo/${courseId}/month1/week/${week}/day/${day}`} // Adjusted route
                                 key={day}
                                 state={{
                                   dayData: courseDataMonth1[week - 1]?.days[day - 1] || null,
@@ -191,7 +191,7 @@ const Module = ({ courseId, authToken }) => {  // Assuming authToken is also pas
                           <ul className="border-2 py-2 space-y-3 text-sm rounded-xl shadow-2xl font-medium">
                             {[1, 2, 3, 4, 5, 6, 7].map((day) => (
                               <Link 
-                                to={`/modulevideo/${week}/${day}`} 
+                                to={`/modulevideo/${courseId}/month2/week/${week}/day/${day}`} // Adjusted route
                                 key={day}
                                 state={{
                                   dayData: courseDataMonth2[week - 1]?.days[day - 1] || null,
@@ -213,8 +213,7 @@ const Module = ({ courseId, authToken }) => {  // Assuming authToken is also pas
             </div>
           )}
         </div>
-
-        <div className="flex-1 ml-6">
+        <div className="w-3/4">
           <Outlet />
         </div>
       </div>
