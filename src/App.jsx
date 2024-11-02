@@ -49,11 +49,36 @@ import Studentmark from "./pages/InstructorPages/Studentmark.jsx";
 import LuctherNotification from "./components/Instructor/LuctherNotification.jsx";
 import { AuthProvider } from "./Context/AuthProvider";
 import ProtectedRoute from "./Context/ProtectedRoute.jsx";
+import React, { useEffect, useState } from "react";
 
 
 function App() {
-  const idToken = "YOUR_ID_TOKEN"; // Replace with actual token retrieval logic
-  const course = {}; // Replace with actual course data retrieval logic
+  const [idToken, setIdToken] = useState(null);
+  const [courseId, setCourseId] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchAuthData = async () => {
+      try {
+        // Replace with actual logic to get the token and course ID
+        const token = await getTokenFromLocalStorage(); // example function
+        const course = await getCourseIdFromApi(); // example function
+
+        setIdToken(token);
+        setCourseId(course);
+      } catch (error) {
+        console.error("Failed to fetch authentication data", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchAuthData();
+  }, []);
+
+  if (loading) {
+    return <div>Loading...</div>; // Show a loading state while fetching data
+  }
 
   return (
     <Router>
@@ -130,11 +155,7 @@ function App() {
               <Route path="purchase" element={<Purchase />} />
             </Route>
 
-
             {/* Instructor Setting Page with Nested Routes */}
-
-            {/* Setting Page with Nested Routes */}
-
             <Route path="/lucthersetting" element={<LuctherSetting />}>
               <Route path="profile" element={<ProfileIN />} />
               <Route path="account" element={<AccountIN />} />
@@ -143,11 +164,10 @@ function App() {
 
             <Route path="/mycertificates" element={<MyCertificates />} />
             <Route path="/assessments" element={<Assessments />} />
-            {/* <Route path="/mycourses" element={<MyCourses />} /> */}
             <Route path="/coursesmodule" element={<CoursesModule />} />
 
             {/* Module with Props */}
-            <Route path="/module" element={<Module idToken={idToken} course={course} />}>
+            <Route path="/module" element={<Module idToken={idToken} courseId={courseId} />}>
               <Route index element={<ModuleVideo />} />
               <Route path="quiztest" element={<QuizTest />} />
               <Route path="assessementtest" element={<AssessementTest />} />
