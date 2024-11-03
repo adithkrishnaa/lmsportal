@@ -78,6 +78,62 @@ const CalendarPage = () => {
 
   const filteredEvents = events.filter(event => event.start.getMonth() === selectedMonth);
 
+  // const handleAddEvent = async () => {
+  //   const title = prompt("Enter event title:");
+  //   const date = prompt("Enter event date (YYYY-MM-DD):");
+  //   const startTime = prompt("Enter start time (HH:MM, 24-hour format):");
+  //   const endTime = prompt("Enter end time (HH:MM, 24-hour format):");
+
+  //   if (title && date && startTime && endTime) {
+  //     const newEvent = {
+  //       id: (events.length + 1).toString(),
+  //       title: title,
+  //       start: `${date}T${startTime}`,
+  //       end: `${date}T${endTime}`,
+  //     };
+
+  //     setEvents((prevEvents) => [...prevEvents, newEvent]);
+  //     try {
+  //       const token = await auth.currentUser.getIdToken();
+  //       const response = await fetch(
+  //         "https://course-compass-backend-zh7c.onrender.com/api/instructor/schedule-class",
+  //         {
+  //           method: "POST",
+  //           headers: {
+  //             Authorization: `Bearer ${token}`,
+  //             "Content-Type": "application/json",
+  //           },
+  //           body: JSON.stringify({
+  //             courseId: courseId,
+  //             title: newEvent.title,
+  //             startTime: newEvent.start,
+  //             endTime: newEvent.end,
+  //           }),
+  //         }
+  //       );
+  //       if (response.ok) {
+  //         const data = await response.json();
+  //         newEvent.id = data.meetingLink;
+  //         setEvents((prevEvents) => [...prevEvents, newEvent]);
+  //         alert(`Event created! Join at: ${data.meetingLink}`);
+  //       } else {
+  //         alert("Failed to schedule class.");
+  //       }
+  //     } catch (error) {
+  //       alert("An error occurred while scheduling the class.");
+  //       console.error("Error scheduling class:", error);
+  //     }
+  //   } else {
+  //     alert("Please provide all details for the event.");
+  //   }
+  // };
+
+  // // Filter upcoming events
+  // const upcomingEvents = events.filter(
+  //   (event) => new Date(event.start) >= new Date()
+  // );
+
+
   return (
     <>
       <LuctherNavbar />
