@@ -1,44 +1,43 @@
-import React, { useState, useEffect } from "react";
 import LuctherNavbar from "../../components/Instructor/LuctherNavbar";
 import { useCalendarApp } from "@schedule-x/react";
 import {
-  createViewDay,
-  createViewWeek,
-  createViewMonthGrid,
-} from "@schedule-x/calendar";
-import { createEventsServicePlugin } from "@schedule-x/events-service";
+  createEventsServicePlugin,
+} from "@schedule-x/events-service";
 import Footer from "../../components/Footer";
+import { useEffect, useState } from "react";
 import { IoIosAdd } from "react-icons/io";
 import { HiCalendar } from "react-icons/hi";
 import { auth } from "../../firebase";
 
-const CalanderPage = () => {
+const CalendarPage = () => {
   const plugins = [createEventsServicePlugin()];
   const [events, setEvents] = useState([]);
-  const [courseId, setCourseId] = useState(null);
+  const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth()); // State to keep track of the selected month
 
-  const calendar = useCalendarApp(
-    {
-      views: [createViewDay(), createViewWeek(), createViewMonthGrid()],
-      events: events,
-    },
-    plugins
-  );
+  const months = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
 
-  // Step 1: Prompt for course ID and fetch course details
-  useEffect(() => {
-    const fetchCourseDetails = async () => {
-      const inputCourseId = prompt("Enter Course ID:");
-      if (!inputCourseId) {
-        alert("Course ID is required.");
-        return;
-      }
-
-      try {
-        const token = await auth.currentUser.getIdToken();
+  const fetchScheduleData = async () => {
+    try {
+      const currentUser = auth.currentUser;
+      if (currentUser) {
+        const token = await currentUser.getIdToken();
         const response = await fetch(
-          `https://course-compass-backend-zh7c.onrender.com/api/course/get-course/course/${inputCourseId}`,
+          "https://course-compass-backend-zh7c.onrender.com/api/instructor/get-schedule",
           {
+            method: "GET",
             headers: {
               Authorization: `Bearer ${token}`,
               "Content-Type": "application/json",
@@ -46,69 +45,38 @@ const CalanderPage = () => {
           }
         );
 
-        if (response.ok) {
-          const courseData = await response.json();
-          setCourseId(courseData._id);
-        } else {
-          console.error("Failed to fetch course details.");
+        if (!response.ok) {
+          throw new Error("Failed to fetch schedule data");
         }
-      } catch (error) {
-        console.error("Error fetching course details:", error);
+
+        const data = await response.json();
+
+        const mappedEvents = data.map((event, index) => ({
+          id: `${event.courseId._id}-${index}`,
+          title: event.courseId.name || "No Title",
+          start: new Date(event.startTime),
+          end: new Date(event.endTime),
+          eventLink: event.eventLink,
+        }));
+
+        setEvents(mappedEvents);
+      } else {
+        console.error("User is not authenticated");
       }
-    };
-
-    fetchCourseDetails();
-  }, []);
-
-  // Event handler to add a new event
-  const handleAddEvent = async () => {
-    const title = prompt("Enter event title:");
-    const date = prompt("Enter event date (YYYY-MM-DD):");
-    const startTime = prompt("Enter start time (HH:MM, 24-hour format):");
-    const endTime = prompt("Enter end time (HH:MM, 24-hour format):");
-
-    if (courseId && title && date && startTime && endTime) {
-      const newEvent = {
-        title,
-        start: `${date}T${startTime}`,
-        end: `${date}T${endTime}`,
-      };
-
-      try {
-        const token = await auth.currentUser.getIdToken();
-        const response = await fetch(
-          "https://course-compass-backend-zh7c.onrender.com/api/instructor/schedule-class",
-          {
-            method: "POST",
-            headers: {
-              Authorization: `Bearer ${token}`,
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              courseId: courseId,
-              title: newEvent.title,
-              startTime: newEvent.start,
-              endTime: newEvent.end,
-            }),
-          }
-        );
-
-        if (response.ok) {
-          const data = await response.json();
-          newEvent.id = data.meetingLink;
-          setEvents((prevEvents) => [...prevEvents, newEvent]);
-          alert(`Event created! Join at: ${data.meetingLink}`);
-        } else {
-          alert("Failed to schedule class.");
-        }
-      } catch (error) {
-        alert("An error occurred while scheduling the class.");
-        console.error("Error scheduling class:", error);
-      }
-    } else {
-      alert("Please provide all details for the event.");
+    } catch (error) {
+      console.error("Error fetching schedule:", error);
     }
   };
+
+  useEffect(() => {
+    fetchScheduleData();
+  }, []);
+
+  const handleMonthChange = (event) => {
+    setSelectedMonth(parseInt(event.target.value)); // Update selected month based on dropdown selection
+  };
+
+  const filteredEvents = events.filter(event => event.start.getMonth() === selectedMonth);
 
   return (
     <>
@@ -143,7 +111,7 @@ const CalanderPage = () => {
         </div>
 
         <button
-          onClick={handleAddEvent}
+          onClick={fetchScheduleData}
           className="flex items-center text-black font-semibold text-[25px] leading-[21px] tracking-[-0.32px] bg-white p-2 rounded-full shadow hover:bg-blue-100"
           style={{ width: "150.557px", height: "53px", flexShrink: 0 }}
         >
@@ -170,20 +138,32 @@ const CalanderPage = () => {
           </h2>
 
           <div className="flex flex-col space-y-4">
-            {events.slice(0, 5).map((event) => (
+            {filteredEvents.map((event) => (
               <div
                 key={event.id}
                 className="flex justify-between items-center bg-white p-3 rounded-lg shadow-sm"
               >
                 <div>
                   <p className="font-semibold">{event.title}</p>
-                  <p className="text-sm text-gray-600">
-                    {new Date(event.start).toLocaleDateString()} -{" "}
-                    {new Date(event.start).toLocaleTimeString([], {
+                  <p className="text-sm text-red-600">
+                    {event.start.toLocaleDateString("en-US", {
+                      month: "short",
+                      day: "numeric",
+                    })}
+                    ,{" "}
+                    {event.start.toLocaleTimeString([], {
                       hour: "2-digit",
                       minute: "2-digit",
                     })}
                   </p>
+                  <a
+                    href={event.eventLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-blue-500 underline text-sm"
+                  >
+                    Join Class
+                  </a>
                 </div>
                 <IoIosAdd className="text-blue-600 cursor-pointer" size={25} />
               </div>
@@ -196,41 +176,39 @@ const CalanderPage = () => {
             <thead>
               <tr>
                 <th>
-                  <h2
+                  <select
+                    value={selectedMonth}
+                    onChange={handleMonthChange}
+                    className="text-blue-600 font-semibold p-2 rounded"
                     style={{
+                      fontSize: "20px",
                       color: "#0832FF",
                       fontFamily: "Inter",
-                      fontSize: "25px",
-                      fontStyle: "normal",
                       fontWeight: "600",
-                      lineHeight: "21px",
-                      letterSpacing: "-0.32px",
                     }}
                   >
-                    Sept
-                  </h2>
+                    {months.map((month, index) => (
+                      <option key={index} value={index}>
+                        {month}
+                      </option>
+                    ))}
+                  </select>
                 </th>
-                {[
-                  "Monday",
-                  "Tuesday",
-                  "Wednesday",
-                  "Thursday",
-                  "Friday",
-                  "Saturday",
-                  "Sunday",
-                ].map((day, index) => (
-                  <th
-                    key={index}
-                    className="p-2"
-                    style={{
-                      color: "#0832FF",
-                      fontFamily: "Inter",
-                      fontWeight: "700",
-                    }}
-                  >
-                    {day}
-                  </th>
-                ))}
+                {["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"].map(
+                  (day, index) => (
+                    <th
+                      key={index}
+                      className="p-2"
+                      style={{
+                        color: "#0832FF",
+                        fontFamily: "Inter",
+                        fontWeight: "700",
+                      }}
+                    >
+                      {day}
+                    </th>
+                  )
+                )}
               </tr>
             </thead>
             <tbody>
@@ -247,53 +225,54 @@ const CalanderPage = () => {
               ].map((time, timeIndex) => (
                 <tr key={timeIndex}>
                   <td
-                    className="p-2"
-                    style={{
-                      color: "#000",
-                      fontFamily: "Inter",
-                      fontWeight: "700",
-                    }}
+                    className="p-2 font-bold"
+                    style={{ color: "#000", fontFamily: "Inter" }}
                   >
                     {time}
                   </td>
                   {Array(7)
                     .fill(0)
-                    .map((_, dayIndex) => (
-                      <td key={dayIndex} className="p-2 border">
-                        {events
-                          .filter((event) => {
-                            const eventDay =
-                              (new Date(event.start).getDay() + 6) % 7; // Adjust for Mon-Sun start
-                            const eventStartTime = new Date(
-                              event.start
-                            ).toLocaleTimeString([], {
-                              hour: "2-digit",
-                              minute: "2-digit",
-                            });
-                            return (
-                              eventStartTime === time && eventDay === dayIndex
-                            );
-                          })
-                          .map((filteredEvent) => (
-                            <p key={filteredEvent.id} className="text-blue-600">
-                              {filteredEvent.title}
-                            </p>
+                    .map((_, dayIndex) => {
+                      const eventsForDayAndTime = filteredEvents.filter((event) => {
+                        const eventDay = event.start.getDay();
+                        const eventTime = event.start.toLocaleTimeString([], {
+                          hour: "2-digit",
+                          minute: "2-digit",
+                          hour12: true,
+                        });
+
+                        return (
+                          eventDay === (dayIndex + 1) % 7 && eventTime === time
+                        );
+                      });
+
+                      return (
+                        <td key={dayIndex} className="p-2 border">
+                          {eventsForDayAndTime.map((event, eventIndex) => (
+                            <div
+                              key={eventIndex}
+                              className="bg-blue-600 text-white p-2 rounded-md"
+                            >
+                              {event.title} <br />
+                              {event.start.toLocaleTimeString([], {
+                                hour: "2-digit",
+                                minute: "2-digit",
+                                hour12: true,
+                              })}
+                            </div>
                           ))}
-                      </td>
-                    ))}
+                        </td>
+                      );
+                    })}
                 </tr>
               ))}
             </tbody>
-
           </table>
         </div>
       </div>
-
       <Footer />
     </>
   );
 };
 
-export default CalanderPage;
-
-// 6712a07bde57de8f762e9894
+export default CalendarPage;
