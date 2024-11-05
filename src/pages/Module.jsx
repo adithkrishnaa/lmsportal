@@ -167,7 +167,7 @@ const Module = () => {
       try {
         const authToken = await auth.currentUser.getIdToken();
         const response = await fetch(
-          `http://localhost:3000/api/student/course-progress`,
+          `https://course-compass-backend-zh7c.onrender.com/api/student/course-progress`,
           {
             headers: {
               Authorization: `Bearer ${authToken}`,
