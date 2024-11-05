@@ -171,7 +171,7 @@ function App() {
               <Route index element={<ModuleVideo />} />
               <Route path="quiztest" element={<QuizTest />} />
               <Route path="assessementtest" element={<AssessementTest />} />
-              <Route path="modulevideo" element={<ModuleVideo />} />
+              <Route path="/module/modulevideo" element={<ModuleVideo />} />
               <Route path="videolive" element={<VideoLive />} />
             </Route>
 

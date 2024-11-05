@@ -12,6 +12,7 @@ const ModuleVideo = ({ courseId, month, setShowQuizTest, setShowAssessmentTest, 
   const [showAssessment, setShowAssessment] = useState(false);
   const [courseData, setCourseData] = useState(null);
   const [error, setError] = useState(null); // State to handle errors
+  const [lectureStatus, setLectureStatus] = useState("loading"); // New state for lecture status
 
   // Fetch course data using the courseId and month
   useEffect(() => {
@@ -29,16 +30,16 @@ const ModuleVideo = ({ courseId, month, setShowQuizTest, setShowAssessmentTest, 
 
         const data = await response.json();
 
-        // Add a check to ensure the data structure is valid
         if (data && data.topic && data.videoUrl) {
           setCourseData(data);
+          setLectureStatus(data.lectureStatus); // Set lecture status based on data
           setError(null); // Clear any previous errors
         } else {
           throw new Error("Unexpected data structure");
         }
       } catch (error) {
         console.error("Failed to fetch course data:", error);
-        setError("Failed to load course data. Please try again."); // Set error message
+        setError("Failed to load course data. Please try again.");
         setCourseData(null); // Reset course data on error
       }
     };
@@ -105,10 +106,19 @@ const ModuleVideo = ({ courseId, month, setShowQuizTest, setShowAssessmentTest, 
             </button>
           </div>
 
+          {/* Show "Join Now" button or completed message based on lecture status */}
+          {lectureStatus === "ongoing" && (
+            <button className="p-3 mt-4 bg-blue-600 text-white rounded-xl">Join Now</button>
+          )}
+          {lectureStatus === "completed" && (
+            <p className="text-gray-500">This class has already been conducted.</p>
+          )}
+
           {/* Display error message if exists */}
           {error && <div className="text-red-600">{error}</div>}
         </div>
 
+        {/* Sidebar with quiz and assessment sections */}
         <div className="w-4/12 pl-5 space-y-5">
           <div className="p-1 w-56 text-white flex rounded-xl bg-ai-gradient">
             <h2 className="text-center p-2">Generate Notes with AI</h2>
@@ -147,49 +157,34 @@ const ModuleVideo = ({ courseId, month, setShowQuizTest, setShowAssessmentTest, 
         </div>
       </div>
 
+      {/* Modal for Quiz Instructions */}
       {showQuiz && (
         <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-60 flex justify-center items-center z-50">
           <div className="w-1/2 space-y-4 rounded-3xl shadow-lg relative bg-white p-6">
             <h2 className="text-2xl font-inter font-semibold">Quiz Instructions</h2>
             <div className="px-5 py-5">
-              <ul className="list-disc text-sm">
-                <li>Lorem ipsum dolor sit amet consectetur.</li>
-                <li>Aliquam hendrerit risus eu in.</li>
-                <li>Vulputate risus consequat tempus at faucibus facilisi vitae.</li>
-                <li>Habitant scelerisque nunc lacinia augue elit faucibus at.</li>
-              </ul>
+              <p className="text-sm font-inter">The following quiz is to assess the knowledge you have gained. Make sure you attempt all questions.</p>
+              <p className="text-sm font-inter">Start when you're ready, and good luck!</p>
             </div>
-            <div className="flex text-xs space-x-4">
-              <p className="p-2 bg-[#D1940C] flex-shrink-0 text-white rounded-full">Total Questions: 30</p>
-              <p className="p-2 bg-[#E67E22] text-white rounded-full">Intermediate</p>
-            </div>
-            <div className="flex font-inter justify-end px-5 space-x-10">
-              <button onClick={handleCloseQuiz} className="p-3 text-base border-[1px] border-black px-5 rounded-xl">Cancel</button>
-              <button onClick={startQuizTest} className="p-3 text-base text-white bg-[#007EFA] px-5 rounded-xl">Start Test</button>
+            <div className="space-x-4 px-5 py-2">
+              <button onClick={startQuizTest} className="bg-blue-500 text-white py-2 px-4 rounded-lg">Start Quiz</button>
+              <button onClick={handleCloseQuiz} className="bg-gray-300 text-black py-2 px-4 rounded-lg">Cancel</button>
             </div>
           </div>
         </div>
       )}
 
+      {/* Modal for Assessment Instructions */}
       {showAssessment && (
         <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-60 flex justify-center items-center z-50">
           <div className="w-1/2 space-y-4 rounded-3xl shadow-lg relative bg-white p-6">
-            <h2 className="text-2xl font-inter font-semibold">Mini-Test 1 Instructions</h2>
+            <h2 className="text-2xl font-inter font-semibold">Assessment Instructions</h2>
             <div className="px-5 py-5">
-              <ul className="list-disc text-sm">
-                <li>Lorem ipsum dolor sit amet consectetur.</li>
-                <li>Aliquam hendrerit risus eu in.</li>
-                <li>Vulputate risus consequat tempus at faucibus facilisi vitae.</li>
-                <li>Habitant scelerisque nunc lacinia augue elit faucibus at.</li>
-              </ul>
+              <p className="text-sm font-inter">Complete the assessment to finish the module. Make sure you answer all questions to the best of your ability.</p>
             </div>
-            <div className="flex text-xs space-x-4">
-              <p className="p-2 bg-[#D1940C] flex-shrink-0 text-white rounded-full">Total Questions: 30</p>
-              <p className="p-2 bg-[#E67E22] text-white rounded-full">Intermediate</p>
-            </div>
-            <div className="flex font-inter justify-end px-5 space-x-10">
-              <button onClick={handleCloseAssessment} className="p-3 text-base border-[1px] border-black px-5 rounded-xl">Cancel</button>
-              <button onClick={startAssessmentTest} className="p-3 text-base text-white bg-[#007EFA] px-5 rounded-xl">Start Test</button>
+            <div className="space-x-4 px-5 py-2">
+              <button onClick={startAssessmentTest} className="bg-blue-500 text-white py-2 px-4 rounded-lg">Start Assessment</button>
+              <button onClick={handleCloseAssessment} className="bg-gray-300 text-black py-2 px-4 rounded-lg">Cancel</button>
             </div>
           </div>
         </div>
