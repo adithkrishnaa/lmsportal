@@ -18,11 +18,9 @@
     "firebase": "^10.14.1",
     "gsap": "^3.12.5",
     "intro.js": "^7.2.0",
-
     "lodash": "^4.17.21",
-
     "lodash.debounce": "^4.0.8",
-
+    "lucide-react": "^0.454.0",
     "moment": "^2.30.1",
     "moment-timezone": "^0.5.45",
     "prop-types": "^15.8.1",
