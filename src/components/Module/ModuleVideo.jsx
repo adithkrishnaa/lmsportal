@@ -106,12 +106,22 @@ const ModuleVideo = ({ courseId, month, setShowQuizTest, setShowAssessmentTest, 
             </button>
           </div>
 
-          {/* Show "Join Now" button or completed message based on lecture status */}
+          {/* Show "Join Now" button, "View Recording" button, or completed message based on lecture status */}
           {lectureStatus === "ongoing" && (
             <button className="p-3 mt-4 bg-blue-600 text-white rounded-xl">Join Now</button>
           )}
           {lectureStatus === "completed" && (
-            <p className="text-gray-500">This class has already been conducted.</p>
+            <div className="flex flex-col space-y-3">
+              <p className="text-gray-500">This class has already been conducted.</p>
+              {courseData && courseData.recordingUrl && (
+                <button
+                  className="p-3 bg-green-600 text-white rounded-xl"
+                  onClick={() => window.open(courseData.recordingUrl, "_blank")}
+                >
+                  View Recording
+                </button>
+              )}
+            </div>
           )}
 
           {/* Display error message if exists */}
@@ -180,7 +190,8 @@ const ModuleVideo = ({ courseId, month, setShowQuizTest, setShowAssessmentTest, 
           <div className="w-1/2 space-y-4 rounded-3xl shadow-lg relative bg-white p-6">
             <h2 className="text-2xl font-inter font-semibold">Assessment Instructions</h2>
             <div className="px-5 py-5">
-              <p className="text-sm font-inter">Complete the assessment to finish the module. Make sure you answer all questions to the best of your ability.</p>
+              <p className="text-sm font-inter">The following assessment is a comprehensive test of the module. Please ensure you have reviewed all content before proceeding.</p>
+              <p className="text-sm font-inter">Start when you're ready, and good luck!</p>
             </div>
             <div className="space-x-4 px-5 py-2">
               <button onClick={startAssessmentTest} className="bg-blue-500 text-white py-2 px-4 rounded-lg">Start Assessment</button>
