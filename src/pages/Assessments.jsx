@@ -268,7 +268,7 @@ const Assessments = () => {
         submission : finalProjectCourse?.submissionUrl ?? "",
         courseId : courseId,
         location : "final-project",
-        status : courseProgress?.month2?.finalProject?.attended ?? false
+        status : courseProgress?.month2?.weeks[3]?.attended ?? false
 
       };
 
@@ -380,14 +380,14 @@ const Assessments = () => {
                           "Start the Test"
                         )}
                       </button>
-                    ) : assessment.type === "project" && assessment.status? (
+                    ) : assessment.type === "project" ? (
                       <button
                         className={`p-2 px-4 font-light rounded-lg text-white ${
                           !assessment.status
-                            ? "bg-[#007EFA]"
-                            : "bg-gray-400 cursor-not-allowed"
+                            ? "bg-gray-400 cursor-not-allowed"
+                            : "bg-[#007EFA]"
                         }`}
-                        disabled={assessment.status === "locked"}
+                        disabled={!assessment.status}
                         onClick={() => handleViewMore(assessment)}
                       >
                           {!assessment.status ? (
