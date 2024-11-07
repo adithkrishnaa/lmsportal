@@ -190,8 +190,8 @@ const ModuleVideo = ({ courseId, month, setShowQuizTest, setShowAssessmentTest, 
           <div className="w-1/2 space-y-4 rounded-3xl shadow-lg relative bg-white p-6">
             <h2 className="text-2xl font-inter font-semibold">Assessment Instructions</h2>
             <div className="px-5 py-5">
-              <p className="text-sm font-inter">The following assessment is a comprehensive test of the module. Please ensure you have reviewed all content before proceeding.</p>
-              <p className="text-sm font-inter">Start when you're ready, and good luck!</p>
+              <p className="text-sm font-inter">The following assessment will test your overall understanding of the module.</p>
+              <p className="text-sm font-inter">Complete it within the allocated time.</p>
             </div>
             <div className="space-x-4 px-5 py-2">
               <button onClick={startAssessmentTest} className="bg-blue-500 text-white py-2 px-4 rounded-lg">Start Assessment</button>
