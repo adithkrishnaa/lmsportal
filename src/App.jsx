@@ -51,7 +51,6 @@ import { AuthProvider } from "./Context/AuthProvider";
 import ProtectedRoute from "./Context/ProtectedRoute.jsx";
 import React, { useEffect, useState } from "react";
 
-
 function App() {
   const [idToken, setIdToken] = useState(null);
   const [courseId, setCourseId] = useState(null);
