@@ -21,7 +21,7 @@ const Assessments = () => {
       const token = await auth.currentUser.getIdToken();
       try {
         const response = await fetch(
-          `https://course-compass-backend-zh7c.onrender.com/api/student/course-progress/course/${courseId}`,
+          `https://course-compass-backend-zh7c.onrender.com/api/student/course-progress`,
           {
             method: "GET",
             headers: {
@@ -80,6 +80,7 @@ const Assessments = () => {
 
   const mergeData = (course, courseProgress) => {
     const fetchedOngoingAssessments = [];
+    console.log(courseProgress);
     const fetchedCompletedAssessments = [];
 
     // Month 1 Week 1 Quizzes
@@ -98,7 +99,7 @@ const Assessments = () => {
           topics: e.topics ?? "Yet to be updated",
           description: e.description ?? "Yet to be updated",
           type: "assessment",
-          attended : course?.month1?.week1?.day[i]?.attended ?? false,
+          status : courseProgress?.month1?.week1?.days[i]?.attended ?? false, //status false by default to lock
         };
 
         // Append to the correct array based on the quizSubmitted status
@@ -123,7 +124,7 @@ const Assessments = () => {
         topics: t.topics ? t.topics : "Yet to be updated",
         description: t.description ? t.description : "Yet to be updated",
         type: "assessment",
-        attended : courseProgress?.month1?.week1?.day?.[6]?.attended ?? false
+        status : courseProgress?.month1?.week1?.days?.[6]?.attended ?? false
       };
       (miniTest && miniTest.quizSubmitted === true
         ? fetchedCompletedAssessments
@@ -155,7 +156,7 @@ const Assessments = () => {
           courseId : courseId,
           index : i,
           location : "project-week-project",
-          attended : courseProgress?.month1?.projectWeek[i]?.attended ?? false
+          status : courseProgress?.month1?.projectWeek[i]?.days[6]?.attended ?? false
 
         };
 
@@ -184,7 +185,7 @@ const Assessments = () => {
             ? week.smallTest.projectDescription
             : "Yet to be updated",
           type: "assessment",
-          attended : courseProgress?.month1?.projectWeek[i]?.attended ?? false
+          status : courseProgress?.month1?.projectWeek[i]?.days[6]?.attended
 
         };
 
@@ -214,7 +215,7 @@ const Assessments = () => {
             ? week.assignmentDescription
             : "Yet to be updated",
           type: "assessment",
-          attended : courseProgress?.month2?.weeks[i]?.attended ?? false
+          status : courseProgress?.month2?.weeks[i]?.attended ?? false
         };
 
         (weeksProgress && weeksProgress[i]?.assignmentStatus === "submitted"
@@ -239,7 +240,7 @@ const Assessments = () => {
           ? test.assignmentDescription
           : "Yet to be updated",
         type: "assessment",
-        attended : courseProgress?.month2?.week5_test?.attended ?? false
+        status : courseProgress?.month2?.weeks[3]?.attended ?? false
         
       };
 
@@ -267,7 +268,7 @@ const Assessments = () => {
         submission : finalProjectCourse?.submissionUrl ?? "",
         courseId : courseId,
         location : "final-project",
-        attended : courseProgress?.month2?.finalProject?.attended ?? false
+        status : courseProgress?.month2?.finalProject?.attended ?? false
 
       };
 
@@ -277,6 +278,7 @@ const Assessments = () => {
       ).push(project);
     }
     setOngoingAssessments(fetchedOngoingAssessments);
+    console.log(ongoingAssessments);
     setCompletedAssessments(fetchedCompletedAssessments);
   };
 
@@ -363,14 +365,14 @@ const Assessments = () => {
                     {assessment.type === "assessment" ? (
                       <button
                         className={`p-2 px-4 font-light rounded-lg text-white ${
-                          assessment.status === "unlocked"
+                          assessment.status
                             ? "bg-[#007EFA]"
                             : "cursor-not-allowed"
-                        }`}
+                        }` }
                         disabled={assessment.status === "locked"}
                         onClick={() => handleStartTest(assessment)}
                       >
-                        {assessment.status === "locked" ? (
+                        {!assessment.status ? (
                           <>
                             <BiSolidLock className="inline mr-2" /> Locked
                           </>
@@ -378,29 +380,25 @@ const Assessments = () => {
                           "Start the Test"
                         )}
                       </button>
-                    ) : assessment.type === "project" ? (
+                    ) : assessment.type === "project" && assessment.status? (
                       <button
                         className={`p-2 px-4 font-light rounded-lg text-white ${
-                          assessment.status === "unlocked"
+                          !assessment.status
                             ? "bg-[#007EFA]"
                             : "bg-gray-400 cursor-not-allowed"
                         }`}
                         disabled={assessment.status === "locked"}
                         onClick={() => handleViewMore(assessment)}
                       >
-                        {assessment.status === "locked"
-                          ? "View More"
-                          : "View More"}
+                          {!assessment.status ? (
+                          <>
+                            <BiSolidLock className="inline mr-2" /> Locked
+                          </>
+                        ) : (
+                          "View More"
+                        )}
                       </button>
                     ) : null}
-
-                    {/* Show lock icon if locked */}
-                    {assessment.status === "locked" && (
-                      <BiSolidLock
-                        className="text-white z-50 right-20 absolute "
-                        size={30}
-                      />
-                    )}
                   </div>
                 </div>
               ))
