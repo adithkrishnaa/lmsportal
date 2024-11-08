@@ -1,8 +1,6 @@
 import LuctherNavbar from "../../components/Instructor/LuctherNavbar";
 import { useCalendarApp } from "@schedule-x/react";
-import {
-  createEventsServicePlugin,
-} from "@schedule-x/events-service";
+import { createEventsServicePlugin } from "@schedule-x/events-service";
 import Footer from "../../components/Footer";
 import { useEffect, useState } from "react";
 import { IoIosAdd } from "react-icons/io";
@@ -12,7 +10,7 @@ import { auth } from "../../firebase";
 const CalendarPage = () => {
   const plugins = [createEventsServicePlugin()];
   const [events, setEvents] = useState([]);
-  const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth()); // State to keep track of the selected month
+  const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth());
 
   const months = [
     "January",
@@ -50,16 +48,21 @@ const CalendarPage = () => {
         }
 
         const data = await response.json();
+        console.log("Fetched data:", data); // Log data for debugging
 
-        const mappedEvents = data.map((event, index) => ({
-          id: `${event.courseId._id}-${index}`,
-          title: event.courseId.name || "No Title",
-          start: new Date(event.startTime),
-          end: new Date(event.endTime),
-          eventLink: event.eventLink,
-        }));
-
-        setEvents(mappedEvents);
+        // Convert start and end to Date objects
+        if (Array.isArray(data.classSchedule)) {
+          const mappedEvents = data.classSchedule.map((event, index) => ({
+            id: `${event.courseId}-${index}`,
+            title: event.courseId.name || "No Title",
+            start: new Date(event.startTime),
+            end: new Date(event.endTime),
+            eventLink: event.eventLink,
+          }));
+          setEvents(mappedEvents);
+        } else {
+          console.error("Unexpected data format for classSchedule:", data);
+        }
       } else {
         console.error("User is not authenticated");
       }
@@ -73,66 +76,79 @@ const CalendarPage = () => {
   }, []);
 
   const handleMonthChange = (event) => {
-    setSelectedMonth(parseInt(event.target.value)); // Update selected month based on dropdown selection
+    setSelectedMonth(parseInt(event.target.value));
   };
 
-  const filteredEvents = events.filter(event => event.start.getMonth() === selectedMonth);
+  // Filter events by selected month
+  const filteredEvents = events.filter(
+    (event) =>
+      event.start instanceof Date && event.start.getMonth() === selectedMonth
+  );
 
-  // const handleAddEvent = async () => {
-  //   const title = prompt("Enter event title:");
-  //   const date = prompt("Enter event date (YYYY-MM-DD):");
-  //   const startTime = prompt("Enter start time (HH:MM, 24-hour format):");
-  //   const endTime = prompt("Enter end time (HH:MM, 24-hour format):");
+  const handleAddEvent = async () => {
+    const courseId = prompt("Enter course ID:");
+    const date = prompt("Enter event date (YYYY-MM-DD):");
+    const startTime = prompt("Enter start time (HH:MM, 24-hour format):");
+    const endTime = prompt("Enter end time (HH:MM, 24-hour format):");
 
-  //   if (title && date && startTime && endTime) {
-  //     const newEvent = {
-  //       id: (events.length + 1).toString(),
-  //       title: title,
-  //       start: `${date}T${startTime}`,
-  //       end: `${date}T${endTime}`,
-  //     };
+    // Validate the input date and time format
+    if (courseId && date && startTime && endTime) {
+      // Check if the date and time format is valid
+      const startDate = new Date(`${date}T${startTime}`);
+      const endDate = new Date(`${date}T${endTime}`);
 
-  //     setEvents((prevEvents) => [...prevEvents, newEvent]);
-  //     try {
-  //       const token = await auth.currentUser.getIdToken();
-  //       const response = await fetch(
-  //         "https://course-compass-backend-zh7c.onrender.com/api/instructor/schedule-class",
-  //         {
-  //           method: "POST",
-  //           headers: {
-  //             Authorization: `Bearer ${token}`,
-  //             "Content-Type": "application/json",
-  //           },
-  //           body: JSON.stringify({
-  //             courseId: courseId,
-  //             title: newEvent.title,
-  //             startTime: newEvent.start,
-  //             endTime: newEvent.end,
-  //           }),
-  //         }
-  //       );
-  //       if (response.ok) {
-  //         const data = await response.json();
-  //         newEvent.id = data.meetingLink;
-  //         setEvents((prevEvents) => [...prevEvents, newEvent]);
-  //         alert(`Event created! Join at: ${data.meetingLink}`);
-  //       } else {
-  //         alert("Failed to schedule class.");
-  //       }
-  //     } catch (error) {
-  //       alert("An error occurred while scheduling the class.");
-  //       console.error("Error scheduling class:", error);
-  //     }
-  //   } else {
-  //     alert("Please provide all details for the event.");
-  //   }
-  // };
+      if (isNaN(startDate) || isNaN(endDate)) {
+        alert("Invalid date or time format. Please check the inputs.");
+        return;
+      }
 
-  // // Filter upcoming events
-  // const upcomingEvents = events.filter(
-  //   (event) => new Date(event.start) >= new Date()
-  // );
+      const newEvent = {
+        courseId: courseId,
+        startTime: startDate.toISOString(),
+        endTime: endDate.toISOString(),
+        eventLink: "https://your-event-link.com", // Replace with the actual link or variable
+      };
 
+      setEvents((prevEvents) => [
+        ...prevEvents,
+        {
+          id: `${newEvent.courseId}-${prevEvents.length + 1}`,
+          title: newEvent.title,
+          start: startDate,
+          end: endDate,
+          eventLink: newEvent.eventLink,
+        },
+      ]);
+
+      try {
+        const token = await auth.currentUser.getIdToken();
+        const response = await fetch(
+          "https://course-compass-backend-zh7c.onrender.com/api/instructor/schedule-class",
+          {
+            method: "POST",
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(newEvent),
+          }
+        );
+
+        if (response.ok) {
+          const data = await response.json();
+          newEvent.eventLink = data.meetingLink; // Update with the actual meeting link from the response
+          alert(`Event created! Join at: ${data.meetingLink}`);
+        } else {
+          alert("Failed to schedule class.");
+        }
+      } catch (error) {
+        alert("An error occurred while scheduling the class.");
+        console.error("Error scheduling class:", error);
+      }
+    } else {
+      alert("Please provide all details for the event.");
+    }
+  };
 
   return (
     <>
@@ -144,10 +160,7 @@ const CalendarPage = () => {
         <div className="flex items-center mb-2">
           <HiCalendar
             size={53.938}
-            style={{
-              color: "#0455BF",
-              flexShrink: 0,
-            }}
+            style={{ color: "#0455BF", flexShrink: 0 }}
           />
           <h2
             className="ml-2"
@@ -156,9 +169,7 @@ const CalendarPage = () => {
               color: "#000",
               fontFamily: "Inter",
               fontSize: "23.56px",
-              fontStyle: "normal",
               fontWeight: "700",
-              lineHeight: "31px",
               letterSpacing: "-0.156px",
             }}
           >
@@ -167,7 +178,7 @@ const CalendarPage = () => {
         </div>
 
         <button
-          onClick={fetchScheduleData}
+          onClick={handleAddEvent}
           className="flex items-center text-black font-semibold text-[25px] leading-[21px] tracking-[-0.32px] bg-white p-2 rounded-full shadow hover:bg-blue-100"
           style={{ width: "150.557px", height: "53px", flexShrink: 0 }}
         >
@@ -184,10 +195,7 @@ const CalendarPage = () => {
               color: "#0832FF",
               fontFamily: "Inter",
               fontSize: "22px",
-              fontStyle: "normal",
               fontWeight: "600",
-              lineHeight: "21px",
-              letterSpacing: "-0.32px",
             }}
           >
             Upcoming Classes
@@ -221,7 +229,6 @@ const CalendarPage = () => {
                     Join Class
                   </a>
                 </div>
-                <IoIosAdd className="text-blue-600 cursor-pointer" size={25} />
               </div>
             ))}
           </div>
@@ -239,7 +246,6 @@ const CalendarPage = () => {
                     style={{
                       fontSize: "20px",
                       color: "#0832FF",
-                      fontFamily: "Inter",
                       fontWeight: "600",
                     }}
                   >
@@ -255,11 +261,7 @@ const CalendarPage = () => {
                     <th
                       key={index}
                       className="p-2"
-                      style={{
-                        color: "#0832FF",
-                        fontFamily: "Inter",
-                        fontWeight: "700",
-                      }}
+                      style={{ color: "#0832FF", fontWeight: "700" }}
                     >
                       {day}
                     </th>
@@ -281,45 +283,35 @@ const CalendarPage = () => {
               ].map((time, timeIndex) => (
                 <tr key={timeIndex}>
                   <td
-                    className="p-2 font-bold"
-                    style={{ color: "#000", fontFamily: "Inter" }}
+                    className="p-2 font-bold border border-gray-300"
+                    style={{ color: "#000" }}
                   >
                     {time}
                   </td>
                   {Array(7)
                     .fill(0)
-                    .map((_, dayIndex) => {
-                      const eventsForDayAndTime = filteredEvents.filter((event) => {
-                        const eventDay = event.start.getDay();
-                        const eventTime = event.start.toLocaleTimeString([], {
-                          hour: "2-digit",
-                          minute: "2-digit",
-                          hour12: true,
-                        });
-
-                        return (
-                          eventDay === (dayIndex + 1) % 7 && eventTime === time
-                        );
-                      });
-
-                      return (
-                        <td key={dayIndex} className="p-2 border">
-                          {eventsForDayAndTime.map((event, eventIndex) => (
-                            <div
-                              key={eventIndex}
-                              className="bg-blue-600 text-white p-2 rounded-md"
+                    .map((_, dayIndex) => (
+                      <td
+                        key={dayIndex}
+                        className="p-2 border border-gray-300"
+                        style={{ color: "#0832FF", cursor: "pointer" }}
+                      >
+                        {filteredEvents
+                          .filter(
+                            (event) =>
+                              event.start.getDay() === dayIndex + 1 &&
+                              event.start.getHours() === timeIndex + 9
+                          )
+                          .map((event) => (
+                            <p
+                              key={event.id}
+                              className="text-sm bg-blue-200 p-1 rounded"
                             >
-                              {event.title} <br />
-                              {event.start.toLocaleTimeString([], {
-                                hour: "2-digit",
-                                minute: "2-digit",
-                                hour12: true,
-                              })}
-                            </div>
+                              {event.title}
+                            </p>
                           ))}
-                        </td>
-                      );
-                    })}
+                      </td>
+                    ))}
                 </tr>
               ))}
             </tbody>
